@@ -14,7 +14,7 @@ import java.io.Writer;
  * 
  * 类/接口注释
  * 
- * @author panrq
+ * @author chuck
  * @createDate Dec 29, 2014
  *
  */

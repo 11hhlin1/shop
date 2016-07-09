@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * 后台线程池
  * 类/接口注释
  * 
- * @author panrq
+ * @author chuck
  * @createDate Dec 29, 2014
  *
  */
