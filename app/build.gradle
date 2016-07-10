@@ -22,5 +22,10 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile project(':applibrary')
-    compile files('libs/butterknife-6.1.0.jar')
+//    compile files('libs/butterknife-6.1.0.jar')
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile project(':loading-more-view')
+    compile project(':ultra-pull-to-refresh')
+    compile 'com.android.support:cardview-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
 }
