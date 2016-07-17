@@ -1,4 +1,4 @@
-package com.gjj.shop;
+package com.gjj.shop.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,8 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.gjj.base.BaseFragment;
-import com.gjj.model.GameInfo;
+import com.gjj.shop.base.BaseFragment;
+import com.gjj.shop.model.GameInfo;
+import com.gjj.shop.R;
 
 import java.util.ArrayList;
 import java.util.List;

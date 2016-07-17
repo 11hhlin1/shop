@@ -1,4 +1,4 @@
-package com.gjj.model;
+package com.gjj.shop.model;
 
 
 import com.gjj.applibrary.http.model.BaseApiResponse;

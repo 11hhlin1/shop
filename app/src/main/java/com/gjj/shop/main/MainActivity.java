@@ -1,15 +1,17 @@
-package com.gjj.shop;
+package com.gjj.shop.main;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.shop.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Bind(R.id.image)
     ImageView imageView;

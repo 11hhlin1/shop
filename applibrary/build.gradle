@@ -25,4 +25,6 @@ dependencies {
     compile 'com.lzy.net:okhttputils:+'
     compile 'com.lzy.net:okhttpserver:+'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.google.code.gson:gson:2.5'
+
 }

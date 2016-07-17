@@ -1,4 +1,4 @@
-package com.gjj.app;
+package com.gjj.shop.app;
 
 import android.app.Application;
 

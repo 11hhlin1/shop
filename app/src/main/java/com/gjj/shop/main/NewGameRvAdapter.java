@@ -1,7 +1,6 @@
-package com.gjj.shop;
+package com.gjj.shop.main;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.gjj.model.GameInfo;
+import com.gjj.shop.model.GameInfo;
+import com.gjj.shop.R;
 
 import java.text.DecimalFormat;
 import java.util.List;
