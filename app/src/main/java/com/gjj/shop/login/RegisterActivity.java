@@ -64,6 +64,7 @@ public class RegisterActivity extends Activity {
 
     @OnClick(R.id.btn_register)
     void register() {
+
         HashMap<String, String> params = new HashMap<>();
         params.put("username", mUsername.getText().toString());
         params.put("password", mPsw.getText().toString());
