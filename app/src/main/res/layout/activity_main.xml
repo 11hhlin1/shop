@@ -2,25 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/top_layout"
-        style="@style/titlebar" >
+        style="@style/titlebar">
 
         <!--<ViewStub-->
-            <!--android:id="@+id/viewstub_back_btn"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_marginLeft="@dimen/margin_24px"-->
-            <!--android:layout="@layout/stub_back_btn" />-->
+        <!--android:id="@+id/viewstub_back_btn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_marginLeft="@dimen/margin_24px"-->
+        <!--android:layout="@layout/stub_back_btn" />-->
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"/>
+            android:text="@string/app_name" />
 
         <ImageView
             android:id="@+id/news_btn"
@@ -32,7 +32,6 @@
             android:padding="10dp"
             android:src="@mipmap/load_img_loading" />
 
-
     </RelativeLayout>
 
     <FrameLayout
@@ -40,16 +39,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/activity_bg_gray" >
-    </FrameLayout>
+        android:background="@color/activity_bg_gray"/>
 
 
-    <com.yyl.fishfeed.biz.widget.NestRadioGroup
+    <com.gjj.shop.widget.NestRadioGroup
         android:id="@+id/group_tab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
         android:background="@android:color/white"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/index_tab"
@@ -57,37 +55,15 @@
             android:drawableTop="@drawable/selector_tab_index"
             android:paddingBottom="3dp"
             android:paddingTop="5dp"
-            android:text="@string/tab_index"/>
-
-        <FrameLayout
-            android:id="@+id/feed_fl"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <RadioButton
-                android:id="@+id/news_tab"
-                style="@style/main_Red_RadioButton_style"
-                android:drawableTop="@drawable/selector_tab_feed"
-                android:paddingBottom="3dp"
-                android:text="@string/tab_feed"/>
-            <ImageView
-                android:id="@+id/feed_redTip"
-                android:layout_width="7dp"
-                android:layout_height="7dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="14dp"
-                android:background="@drawable/all_img_dot_pr"
-                android:visibility="gone"/>
-        </FrameLayout>
+            android:text="@string/index" />
 
         <RadioButton
-            android:id="@+id/progress_tab"
+            android:id="@+id/community_tab"
             style="@style/main_RadioButton_style"
-            android:drawableTop="@drawable/selector_tab_construct_progress"
+            android:drawableTop="@drawable/selector_tab_feed"
             android:paddingBottom="3dp"
             android:paddingTop="5dp"
-            android:text="@string/tab_construct_progress"/>
+            android:text="@string/community" />
 
 
         <FrameLayout
@@ -95,12 +71,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <RadioButton
-                android:id="@+id/personal_tab"
+                android:id="@+id/shopping_tab"
                 style="@style/main_Red_RadioButton_style"
                 android:drawableTop="@drawable/selector_tab_personal"
                 android:paddingBottom="3dp"
-                android:text="@string/tab_personal"/>
+                android:text="@string/shopping" />
+
             <ImageView
                 android:id="@+id/redTip"
                 android:layout_width="7dp"
@@ -108,9 +86,17 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="12dp"
-                android:background="@drawable/all_img_dot_pr"
-                android:visibility="gone"/>
+                android:background="@mipmap/all_img_dot_pr"
+                android:visibility="gone" />
         </FrameLayout>
-    </com.yyl.fishfeed.biz.widget.NestRadioGroup>
+
+        <RadioButton
+            android:id="@+id/person_tab"
+            style="@style/main_RadioButton_style"
+            android:drawableTop="@drawable/selector_tab_im"
+            android:paddingBottom="3dp"
+            android:paddingTop="5dp"
+            android:text="@string/person" />
+    </com.gjj.shop.widget.NestRadioGroup>
 
 </LinearLayout>

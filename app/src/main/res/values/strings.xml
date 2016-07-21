@@ -2,4 +2,9 @@
     <string name="app_name">义乌商城</string>
     <string name="hint_username">请输入手机号码</string>
     <string name="hint_password">请输入密码</string>
+
+    <string name="index">首页</string>
+    <string name="community">社区</string>
+    <string name="shopping">购物车</string>
+    <string name="person">我</string>
 </resources>
