@@ -65,7 +65,7 @@
         <activity
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:name=".splash.SplashActivity" >
+            android:name=".main.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,14 +73,14 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".main.MainActivity"
-            android:screenOrientation="portrait"
-            android:clearTaskOnLaunch="true"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
+        <!--<activity-->
+            <!--android:name=".main.MainActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:clearTaskOnLaunch="true"-->
+            <!--android:configChanges="orientation|keyboardHidden|screenSize"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:windowSoftInputMode="adjustPan" >-->
+        <!--</activity>-->
         <activity
             android:name=".login.LoginActivity"
             android:screenOrientation="portrait"

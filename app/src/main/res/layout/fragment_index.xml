@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
+        android:id="@+id/store_house_ptr_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ptr_resistance="1.7"
+        app:ptr_ratio_of_header_height_to_refresh="1.2"
+        app:ptr_duration_to_close="300"
+        app:ptr_duration_to_close_header="2000"
+        app:ptr_keep_header_when_refresh="true"
+        app:ptr_pull_to_fresh="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.bigkoo.convenientbanner.ConvenientBanner
+                android:id="@+id/convenientBanner"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:canLoop="true"/>
+
+
+        </LinearLayout>
+    </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
+</ScrollView>
