@@ -10,7 +10,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseMainActivity;
+import com.gjj.shop.community.CommunityFragment;
 import com.gjj.shop.index.IndexFragment;
+import com.gjj.shop.person.PersonalFragment;
+import com.gjj.shop.shopping.ShoppingFragment;
 import com.gjj.shop.widget.NestRadioGroup;
 
 import butterknife.Bind;
@@ -58,8 +61,8 @@ public class MainActivity extends BaseMainActivity {
             tabId = savedInstanceState.getInt(SAVE_INSTANCE_STATE_KEY_TAB_ID);
         }
         switch (tabId) {
-            case R.id.index_tab:
-                mRadioGroup.check(R.id.index_tab);
+            case R.id.person_tab:
+                mRadioGroup.check(R.id.person_tab);
                 break;
             case R.id.community_tab:
                 mRadioGroup.check(R.id.community_tab);
@@ -68,7 +71,7 @@ public class MainActivity extends BaseMainActivity {
                 mRadioGroup.check(R.id.shopping_tab);
                 break;
             default:
-                mRadioGroup.check(R.id.person_tab);
+                mRadioGroup.check(R.id.index_tab);
                 break;
         }
 //        Glide.with(this).load("http://jcodecraeer.com/uploads/20150327/1427445294447874.jpg")
@@ -82,18 +85,23 @@ public class MainActivity extends BaseMainActivity {
     }
 
     private void showPersonTab() {
-
+        mTitleTV.setText(R.string.person);
+        replaceFragment(PersonalFragment.class);
     }
 
     private void showShoppingTab() {
+        mTitleTV.setText(R.string.shopping);
+        replaceFragment(ShoppingFragment.class);
 
     }
 
     private void showCommunityTab() {
-
+        mTitleTV.setText(R.string.community);
+        replaceFragment(CommunityFragment.class);
     }
 
     private void showIndexTab() {
+        mTitleTV.setText(R.string.app_name);
         replaceFragment(IndexFragment.class);
     }
 

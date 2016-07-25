@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
         android:id="@+id/store_house_ptr_frame"
@@ -13,21 +13,111 @@
         app:ptr_ratio_of_header_height_to_refresh="1.2"
         app:ptr_duration_to_close="300"
         app:ptr_duration_to_close_header="2000"
-        app:ptr_keep_header_when_refresh="true"
-        app:ptr_pull_to_fresh="false">
+        app:ptr_keep_header_when_refresh="true">
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollbars="none"
             android:orientation="vertical">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
             <com.bigkoo.convenientbanner.ConvenientBanner
                 android:id="@+id/convenientBanner"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 app:canLoop="true"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:orientation="horizontal"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/cheap_shop"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/textsize_12sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:drawablePadding="@dimen/margin_6p"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:text="@string/cheap_shop"/>
+                    <TextView
+                        android:id="@+id/foreign_shop"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/textsize_12sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:drawablePadding="@dimen/margin_6p"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:text="@string/foreign_shop"/>
+                    <TextView
+                        android:id="@+id/supermarket_shop"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/textsize_12sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:drawablePadding="@dimen/margin_6p"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:text="@string/supermarket_shop"/>
+                    <TextView
+                        android:id="@+id/factory_shop"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/textsize_12sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:drawablePadding="@dimen/margin_6p"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:text="@string/factory_shop"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_6p"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textsize_14sp"
+                        android:text="@string/advice_product"
+                        android:padding="@dimen/margin_6p"/>
 
 
-        </LinearLayout>
+                    <com.gjj.shop.widget.UnScrollableGridView
+                        android:id="@+id/product_grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cacheColorHint="@android:color/transparent"
+                        android:horizontalSpacing="@dimen/margin_24px"
+                        android:listSelector="@android:color/transparent"
+                        android:numColumns="2"
+                        android:padding="@dimen/margin_24px"
+                        android:stretchMode="columnWidth"
+                        android:verticalSpacing="@dimen/margin_24px"
+                        android:gravity="center"/>
+                    <!--<cn.finalteam.loadingviewfinal.RecyclerViewFinal-->
+                        <!--android:id="@+id/advice_list"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:cacheColorHint="#00000000"-->
+                        <!--app:noLoadMoreHideView="false"/>-->
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
     </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
-</ScrollView>
+</LinearLayout>

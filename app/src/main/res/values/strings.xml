@@ -7,4 +7,9 @@
     <string name="community">社区</string>
     <string name="shopping">购物车</string>
     <string name="person">我</string>
+    <string name="cheap_shop">大聚惠</string>
+    <string name="foreign_shop">海外购</string>
+    <string name="supermarket_shop">超市百货</string>
+    <string name="factory_shop">厂家直销</string>
+    <string name="advice_product">精品促销</string>
 </resources>

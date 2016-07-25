@@ -23,7 +23,6 @@ import java.util.ArrayList;
 public class BaseMainActivity extends FragmentActivity {
 
     private ArrayList<Fragment> mHistoryList = new ArrayList<Fragment>();
-    private FragmentFactory mFragmentFactory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,16 +32,11 @@ public class BaseMainActivity extends FragmentActivity {
     public <T extends BaseFragment> Fragment replaceFragment(Class<T> clazz) {
         return replaceFragment(clazz, new Bundle());
     }
-    public FragmentFactory getFragmentFactory() {
-        if (mFragmentFactory == null) {
-            mFragmentFactory = new FragmentFactory();
-        }
-        return mFragmentFactory;
-    }
+
 
     public boolean isFragmentInCache(BaseFragment f) {
-        if (mFragmentFactory != null) {
-            return mFragmentFactory.getFragmentFromCache(f.getClass()) != null;
+        if (FragmentFactory.getFragmentFactory() != null) {
+            return FragmentFactory.getFragmentFactory().getFragmentFromCache(f.getClass()) != null;
         }
         return false;
     }
@@ -58,7 +52,7 @@ public class BaseMainActivity extends FragmentActivity {
         FragmentTransaction fT = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentByTag(clazz.getName());
         if (fragment == null) {
-            fragment = getFragmentFactory().getFragment(clazz, false);
+            fragment = FragmentFactory.getFragmentFactory().getFragment(clazz, false);
             fragment.setArguments(args);
             fT.add(R.id.content, fragment, clazz.getName());
         } else {

@@ -19,6 +19,7 @@ import com.gjj.applibrary.log.L;
 public class FragmentFactory {
 
     private SparseArray<BaseFragment> mFragmentCache = new SparseArray<BaseFragment>();
+    private static volatile FragmentFactory mFragmentFactory;
 
     public FragmentFactory() {
     }
@@ -95,5 +96,16 @@ public class FragmentFactory {
     
     public void clearFragmentCache(){
         mFragmentCache.clear();
+    }
+
+    public static FragmentFactory getFragmentFactory() {
+        if (mFragmentFactory == null) {
+            synchronized (FragmentFactory.class) {
+                if (mFragmentFactory == null) {
+                    mFragmentFactory = new FragmentFactory();
+                }
+            }
+        }
+        return mFragmentFactory;
     }
 }

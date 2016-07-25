@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.gjj.shop.base.BaseFragment;
+import com.gjj.shop.index.AdviceProductAdapter;
 import com.gjj.shop.model.GameInfo;
 import com.gjj.shop.R;
 
@@ -38,7 +39,7 @@ public class PtrRecyclerViewFragment extends BaseFragment {
     PtrClassicFrameLayout mPtrRvLayout;
 
     private List<GameInfo> mGameList;
-    private NewGameRvAdapter mNewGameRvAdapter;
+    private AdviceProductAdapter mNewGameRvAdapter;
 
     private int mPage = 1;
 
@@ -53,7 +54,7 @@ public class PtrRecyclerViewFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         mGameList = new ArrayList<>();
-        mNewGameRvAdapter = new NewGameRvAdapter(getContext(), mGameList);
+//        mNewGameRvAdapter = new AdviceProductAdapter(getContext(), mGameList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRvGames.setLayoutManager(linearLayoutManager);
