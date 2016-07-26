@@ -80,8 +80,12 @@ public class BaseMainActivity extends FragmentActivity {
     }
 
     public BaseFragment getCurrentFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        return (BaseFragment) fragmentManager.findFragmentById(R.id.content);
+        for (Fragment fragment : mHistoryList) {
+            if (!fragment.isHidden()) {
+                return (BaseFragment)fragment;
+            }
+        }
+        return null;
     }
 
     protected void init() {
