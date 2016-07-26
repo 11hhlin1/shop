@@ -3,6 +3,8 @@ package com.gjj.shop.app;
 import android.app.Application;
 
 import com.gjj.applibrary.app.AppLib;
+import com.gjj.applibrary.http.model.BundleKey;
+import com.gjj.applibrary.util.PreferencesManager;
 import com.lzy.okhttputils.OkHttpUtils;
 
 /**
@@ -21,7 +23,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         mApp = this;
         mAppLib = AppLib.onCreate(mApp);
-
+        PreferencesManager.getInstance().put(BundleKey.TOKEN, "834320403214");
         OkHttpUtils.init(this);
     }
 }
