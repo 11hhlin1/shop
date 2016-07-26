@@ -133,14 +133,14 @@ public class IndexFragment extends BaseFragment {
 //        mProductAdapter = productAdapter;
 //        mAdviceList.setItemAnimator(null);
 //        mAdviceList.setAdapter(productAdapter);
-        GridAdapter gridAdapter = new GridAdapter(getActivity(), list);
-        mUnScrollableGridView.setAdapter(gridAdapter);
-        MainTaskExecutor.scheduleTaskOnUiThread(500, new Runnable() {
-            @Override
-            public void run() {
-                mScrollView.scrollTo(0, 0);
-            }
-        });
+//        GridAdapter gridAdapter = new GridAdapter(getActivity(), list);
+//        mUnScrollableGridView.setAdapter(gridAdapter);
+//        MainTaskExecutor.scheduleTaskOnUiThread(500, new Runnable() {
+//            @Override
+//            public void run() {
+//                mScrollView.scrollTo(0, 0);
+//            }
+//        });
     }
 
 

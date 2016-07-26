@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.gjj.applibrary.http.model.BundleKey;
 import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.shop.login.LoginActivity;
@@ -21,7 +22,7 @@ public class SplashActivity extends Activity {
         MainTaskExecutor.scheduleTaskOnUiThread(500, new Runnable() {
             @Override
             public void run() {
-                String token = PreferencesManager.getInstance(SplashActivity.this).get(BundleKey.TOKEN);
+                String token = PreferencesManager.getInstance().get(BundleKey.TOKEN);
 
                 if(TextUtils.isEmpty(token)) {
                     Intent intent = new Intent();
