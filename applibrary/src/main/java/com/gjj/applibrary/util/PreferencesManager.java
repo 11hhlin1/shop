@@ -17,15 +17,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
 
+import com.gjj.applibrary.app.AppLib;
+
 
 /**
- * [PreferencesManager管理类，提供get和put方法来重写SharedPreferences所提供的方法，更为实用和便捷]
- * 
- * @author huxinwu
- * @version 1.0
- * @date 2014-3-5
- * 
- **/
+ * Created by chuck on 16/7/17.
+ */
 @SuppressLint({ "SdCardPath", "DefaultLocale" })
 public class PreferencesManager {
 
@@ -70,8 +67,8 @@ public class PreferencesManager {
 	 *            上下文
 	 * @return
 	 */
-	public static PreferencesManager getInstance(Context context) {
-		return getInstance(context, shareName);
+	public static PreferencesManager getInstance() {
+		return getInstance(AppLib.getContext(), shareName);
 	}
 
 	/**

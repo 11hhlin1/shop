@@ -5,10 +5,16 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.gjj.applibrary.app.AppLib;
+
 /**
  * Created by Chuck on 2016/7/26.
  */
 public class ToastUtil {
+
+    public static void shortToast(int resId) {
+        showToast(AppLib.getContext(), resId, Toast.LENGTH_SHORT);
+    }
 
     public static void shortToast(Context context, int resId) {
         showToast(context, resId, Toast.LENGTH_SHORT);

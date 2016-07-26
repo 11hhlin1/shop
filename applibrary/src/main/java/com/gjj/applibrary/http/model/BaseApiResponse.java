@@ -3,9 +3,7 @@ package com.gjj.applibrary.http.model;
 import java.io.Serializable;
 
 /**
- * Desction:
- * Author:pengjianbo
- * Date:15/9/29 下午4:08
+ * Created by chuck on 16/7/17.
  */
 public class BaseApiResponse<T> implements Serializable {
     private int code;
