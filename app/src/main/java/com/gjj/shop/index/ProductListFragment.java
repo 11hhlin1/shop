@@ -11,4 +11,9 @@ public class ProductListFragment extends BaseFragment{
     public int getContentViewLayout() {
         return R.layout.fragment_product_list;
     }
+
+    @Override
+    public void initView() {
+
+    }
 }

@@ -11,4 +11,9 @@ public class PersonalFragment extends BaseFragment{
     public int getContentViewLayout() {
         return R.layout.fragment_person;
     }
+
+    @Override
+    public void initView() {
+
+    }
 }

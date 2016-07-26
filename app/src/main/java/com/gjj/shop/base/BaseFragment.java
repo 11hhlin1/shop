@@ -14,6 +14,8 @@ import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.shop.widget.CustomProgressDialog;
 import com.lzy.okhttputils.OkHttpUtils;
 
+import butterknife.ButterKnife;
+
 
 /**
  * chuck
@@ -28,11 +30,14 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getContentViewLayout(), container, false);
+        ButterKnife.bind(this, view);
+        initView();
         return view;
     }
 
     public abstract int getContentViewLayout();
 
+    public abstract void initView();
 
     @Override
     public void onDestroyView() {

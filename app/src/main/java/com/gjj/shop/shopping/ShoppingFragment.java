@@ -11,4 +11,9 @@ public class ShoppingFragment extends BaseFragment {
     public int getContentViewLayout() {
         return R.layout.fragment_shopping;
     }
+
+    @Override
+    public void initView() {
+
+    }
 }

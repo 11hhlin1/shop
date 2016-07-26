@@ -11,4 +11,9 @@ public class CommunityFragment extends BaseFragment{
     public int getContentViewLayout() {
         return R.layout.fragment_community;
     }
+
+    @Override
+    public void initView() {
+
+    }
 }

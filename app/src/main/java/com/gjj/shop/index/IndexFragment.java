@@ -87,9 +87,7 @@ public class IndexFragment extends BaseFragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+    public void initView() {
         mPtrClassicFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -141,6 +139,13 @@ public class IndexFragment extends BaseFragment {
 //                mScrollView.scrollTo(0, 0);
 //            }
 //        });
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+//        ButterKnife.bind(this, view);
     }
 
 

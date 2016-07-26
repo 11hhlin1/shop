@@ -49,6 +49,11 @@ public class PtrRecyclerViewFragment extends BaseFragment {
     }
 
     @Override
+    public void initView() {
+
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
