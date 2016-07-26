@@ -22,11 +22,7 @@ import com.lzy.okhttputils.OkHttpUtils;
 
 
 /**
- * @author jack
- * @version V1.0
- * @Title:
- * @Description: 登陆界面
- * @date 2015年7月22日 上午12:11:51
+ * Created by chuck on 16/7/17.
  */
 public class LoginActivity extends Activity {
     /**

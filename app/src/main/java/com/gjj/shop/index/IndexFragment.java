@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
@@ -15,6 +16,7 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.R;
+import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.widget.UnScrollableGridView;
 
@@ -23,6 +25,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
@@ -47,6 +50,28 @@ public class IndexFragment extends BaseFragment {
     @Bind(R.id.scrollView)
     ScrollView mScrollView;
 
+    @Bind(R.id.cheap_shop)
+    TextView mCheapShop;
+
+    @OnClick(R.id.cheap_shop)
+    void goCheapShop() {
+        PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
+    }
+
+    @OnClick(R.id.foreign_shop)
+    void goForeignShop() {
+        PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
+    }
+
+    @OnClick(R.id.factory_shop)
+    void goFactoryShop() {
+        PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
+    }
+
+    @OnClick(R.id.supermarket_shop)
+    void goSuperMaketShop() {
+        PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
+    }
 
     private AdviceProductAdapter mProductAdapter;
     private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",

@@ -8,26 +8,18 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.http.model.BundleKey;
 import com.gjj.applibrary.log.L;
-import com.gjj.applibrary.task.ForegroundTaskExecutor;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.shop.R;
 import com.gjj.shop.main.MainActivity;
-import com.gjj.shop.model.RegisterResponse;
 import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.ApiConstants;
-import com.gjj.shop.net.BundleKey;
 import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.cache.CacheMode;
 
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.HashMap;
 
 import butterknife.Bind;
@@ -38,7 +30,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by user on 16/7/17.
+ * Created by chuck on 16/7/17.
  */
 public class RegisterActivity extends Activity {
 
@@ -84,6 +76,7 @@ public class RegisterActivity extends Activity {
 //        });
         OkHttpUtils.post(ApiConstants.REGISTER)//
                 .tag(this)//
+                .cacheMode(CacheMode.NO_CACHE)
                 .postJson(jsonObject.toString())//
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
@@ -92,7 +85,7 @@ public class RegisterActivity extends Activity {
 //                      UserInfo baseApiResponse = rspInfo.rspInfogetData();
                         if(rspInfo != null) {
                             L.d("@@@@@>>", rspInfo.token);
-                            PreferencesManager.getInstance(RegisterActivity.this).put(BundleKey.TOKEN, rspInfo.token);
+                            PreferencesManager.getInstance().put(BundleKey.TOKEN, rspInfo.token);
                             Intent intent = new Intent();
                             intent.setClass(RegisterActivity.this, MainActivity.class);
                             startActivity(intent);

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 
 
 import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.task.ForegroundTaskExecutor;
 import com.gjj.shop.R;
 
 import java.util.ArrayList;
@@ -89,9 +90,9 @@ public class BaseMainActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         BaseFragment fragment = getCurrentFragment();
-//        if (fragment == null || !fragment.goBack(true)) {
-//            super.onBackPressed();
-//        }
+        if (fragment == null || !fragment.goBack(true)) {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -114,5 +115,18 @@ public class BaseMainActivity extends FragmentActivity {
             fT.remove(fragment);
             fT.commitAllowingStateLoss();
         }
+    }
+
+    public static void killApp() {
+        ForegroundTaskExecutor.executeTask(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                }
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        });
     }
 }

@@ -8,10 +8,8 @@ import android.text.TextUtils;
 import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.shop.login.LoginActivity;
-import com.gjj.shop.login.RegisterActivity;
 import com.gjj.shop.main.MainActivity;
 import com.gjj.shop.R;
-import com.gjj.shop.net.BundleKey;
 
 
 public class SplashActivity extends Activity {

@@ -8,6 +8,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.task.MainTaskExecutor;
+import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseMainActivity;
 import com.gjj.shop.community.CommunityFragment;
@@ -18,7 +20,9 @@ import com.gjj.shop.widget.NestRadioGroup;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
+/**
+ * Created by chuck on 16/7/17.
+ */
 public class MainActivity extends BaseMainActivity {
 
     private static final String SAVE_INSTANCE_STATE_KEY_TAB_ID = "tabId";
@@ -30,6 +34,9 @@ public class MainActivity extends BaseMainActivity {
 
     @Bind(R.id.tv_title)
     TextView mTitleTV;
+
+    private boolean mIsBackPressed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,4 +112,22 @@ public class MainActivity extends BaseMainActivity {
         replaceFragment(IndexFragment.class);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mIsBackPressed) {
+            mIsBackPressed = false;
+            finish();
+            killApp();
+        } else {
+            ToastUtil.shortToast(this, R.string.quit_toast);
+            mIsBackPressed = true;
+            MainTaskExecutor.scheduleTaskOnUiThread(2000, new Runnable() {
+
+                @Override
+                public void run() {
+                    mIsBackPressed = false;
+                }
+            });
+        }
+    }
 }

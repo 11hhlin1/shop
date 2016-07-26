@@ -12,4 +12,5 @@
     <string name="supermarket_shop">超市百货</string>
     <string name="factory_shop">厂家直销</string>
     <string name="advice_product">精品促销</string>
+    <string name="quit_toast">再按一次退出商城</string>
 </resources>
