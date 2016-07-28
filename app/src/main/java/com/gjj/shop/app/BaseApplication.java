@@ -23,7 +23,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         mApp = this;
         mAppLib = AppLib.onCreate(mApp);
-        PreferencesManager.getInstance().put(BundleKey.TOKEN, "834320403214");
+//        PreferencesManager.getInstance().put(BundleKey.TOKEN, "834320403214");
         OkHttpUtils.init(this);
     }
 }

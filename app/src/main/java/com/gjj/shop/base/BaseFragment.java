@@ -42,6 +42,8 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        ButterKnife.unbind(this);
+
         //根据 Tag 取消请求
         OkHttpUtils.getInstance().cancelTag(this);
     }

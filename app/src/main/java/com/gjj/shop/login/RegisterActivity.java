@@ -99,6 +99,7 @@ public class RegisterActivity extends Activity {
                         // call        本次网络的请求对象，可以根据该对象拿到 request
                         // response    本次网络访问的结果对象，包含了响应头，响应码等，如果网络异常 或者数据来自于缓存，该对象为null
                         // e           本次网络访问的异常信息，如果服务器内部发生了错误，响应码为 400~599之间，该异常为 null
+                        if(response != null)
                         L.d("@@@@@>>", response.code());
                     }
                 });

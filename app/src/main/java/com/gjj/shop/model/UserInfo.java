@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by user on 16/7/16.
  */
 public class UserInfo implements Serializable {
+    private static final long serialVersionUID = 5037448007242771145L;
     public String uid;
     public String username;
     public String nickname;
