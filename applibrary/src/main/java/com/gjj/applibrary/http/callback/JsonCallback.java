@@ -3,8 +3,8 @@ package com.gjj.applibrary.http.callback;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.gjj.applibrary.log.L;
-import com.google.gson.Gson;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.AbsCallback;
 
@@ -53,12 +53,12 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
                  */
                 if (clazz == String.class) return (T) data;
                 if (clazz != null) {
-                     T object = new Gson().fromJson(data, clazz);
+                     T object = JSON.parseObject(data, clazz);
                     L.d("@@@@", object);
                     return object;
 
                 }
-                if (type != null) return new Gson().fromJson(data, type);
+                if (type != null) return JSON.parseObject(data, type);
                 break;
             case 104:
                 //比如：用户授权信息无效，在此实现相应的逻辑，弹出对话或者跳转到其他页面等,该抛出错误，会在onError中回调。
