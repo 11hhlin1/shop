@@ -1,3 +1,3 @@
-include ':app', ':applibrary'
+include ':app', ':applibrary', ':thirdAccess'
 include ':ultra-pull-to-refresh'
 include ':loading-more-view'
