@@ -72,7 +72,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.RvVi
         TextView mDesc;
         @Bind(R.id.image_grid)
         UnScrollableGridView mGridView;
-        @Bind(R.id.image_grid)
+        @Bind(R.id.time)
         TextView mTime;
         @Bind(R.id.share_btn)
         ImageView mShareBtn;
