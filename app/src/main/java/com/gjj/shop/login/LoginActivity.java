@@ -1,30 +1,47 @@
 package com.gjj.shop.login;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 
+import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.http.model.BundleKey;
+import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.util.MD5Util;
+import com.gjj.applibrary.util.PreferencesManager;
+import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
+import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.main.MainActivity;
+import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.ApiConstants;
+import com.gjj.shop.widget.CustomProgressDialog;
 import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.cache.CacheMode;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 
 /**
  * Created by chuck on 16/7/17.
  */
 public class LoginActivity extends Activity {
+    private CustomProgressDialog mLoginDialog;
     /**
      * 输入手机号
      */
@@ -41,8 +58,7 @@ public class LoginActivity extends Activity {
      * 登陆
      */
     @Bind(R.id.login_btn)
-    Button login_btn;
-
+    Button mLoginBtn;
 
     /**
      * @param
@@ -52,27 +68,35 @@ public class LoginActivity extends Activity {
      */
     @OnClick(R.id.login_btn)
     void onClickLogin() {
+        showDialog();
         doLogin();
     }
+
     @OnClick(R.id.go_register)
     void onClickRegister() {
-        Intent intent = new Intent();
-        intent.setClass(this, RegisterActivity.class);
-        startActivity(intent);
-    }
-   // @OnClick(R.id.login_register_tv)
-    void onClickGoReg() {
-        //PageSwitcher.switchToTopNavPage(thiss, RegisterSubmitFragment.class, null, "", "注册账号", null);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(RegisterFragment.FLAG, true);
+        PageSwitcher.switchToTopNavPage(this,RegisterFragment.class,null,getString(R.string.register),"");
     }
 
-    /**
-     * 短信验证有效时间ms
-     */
-    private static final int SMS_VALIDITY = 60000;
+    @OnClick(R.id.sina_login)
+    void onSinaLogin() {
+    }
 
+    @OnClick(R.id.qq_login)
+    void onqqLogin() {
+    }
 
+    @OnClick(R.id.wechat_login)
+    void onWechatLogin() {
+    }
 
-
+    @OnClick(R.id.forget_psw)
+    void onForgetPsw() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(RegisterFragment.FLAG, false);
+        PageSwitcher.switchToTopNavPage(this, RegisterFragment.class,bundle,getString(R.string.register),"");
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,92 +107,92 @@ public class LoginActivity extends Activity {
 
 
     /**
-     * 获取短信验证码
-     */
-    private void getAppSmsToken() {
-        //String phone = login_phone_number_edit.getText().toString().trim().replaceAll(" ", "");
-        //if (TextUtils.isEmpty(phone)) {
-            //YylApp.showToast("请输入正确的手机号");
-           // return;
-        //}
-        //login_security_code_edit.setText("");
-        //Request request = YylRequestFactory.getMobileRegisterToken(phone);
-        //YylRequestManager.getInstance().execute(request, this);
-    }
-
-
-
-    /**
      * 登录成功
      */
     private void loginSucceed() {
-       /* Window window = getWindow();
-        WindowManager.LayoutParams params = window.getAttributes();
-        params.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        window.setAttributes(params);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);*/
         Intent i = new Intent(this, MainActivity.class);
-        // if (GjjApp.getInstance().getLockPatternUtils().savedPatternExists()) {
-        // i.setClass(this, UnlockGesturePasswordActivity.class);
-        // } else {
-        // i.setClass(this, GuideGesturePasswordActivity.class);
-        // }
-        //延迟关闭登录页面，因为MainActivity背景透明，可能在做动画过程中看到桌面
-//        MainTaskExecutor.scheduleTaskOnUiThread(500, new Runnable() {
-//            @Override
-//            public void run() {
-//                finish();
-//            }
-//        });
         startActivity(i);
         finish();
-    }
-
-
-    class SmsRequestParam {
-        String mobile;
-    }
-
-
-
-    /**
-     * 设置按钮可用
-     *
-     * @param ms
-     */
-
-
-    private String sendSmsCountDown(long ms) {
-        return String.format("%s" + "再次发送", ms);
     }
 
     /**
      * 登陆
      */
     private void doLogin() {
+
         String phone = login_phone_number.getText().toString().trim().replaceAll(" ", "");
         if (TextUtils.isEmpty(phone)) {
-            //YylApp.showToast("请输入正确的手机号码");
+            ToastUtil.shortToast(R.string.hint_login_username);
             return;
         }
-        String smscode = login_psw.getText().toString().trim()
+        String psw = login_psw.getText().toString().trim()
                 .replaceAll(" ", "");
-        if (TextUtils.isEmpty(smscode)) {
-           // YylApp.showToast("请出入验证码");
+        if (TextUtils.isEmpty(psw)) {
+            ToastUtil.shortToast(R.string.hint_login_pwd);
             return;
         }
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", phone);
+        params.put("password", MD5Util.md5Hex(psw));
+        final JSONObject jsonObject = new JSONObject(params);
+        OkHttpUtils.post(ApiConstants.LOGIN)
+                .tag(this)
+                .cacheMode(CacheMode.NO_CACHE)
+                .postJson(jsonObject.toString())
+                .execute(new JsonCallback<UserInfo>(UserInfo.class) {
+                    @Override
+                    public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
 
-        OkHttpUtils.post(ApiConstants.LOGIN);
+                        dismissProgressDialog();
+                            if(rspInfo != null) {
+                                L.d("@@@@@>>", rspInfo.token);
+                                PreferencesManager.getInstance().put(BundleKey.TOKEN, rspInfo.token);
+                                Intent intent = new Intent();
+                                intent.setClass(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                    }
+                    @Override
+                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                        dismissProgressDialog();
+                        if(response != null)
+                            L.d("@@@@@>>", response.code());
+                    }
+                });
+
     }
 
-    class LoginRequestParam {
-        String sms;
-        String mobile;
+    private void showDialog() {
+        CustomProgressDialog loginDialog = mLoginDialog;
+        if (null == loginDialog) {
+            loginDialog = new CustomProgressDialog(this);
+            mLoginDialog = loginDialog;
+            loginDialog.setTipText(R.string.login_ing_tip);
+            loginDialog.setCancelable(false);
+            loginDialog.setCanceledOnTouchOutside(false);
+            loginDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    onBackPressed();
+                }
+            });
+        }
+        loginDialog.show();
     }
 
+    /**
+     * 关闭登录提示框
+     */
+    private void dismissProgressDialog() {
+        if (null != mLoginDialog) {
+            mLoginDialog.dismiss();
+        }
+    }
     @Override
     public void onDestroy() {
-
         super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

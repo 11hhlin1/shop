@@ -7,6 +7,6 @@ public class ApiConstants {
     public static final String host = "http://58.67.151.217:20004/";
     public static final String LOGIN = host + "user/login";
     public static final String REGISTER = host+ "user/register";
-
+    public static final String GET_SMS_CODE = host+ "user/getsmscode";
 
 }

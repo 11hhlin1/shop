@@ -2,35 +2,134 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg_gray">
 
-    <EditText
-        android:id="@+id/username"
+    <RelativeLayout
+        style="@style/titlebar">
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/title_textView"
+            android:text="@string/login"/>
+
+        <TextView
+            android:id="@+id/go_register"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/margin_48px"
+            android:text="@string/register"
+            android:textColor="@color/button_text_color_selector"
+            android:textSize="@dimen/textsize_16sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/hint_username"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/login_img_logo"/>
+    </RelativeLayout>
 
-
-    <EditText
-        android:id="@+id/psw"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/hint_password"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/margin_90px"
+        android:paddingRight="@dimen/margin_90px">
+        <EditText
+            android:id="@+id/username"
+            style="@style/login_edittext"
+            android:layout_height="46dp"
+            android:digits="\@-+._0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ"
+            android:drawableLeft="@mipmap/login_icon_user"
+            android:hint="@string/hint_login_username"
+            android:imeOptions="actionNext"/>
+        <EditText
+            android:id="@+id/psw"
+            android:layout_below="@+id/username"
+            style="@style/login_edittext"
+            android:layout_height="46dp"
+            android:layout_marginTop="14dp"
+            android:drawableLeft="@mipmap/login_icon_password"
+            android:hint="@string/hint_login_pwd"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"/>
+        <TextView
+            android:id="@+id/forget_psw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/psw"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="3dp"
+            android:text="@string/forget_psw"/>
+        <Button
+            android:id="@+id/login_btn"
+            style="@style/login_btn"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/forget_psw"
+            android:layout_height="@dimen/single_line_height_132px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="@string/login"/>
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/login_btn"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="登录"
-        android:layout_marginTop="10dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/go_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:text="还没注册?"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/other_login"
+                android:textColor="@color/secondary_gray"
+                android:textSize="@dimen/textsize_14sp"
+                android:layout_gravity="center"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/margin_20p"
+                android:paddingLeft="@dimen/margin_120px"
+                android:paddingRight="@dimen/margin_120px">
+
+                <ImageView
+                android:id="@+id/sina_login"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/share_icon_sina"/>
+
+                <ImageView
+                    android:id="@+id/qq_login"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/share_icon_qq"/>
+                <ImageView
+                    android:id="@+id/wechat_login"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/share_icon_wechat"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

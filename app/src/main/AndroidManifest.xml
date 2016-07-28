@@ -88,13 +88,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-        <activity
-            android:name=".login.RegisterActivity"
-            android:screenOrientation="portrait"
-            android:clearTaskOnLaunch="true"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
 
         <activity
             android:name=".base.TopNavSubActivity"
