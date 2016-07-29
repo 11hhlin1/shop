@@ -2,14 +2,19 @@ package com.gjj.shop.community;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
+import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.index.ProductListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.OnLoadMoreListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
@@ -21,12 +26,22 @@ import cn.finalteam.loadingviewfinal.RecyclerViewFinal;
  */
 public class CommunityFragment extends BaseFragment{
 
-    @Bind(R.id.fl_empty_view)
-    FrameLayout mFlEmptyView;
+//    @Bind(R.id.fl_empty_view)
+//    FrameLayout mFlEmptyView;
     @Bind(R.id.recyclerView)
     RecyclerViewFinal mRecyclerView;
     @Bind(R.id.community_layout)
     PtrClassicFrameLayout mPtrLayout;
+    @Bind(R.id.add_feed_btn)
+    ImageView mAddFeed;
+    @Bind(R.id.tv_title)
+    TextView mTitleTV;
+
+    @OnClick(R.id.add_feed_btn)
+    void addFeed() {
+        PageSwitcher.switchToTopNavPage(getActivity(),AddFeedFragment.class,null,getString(R.string.share),getString(R.string.commit));
+
+    }
     private List<CommunityInfo> mCommunityInfoList;
     private CommunityAdapter mAdapter;
     private int mPage = 1;
@@ -38,12 +53,13 @@ public class CommunityFragment extends BaseFragment{
 
     @Override
     public void initView() {
+        mTitleTV.setText(R.string.community);
         mCommunityInfoList = new ArrayList<>();
         mAdapter = new CommunityAdapter(getContext(), mCommunityInfoList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setEmptyView(mFlEmptyView);
+//        mRecyclerView.setEmptyView(mFlEmptyView);
         mRecyclerView.setAdapter(mAdapter);
 
         setSwipeRefreshInfo();

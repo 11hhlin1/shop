@@ -1,13 +1,11 @@
 package com.gjj.shop.main;
 
-import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
@@ -20,20 +18,22 @@ import com.gjj.shop.widget.NestRadioGroup;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by chuck on 16/7/17.
  */
 public class MainActivity extends BaseMainActivity {
 
     private static final String SAVE_INSTANCE_STATE_KEY_TAB_ID = "tabId";
-    @Bind(R.id.top_layout)
-    RelativeLayout mTitleBar;
 
     @Bind(R.id.group_tab)
     NestRadioGroup mRadioGroup;
 
-    @Bind(R.id.tv_title)
-    TextView mTitleTV;
+
+
+
+
 
     private boolean mIsBackPressed = false;
 
@@ -92,23 +92,23 @@ public class MainActivity extends BaseMainActivity {
     }
 
     private void showPersonTab() {
-        mTitleTV.setText(R.string.person);
+
         replaceFragment(PersonalFragment.class);
     }
 
     private void showShoppingTab() {
-        mTitleTV.setText(R.string.shopping);
+
         replaceFragment(ShoppingFragment.class);
 
     }
 
     private void showCommunityTab() {
-        mTitleTV.setText(R.string.community);
+
         replaceFragment(CommunityFragment.class);
     }
 
     private void showIndexTab() {
-        mTitleTV.setText(R.string.app_name);
+
         replaceFragment(IndexFragment.class);
     }
 

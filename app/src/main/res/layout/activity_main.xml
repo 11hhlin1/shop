@@ -4,33 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/top_layout"
-        style="@style/titlebar">
 
-        <!--<ViewStub-->
-        <!--android:id="@+id/viewstub_back_btn"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_marginLeft="@dimen/margin_24px"-->
-        <!--android:layout="@layout/stub_back_btn" />-->
-
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/title_textView" />
-
-        <ImageView
-            android:id="@+id/news_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="6dp"
-            android:padding="10dp"
-            android:src="@mipmap/load_img_loading" />
-
-    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/content"

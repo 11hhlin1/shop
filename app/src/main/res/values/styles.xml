@@ -99,4 +99,16 @@
         <item name="android:layout_height">@dimen/line_height</item>
         <item name="android:background">@color/line_color_gray</item>
     </style>
+
+    <style name="photo_grid_view">
+        <item name="android:background">@color/white</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:horizontalSpacing">@dimen/margin_24px</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:numColumns">4</item>
+        <item name="android:padding">@dimen/margin_48px</item>
+        <item name="android:stretchMode">columnWidth</item>
+        <item name="android:verticalSpacing">@dimen/margin_24px</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

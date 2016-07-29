@@ -7,6 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -53,6 +54,25 @@ public class IndexFragment extends BaseFragment {
     @Bind(R.id.cheap_shop)
     TextView mCheapShop;
 
+    @Bind(R.id.category)
+    ImageView mCategory;
+
+    @Bind(R.id.search_btn)
+    ImageView mSearchBtn;
+
+    @Bind(R.id.tv_title)
+    TextView mTitleTV;
+
+    @OnClick(R.id.search_btn)
+    void search() {
+
+    }
+
+    @OnClick(R.id.category)
+    void category() {
+
+    }
+
     @OnClick(R.id.cheap_shop)
     void goCheapShop() {
         PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
@@ -88,6 +108,7 @@ public class IndexFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        mTitleTV.setText(R.string.app_name);
         mPtrClassicFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {

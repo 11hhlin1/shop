@@ -14,6 +14,8 @@ import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.shop.widget.CustomProgressDialog;
 import com.lzy.okhttputils.OkHttpUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 
 
@@ -46,6 +48,9 @@ public abstract class BaseFragment extends Fragment {
 
         //根据 Tag 取消请求
         OkHttpUtils.getInstance().cancelTag(this);
+        if(EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     /**

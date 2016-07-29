@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        style="@style/titlebar">
 
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/title_textView" />
+
+
+        <ImageView
+        android:id="@+id/add_feed_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:src="@mipmap/load_img_loading"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"/>
+
+
+    </RelativeLayout>
     <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
         android:id="@+id/community_layout"
         android:layout_width="match_parent"
@@ -23,5 +45,5 @@
 
     </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
 
-    <include layout="@layout/layout_empty_view"/>
-</FrameLayout>
+    <!--<include layout="@layout/layout_empty_view"/>-->
+</LinearLayout>

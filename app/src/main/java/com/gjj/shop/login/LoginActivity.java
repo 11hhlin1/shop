@@ -76,7 +76,7 @@ public class LoginActivity extends Activity {
     void onClickRegister() {
         Bundle bundle = new Bundle();
         bundle.putBoolean(RegisterFragment.FLAG, true);
-        PageSwitcher.switchToTopNavPage(this,RegisterFragment.class,null,getString(R.string.register),"");
+        PageSwitcher.switchToTopNavPage(this,RegisterFragment.class,bundle,getString(R.string.register),"");
     }
 
     @OnClick(R.id.sina_login)

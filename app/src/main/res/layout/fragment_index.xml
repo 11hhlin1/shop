@@ -4,7 +4,36 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        style="@style/titlebar">
 
+        <ImageView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:padding="10dp"
+            android:src="@mipmap/load_img_loading" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/title_textView" />
+
+
+
+            <ImageView
+                android:id="@+id/search_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="6dp"
+                android:padding="10dp"
+                android:src="@mipmap/load_img_loading" />
+    </RelativeLayout>
     <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
         android:id="@+id/store_house_ptr_frame"
         android:layout_width="match_parent"

@@ -34,4 +34,12 @@
     <string name="enter_mobile">请输入手机号</string>
     <string name="enter_mobile_error">请输入正确手机号</string>
     <string name="enter_psw_error">两次密码不一致</string>
+
+
+    <string name="edit">编辑</string>
+    <string name="des_start_up">请添加描述</string>
+
+    <string name="share">分享</string>
+    <string name="commit">提交</string>
+
 </resources>
