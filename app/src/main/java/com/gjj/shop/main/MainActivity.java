@@ -31,10 +31,6 @@ public class MainActivity extends BaseMainActivity {
     NestRadioGroup mRadioGroup;
 
 
-
-
-
-
     private boolean mIsBackPressed = false;
 
     @Override

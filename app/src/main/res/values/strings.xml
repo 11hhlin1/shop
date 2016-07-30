@@ -41,5 +41,7 @@
 
     <string name="share">分享</string>
     <string name="commit">提交</string>
+    <string name="all_select">全选</string>
+    <string name="amount_money">合计:</string>
 
 </resources>

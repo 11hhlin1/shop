@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ACTIVITY_ENTRY_NAME</string>
+    <string name="not_login">您还未登录</string>
+    <string name="sina_not_install">您还未安装微博客户端</string>
+    <string name="weibosdk_demo_token_to_string_format_1">Token：%1$s \n有效期：%2$s</string>
+    <string name="weixin_not_install">您还未安装微信客户端</string>
+</resources>

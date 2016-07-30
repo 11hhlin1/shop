@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/top_layout"
+        android:layout_alignParentTop="true"
         style="@style/titlebar">
-
 
         <TextView
             android:id="@+id/tv_title"
@@ -27,4 +26,58 @@
 
 
     </RelativeLayout>
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+        <View
+            style="@style/horizontal_line"
+            android:layout_alignParentTop="true"/>
+        <CheckBox
+            android:id="@+id/all_sel_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/all_sel_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/all_sel_box"
+            android:layout_marginLeft="2dp"
+            android:text="@string/all_select"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_14sp"/>
+        <TextView
+            android:id="@+id/amount_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/all_sel_text"
+            android:layout_marginLeft="15dp"
+            android:text="@string/amount_money"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_14sp"/>
+        <Button
+            android:id="@+id/state_btn"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@color/color_EE394A"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_16sp"
+            android:text="结算"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"/>
+</RelativeLayout>
