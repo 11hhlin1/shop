@@ -1,6 +1,0 @@
-int drawable ic_launcher 0x7f020000
-int string app_name 0x7f030000
-int string not_login 0x7f030001
-int string sina_not_install 0x7f030002
-int string weibosdk_demo_token_to_string_format_1 0x7f030003
-int string weixin_not_install 0x7f030004
