@@ -18,6 +18,7 @@ import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.R;
 import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.index.cheap.CheapShopListFragment;
 import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.widget.UnScrollableGridView;
 
@@ -75,7 +76,7 @@ public class IndexFragment extends BaseFragment {
 
     @OnClick(R.id.cheap_shop)
     void goCheapShop() {
-        PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
+        PageSwitcher.switchToTopNavPage(getActivity(),CheapShopListFragment.class,null,getString(R.string.cheap_shop),"");
     }
 
     @OnClick(R.id.foreign_shop)

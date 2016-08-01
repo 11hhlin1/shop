@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
+        android:id="@+id/store_house_ptr_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ptr_resistance="1.7"
+        app:ptr_ratio_of_header_height_to_refresh="1.2"
+        app:ptr_duration_to_close="300"
+        app:ptr_duration_to_close_header="2000"
+        app:ptr_keep_header_when_refresh="true">
+    <GridView
+        android:id="@+id/product_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="@android:color/transparent"
+        android:horizontalSpacing="@dimen/margin_24px"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="2"
+        android:padding="@dimen/margin_24px"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/margin_24px"
+        android:gravity="center"/>
+    </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
 
 </LinearLayout>

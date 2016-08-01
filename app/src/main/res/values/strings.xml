@@ -14,6 +14,12 @@
     <string name="factory_shop">厂家直销</string>
     <string name="advice_product">精品促销</string>
     <string name="quit_toast">再按一次退出商城</string>
+    <string name="one_yuan_buy">一元抢购</string>
+    <string name="nine_yuan_buy">九元九专场</string>
+    <string name="start_up_buy">开业大聚惠</string>
+
+
+
 
     <string name="login">登录</string>
     <string name="register">注册</string>

@@ -111,4 +111,17 @@
         <item name="android:verticalSpacing">@dimen/margin_24px</item>
         <item name="android:gravity">center</item>
     </style>
+
+
+    <!-- 施工进度页面 -->
+    <style name="RadioButton_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/personal_small_height</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@color/main_text_color_selector</item>
+        <item name="android:textSize">@dimen/textsize_16sp</item>
+        <item name="android:drawablePadding">@dimen/margin_24px</item>
+    </style>
 </resources>
