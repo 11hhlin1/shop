@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.shop.R;
 import com.gjj.shop.widget.UnScrollableGridView;
 
@@ -47,8 +48,10 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.RvVi
         Glide.with(mContext)
                 .load(info.avatar)
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.all_img_dot_pr)
+                .error(R.mipmap.all_img_dot_pr)
+                .dontAnimate()
+                .transform(new GlideCircleTransform(mContext))
                 .into(holder.mAvatar);
         holder.mNickName.setText(info.nickname);
         holder.mDesc.setText(info.desc);

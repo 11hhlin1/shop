@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by Chuck on 2016/7/29.
  */
-public class AddPhotoAdapter extends BaseAdapter{
+public class AddPhotoAdapter extends BaseAdapter {
     public static final int MAX_SELECT = 6;
     private Context mContext;
     private ArrayList<String> mList;
