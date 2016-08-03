@@ -50,8 +50,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.RvVi
                 .centerCrop()
                 .placeholder(R.mipmap.all_img_dot_pr)
                 .error(R.mipmap.all_img_dot_pr)
-                .dontAnimate()
-                .transform(new GlideCircleTransform(mContext))
+                .bitmapTransform(new GlideCircleTransform(mContext))
                 .into(holder.mAvatar);
         holder.mNickName.setText(info.nickname);
         holder.mDesc.setText(info.desc);
