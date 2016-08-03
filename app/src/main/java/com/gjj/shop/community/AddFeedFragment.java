@@ -1,12 +1,14 @@
 package com.gjj.shop.community;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.EditText;
 
+import com.gjj.applibrary.log.L;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.event.EventOfAddPhoto;
@@ -59,20 +61,20 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
         mAdapter = new AddPhotoAdapter(getActivity(), mList);
         mGridView.setAdapter(mAdapter);
         mAdapter.setSelectPhotoListener(this);
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void addPhoto(EventOfAddPhoto event) {
-        if(event.mType == GET_CAMERA_CODE) {
-            if(!mList.contains(mPhotoUrl))
-                mList.add(mPhotoUrl);
-        } else {
-            if(!mList.contains(event.mPhotoUrl))
-            mList.add(event.mPhotoUrl);
-        }
-        mAdapter.notifyDataSetChanged();
-    }
+//
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void addPhoto(EventOfAddPhoto event) {
+//        if(event.mType == GET_CAMERA_CODE) {
+//            if(!mList.contains(mPhotoUrl))
+//                mList.add(mPhotoUrl);
+//        } else {
+//            if(!mList.contains(event.mPhotoUrl))
+//            mList.add(event.mPhotoUrl);
+//        }
+//        mAdapter.notifyDataSetChanged();
+//    }
 
     public void doPickPhotoFromGallery() {
         Intent intent;
@@ -104,4 +106,51 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
         return "IMG_" + rq + ".jpg";
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(getActivity() == null) {
+            return;
+        }
+        if (resultCode != getActivity().RESULT_OK) {
+            return;
+        }
+        if (requestCode == AddFeedFragment.GET_PHOTO_CODE) {
+            if (data != null) {
+                Uri selectedImage = data.getData();
+                if (selectedImage != null) {
+                    sendPicByUri(selectedImage);
+                }
+            }
+        } else if (requestCode == AddFeedFragment.GET_CAMERA_CODE) {
+            if(!mList.contains(mPhotoUrl))
+                mList.add(mPhotoUrl);
+            mAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    /**
+     * 根据图库图片uri发送图片
+     *
+     * @param selectedImage
+     */
+    protected void sendPicByUri(Uri selectedImage) {
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            cursor = null;
+            if (picturePath == null || picturePath.equals("null")) {
+                return;
+            }
+            if(!mList.contains(picturePath))
+                mList.add(picturePath);
+            mAdapter.notifyDataSetChanged();
+        }
+
+    }
 }

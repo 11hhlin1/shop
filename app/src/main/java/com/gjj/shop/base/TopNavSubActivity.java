@@ -102,50 +102,9 @@ public class TopNavSubActivity extends BaseSubActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-        if (requestCode == AddFeedFragment.GET_PHOTO_CODE) {
-            if (data != null) {
-                Uri selectedImage = data.getData();
-                if (selectedImage != null) {
-                    sendPicByUri(selectedImage);
-                }
-            }
-        } else if (requestCode == AddFeedFragment.GET_CAMERA_CODE) {
-            EventOfAddPhoto eventOfAddPhoto = new EventOfAddPhoto();
-            eventOfAddPhoto.mType = AddFeedFragment.GET_CAMERA_CODE;
-            EventBus.getDefault().post(eventOfAddPhoto);
-        }
         super.onActivityResult(requestCode, resultCode, data);
 
     }
 
-    /**
-     * 根据图库图片uri发送图片
-     *
-     * @param selectedImage
-     */
-    protected void sendPicByUri(Uri selectedImage) {
-        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            cursor = null;
-            EventOfAddPhoto eventOfAddPhoto = new EventOfAddPhoto();
-            eventOfAddPhoto.mPhotoUrl = picturePath;
-            eventOfAddPhoto.mType = AddFeedFragment.GET_PHOTO_CODE;
-            L.d("@@@@@", picturePath);
-            EventBus.getDefault().post(eventOfAddPhoto);
-//            if (picturePath == null || picturePath.equals("null")) {
-//                GjjAppLib.showToast(R.string.cant_find_pictures);
-//                return;
-//            }
-//            sendImageMessage(picturePath);
-        }
 
-    }
 }
