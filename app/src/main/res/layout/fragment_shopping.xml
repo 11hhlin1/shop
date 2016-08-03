@@ -74,7 +74,7 @@
             android:background="@color/color_EE394A"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_16sp"
-            android:text="结算"/>
+            android:text="@string/balance"/>
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

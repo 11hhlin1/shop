@@ -124,4 +124,15 @@
         <item name="android:textSize">@dimen/textsize_16sp</item>
         <item name="android:drawablePadding">@dimen/margin_24px</item>
     </style>
+
+    <style name="white_bg_dialog" parent="@android:style/Theme.Dialog">
+        <!--边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--无标题-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@mipmap/progress_img_popbg</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 </resources>
