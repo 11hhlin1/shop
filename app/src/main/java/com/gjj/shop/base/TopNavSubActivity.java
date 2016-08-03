@@ -2,7 +2,6 @@ package com.gjj.shop.base;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,8 +17,6 @@ import com.gjj.shop.community.AddFeedFragment;
 import com.gjj.shop.event.EventOfAddPhoto;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -115,6 +112,10 @@ public class TopNavSubActivity extends BaseSubActivity {
                     sendPicByUri(selectedImage);
                 }
             }
+        } else if (requestCode == AddFeedFragment.GET_CAMERA_CODE) {
+            EventOfAddPhoto eventOfAddPhoto = new EventOfAddPhoto();
+            eventOfAddPhoto.mType = AddFeedFragment.GET_CAMERA_CODE;
+            EventBus.getDefault().post(eventOfAddPhoto);
         }
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -136,6 +137,7 @@ public class TopNavSubActivity extends BaseSubActivity {
             cursor = null;
             EventOfAddPhoto eventOfAddPhoto = new EventOfAddPhoto();
             eventOfAddPhoto.mPhotoUrl = picturePath;
+            eventOfAddPhoto.mType = AddFeedFragment.GET_PHOTO_CODE;
             L.d("@@@@@", picturePath);
             EventBus.getDefault().post(eventOfAddPhoto);
 //            if (picturePath == null || picturePath.equals("null")) {

@@ -1,14 +1,14 @@
 package com.gjj.shop.community;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.ListAdapter;
 
 import com.bumptech.glide.Glide;
 import com.gjj.shop.R;
@@ -26,7 +26,7 @@ public class AddPhotoAdapter extends BaseAdapter{
     protected LayoutInflater mInflater;
     private static final int VIEW_TYPE_GO_CAMERA = 0;
     private static final int VIEW_TYPE_SELECT_CHILD = 1;
-
+    private SelectPhotoListener mSelectListener;
     public AddPhotoAdapter(Context context, ArrayList<String> list) {
         this.mContext = context;
         this.mList = list;
@@ -110,19 +110,39 @@ public class AddPhotoAdapter extends BaseAdapter{
     private View.OnClickListener mPhotoAddClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent;
-        if (Build.VERSION.SDK_INT < 19) {
-            intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-
-        } else {
-            intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        }
-            Activity activity = (Activity) mContext;
-            activity.startActivityForResult(intent, AddFeedFragment.GET_PHOTO_CODE);
+            String[] choiceItems= new String[2];
+            choiceItems[0] = "相机拍摄";  //拍照
+            choiceItems[1] = "本地相册";  //从相册中选择
+            ListAdapter adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, choiceItems);
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle("添加图片");
+            builder.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:  //相机
+                            mSelectListener.doTakePhoto();
+                            break;
+                        case 1:  //从图库相册中选取
+                            mSelectListener.doPickPhotoFromGallery();
+                            break;
+                    }
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
         }
     };
+    public void setSelectPhotoListener(SelectPhotoListener listener) {
+        this.mSelectListener = listener;
+    }
+
     public static class ViewHolder {
         public SquareCenterImageView mImageView;
+    }
+
+    public interface SelectPhotoListener {
+        void doTakePhoto();
+        void doPickPhotoFromGallery();
     }
 }
