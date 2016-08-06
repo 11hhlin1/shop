@@ -7,6 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.gjj.shop.R;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.index.cheap.CheapShopListFragment;
 import com.gjj.shop.model.ProductInfo;
+import com.gjj.shop.widget.HorizontalListView;
 import com.gjj.shop.widget.UnScrollableGridView;
 
 import java.util.ArrayList;
@@ -64,6 +66,9 @@ public class IndexFragment extends BaseFragment {
     @Bind(R.id.tv_title)
     TextView mTitleTV;
 
+    @Bind(R.id.shop_list)
+    HorizontalListView mHorizontalListView;
+
     @OnClick(R.id.search_btn)
     void search() {
 
@@ -102,6 +107,8 @@ public class IndexFragment extends BaseFragment {
             "http://f.hiphotos.baidu.com/image/h%3D200/sign=1478eb74d5a20cf45990f9df460b4b0c/d058ccbf6c81800a5422e5fdb43533fa838b4779.jpg",
             "http://f.hiphotos.baidu.com/image/pic/item/09fa513d269759ee50f1971ab6fb43166c22dfba.jpg"
     };
+
+    HorizontalListViewAdapter mHorizontalListViewAdapter;
     @Override
     public int getContentViewLayout() {
         return R.layout.fragment_index;
@@ -136,8 +143,16 @@ public class IndexFragment extends BaseFragment {
 
             }
         });
+        String[] titles = {"怀师", "南怀瑾军校", "闭关", "南怀瑾", "南公庄严照", "怀师法相"};
+        String[] imgs = {"", "", "", "", "", ""};
+        mHorizontalListViewAdapter = new HorizontalListViewAdapter(getActivity(),titles,imgs);
+        mHorizontalListView.setAdapter(mHorizontalListViewAdapter);
+        mHorizontalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
+            }
+        });
 //        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
 //                LinearLayoutManager.VERTICAL);
 //        // 设置布局管理器

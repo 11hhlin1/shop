@@ -8,5 +8,5 @@ public class ApiConstants {
     public static final String LOGIN = host + "user/login";
     public static final String REGISTER = host+ "user/register";
     public static final String GET_SMS_CODE = host+ "user/getsmscode";
-
+    public static final String GET_USER_INFO = host+ "user/info";
 }

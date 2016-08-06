@@ -1,24 +1,37 @@
 package com.gjj.shop.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.http.model.BundleKey;
+import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.task.MainTaskExecutor;
+import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseMainActivity;
 import com.gjj.shop.community.CommunityFragment;
 import com.gjj.shop.index.IndexFragment;
+import com.gjj.shop.model.UserInfo;
+import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.person.PersonalFragment;
 import com.gjj.shop.shopping.ShoppingFragment;
 import com.gjj.shop.widget.NestRadioGroup;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.cache.CacheMode;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by chuck on 16/7/17.
@@ -79,6 +92,8 @@ public class MainActivity extends BaseMainActivity {
         }
 //        Glide.with(this).load("http://jcodecraeer.com/uploads/20150327/1427445294447874.jpg")
 //                .into(imageView);
+
+
     }
 
     @Override
@@ -88,7 +103,30 @@ public class MainActivity extends BaseMainActivity {
     }
 
     private void showPersonTab() {
+        OkHttpUtils.post(ApiConstants.GET_USER_INFO)
+                .tag(this)
+                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                .execute(new JsonCallback<UserInfo>(UserInfo.class) {
+                    @Override
+                    public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
 
+//                        dismissProgressDialog();
+                        if(rspInfo != null) {
+                            L.d("@@@@@>>", rspInfo.phone);
+//                            PreferencesManager.getInstance().put(BundleKey.TOKEN, rspInfo.token);
+//                            Intent intent = new Intent();
+//                            intent.setClass(LoginActivity.this, MainActivity.class);
+//                            startActivity(intent);
+//                            finish();
+                        }
+                    }
+                    @Override
+                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+//                        dismissProgressDialog();
+                        if(response != null)
+                            L.d("@@@@@>>", response.code());
+                    }
+                });
         replaceFragment(PersonalFragment.class);
     }
 
