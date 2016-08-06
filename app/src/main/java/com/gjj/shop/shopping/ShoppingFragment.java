@@ -83,9 +83,10 @@ public class ShoppingFragment extends BaseFragment implements ShoppingAdapter.Se
     @Override
     public void initView() {
         mTitleTV.setText(R.string.shopping);
-        LinearLayoutManager staggeredGridLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mShopIDList = new ArrayList<>();
         // 设置布局管理器
-        mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mAdapter = new ShoppingAdapter(getActivity(), new ArrayList<ShopAdapterInfo>());
         mAdapter.setmSelectListener(this);
         mRecyclerView.setAdapter(mAdapter);

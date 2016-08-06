@@ -32,7 +32,7 @@
         <RadioButton
             android:id="@+id/community_tab"
             style="@style/main_RadioButton_style"
-            android:drawableTop="@drawable/selector_tab_feed"
+            android:drawableTop="@drawable/selector_tab_community"
             android:paddingBottom="3dp"
             android:paddingTop="5dp"
             android:text="@string/community" />
@@ -47,7 +47,7 @@
             <RadioButton
                 android:id="@+id/shopping_tab"
                 style="@style/main_Red_RadioButton_style"
-                android:drawableTop="@drawable/selector_tab_personal"
+                android:drawableTop="@drawable/selector_tab_shopping"
                 android:paddingBottom="3dp"
                 android:text="@string/shopping" />
 
@@ -65,7 +65,7 @@
         <RadioButton
             android:id="@+id/person_tab"
             style="@style/main_RadioButton_style"
-            android:drawableTop="@drawable/selector_tab_im"
+            android:drawableTop="@drawable/selector_tab_personal"
             android:paddingBottom="3dp"
             android:paddingTop="5dp"
             android:text="@string/person" />

@@ -16,12 +16,11 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
             android:padding="10dp"
-            android:src="@mipmap/load_img_loading" />
+            android:src="@mipmap/fl" />
 
         <TextView
             android:id="@+id/tv_title"
             style="@style/title_textView" />
-
 
 
             <ImageView
@@ -32,7 +31,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="6dp"
                 android:padding="10dp"
-                android:src="@mipmap/load_img_loading" />
+                android:src="@mipmap/soso" />
     </RelativeLayout>
     <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
         android:id="@+id/store_house_ptr_frame"

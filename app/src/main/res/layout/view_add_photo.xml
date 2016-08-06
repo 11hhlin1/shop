@@ -2,7 +2,6 @@
 <com.gjj.shop.widget.SquareLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@mipmap/upload_icon_add_pr"
     android:gravity="center"
     android:orientation="vertical" >
 
@@ -10,6 +9,6 @@
         android:id="@+id/icon_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/upload_icon_add" />
+        android:src="@mipmap/f_addimg" />
 
 </com.gjj.shop.widget.SquareLinearLayout>

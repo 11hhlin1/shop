@@ -28,6 +28,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
@@ -81,5 +82,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/top_layout"
+        android:layout_above="@+id/bottom_layout"
         android:scrollbars="none"/>
 </RelativeLayout>

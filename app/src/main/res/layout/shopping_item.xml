@@ -75,7 +75,7 @@
                 android:id="@+id/plus_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/all_img_dot_pr"
+                android:src="@mipmap/add_btn"
                 />
             <TextView
                 android:id="@+id/product_amount"
@@ -91,7 +91,7 @@
                 android:layout_marginLeft="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/all_img_dot_pr"
+                android:src="@mipmap/cut_btn"
                 />
         </LinearLayout>
         <LinearLayout
