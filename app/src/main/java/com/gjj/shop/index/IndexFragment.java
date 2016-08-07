@@ -16,6 +16,7 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.gjj.applibrary.task.MainTaskExecutor;
+import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.R;
 import com.gjj.shop.base.PageSwitcher;
@@ -150,7 +151,7 @@ public class IndexFragment extends BaseFragment {
         mHorizontalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                PageSwitcher.switchToTopNavPage(getActivity(),ShopFragment.class,null,"","");
             }
         });
 //        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
@@ -168,14 +169,22 @@ public class IndexFragment extends BaseFragment {
 //        mProductAdapter = productAdapter;
 //        mAdviceList.setItemAnimator(null);
 //        mAdviceList.setAdapter(productAdapter);
-//        GridAdapter gridAdapter = new GridAdapter(getActivity(), list);
-//        mUnScrollableGridView.setAdapter(gridAdapter);
-//        MainTaskExecutor.scheduleTaskOnUiThread(500, new Runnable() {
-//            @Override
-//            public void run() {
-//                mScrollView.scrollTo(0, 0);
-//            }
-//        });
+        GridAdapter gridAdapter = new GridAdapter(getActivity(), list);
+        mUnScrollableGridView.setAdapter(gridAdapter);
+        mScrollView.fullScroll(ScrollView.FOCUS_UP);
+        mUnScrollableGridView.setFocusable(false);
+        mUnScrollableGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ToastUtil.shortToast(view.getContext(), "product:"+position);
+            }
+        });
+        MainTaskExecutor.scheduleTaskOnUiThread(500, new Runnable() {
+            @Override
+            public void run() {
+                mScrollView.smoothScrollTo(0, 0);
+            }
+        });
     }
 
 
