@@ -33,7 +33,7 @@
     <color name="green">#40d359</color>
     <color name="black">#202026</color>
     <color name="white">#ffffff</color>
-    <color name="secondary_gray">#808086</color>
+    <color name="secondary_gray">#808080</color>
     <color name="third_gray">#a0a0a8</color>
     <color name="disable_gray">#dcdcdc</color>
     <color name="progress_bar_not_reach_gray">#dcdce2</color>
@@ -41,4 +41,9 @@
     <color name="dialog_bg">#99000000</color>
     <color name="color_606066">#606066</color>
     <color name="color_EE394A">#EE394A</color>
+    <color name="color_ed394a">#ed394a</color>
+
+    <color name="color_4c4c4c">#4c4c4c</color>
+    <color name="color_999999">#999999</color>
+
 </resources>

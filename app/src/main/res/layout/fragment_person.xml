@@ -4,13 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/top_layout"
-        style="@style/titlebar">
 
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/title_textView" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/user_bg">
 
     </RelativeLayout>
 </LinearLayout>

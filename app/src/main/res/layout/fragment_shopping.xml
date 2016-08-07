@@ -30,7 +30,7 @@
     <RelativeLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="43dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white">
         <View
@@ -44,13 +44,13 @@
             android:layout_centerVertical="true"
             android:background="@drawable/selector_check_box"
             android:button="@null"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="12dp"/>
         <TextView
             android:id="@+id/all_sel_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/all_sel_box"
-            android:layout_marginLeft="2dp"
+            android:layout_marginLeft="4dp"
             android:text="@string/all_select"
             android:layout_centerVertical="true"
             android:textColor="@color/black"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/all_sel_text"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="20dp"
             android:text="@string/amount_money"
             android:layout_centerVertical="true"
             android:textColor="@color/black"
@@ -72,9 +72,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@color/color_EE394A"
+            android:background="@mipmap/js_btn_bg"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_16sp"
+            android:textSize="@dimen/textsize_15sp"
             android:text="@string/balance"/>
     </RelativeLayout>
 

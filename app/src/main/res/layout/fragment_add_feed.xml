@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp">
+
+    <EditText
+        android:id="@+id/desc_tv"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@android:color/white"
+        android:ems="10"
+        android:gravity="start"
+        android:hint="@string/des_start_up"
+        android:maxLength="200"
+        android:minLines="4"
+        android:paddingTop="@dimen/margin_30p"
+        android:scrollbars="vertical"
+        android:textColor="@color/black"
+        android:textColorHint="@color/secondary_gray"
+        android:textSize="@dimen/textsize_14sp" />
 
 
+    <com.gjj.shop.widget.UnScrollableGridView
+        android:id="@+id/albums_grid"
+        style="@style/photo_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/desc_tv"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:background="@android:color/white"
-            android:ems="10"
-            android:gravity="start"
-            android:hint="@string/des_start_up"
-            android:maxLength="200"
-            android:minLines="4"
-            android:padding="@dimen/margin_30p"
-            android:scrollbars="vertical"
-            android:textColor="@color/black"
-            android:textColorHint="@color/secondary_gray"
-            android:textSize="@dimen/textsize_14sp"/>
-
-
-        <com.gjj.shop.widget.UnScrollableGridView
-            android:id="@+id/albums_grid"
-            style="@style/photo_grid_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <View style="@style/horizontal_line" />
+    <View style="@style/horizontal_line" />
 
 </LinearLayout>
