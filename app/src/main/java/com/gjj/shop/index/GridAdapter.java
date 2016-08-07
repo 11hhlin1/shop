@@ -72,6 +72,12 @@ public class GridAdapter extends BaseAdapter {
         @Bind(R.id.title)
         TextView mProductName;
 
+        @Bind(R.id.new_price)
+        TextView mNewPrice;
+
+        @Bind(R.id.old_price)
+        TextView mOldPrice;
+
         public ItemViewTag(View itemView) {
             ButterKnife.bind(this, itemView);
         }

@@ -175,12 +175,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:cacheColorHint="@android:color/transparent"
-                        android:horizontalSpacing="@dimen/margin_24px"
+                        android:horizontalSpacing="5dp"
                         android:listSelector="@android:color/transparent"
                         android:numColumns="2"
-                        android:padding="@dimen/margin_24px"
+                        android:padding="@dimen/margin_36px"
                         android:stretchMode="columnWidth"
-                        android:verticalSpacing="@dimen/margin_24px"
+                        android:verticalSpacing="6dp"
                         android:gravity="center"/>
                     <View
                         style="@style/horizontal_line"/>
