@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp">
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/desc_tv"
@@ -16,6 +14,8 @@
         android:hint="@string/des_start_up"
         android:maxLength="200"
         android:minLines="4"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:paddingTop="@dimen/margin_30p"
         android:scrollbars="vertical"
         android:textColor="@color/black"
@@ -27,7 +27,9 @@
         android:id="@+id/albums_grid"
         style="@style/photo_grid_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp" />
 
     <View style="@style/horizontal_line" />
 

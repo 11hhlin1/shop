@@ -6,13 +6,22 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.EditText;
 
+import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.http.callback.StringDialogCallback;
 import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.event.EventOfAddPhoto;
+import com.gjj.shop.model.UserInfo;
+import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.widget.UnScrollableGridView;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.cache.CacheMode;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -20,8 +29,13 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Chuck on 2016/7/29.
@@ -53,6 +67,43 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
     @Override
     public void onRightBtnClick() {
         super.onRightBtnClick();
+        if(TextUtils.isEmpty(mDesc.getText().toString())){
+            return;
+        }
+        HashMap<String, String> params = new HashMap<>();
+        params.put("desc", mDesc.getText().toString());
+        List<File> fileList = new ArrayList<>();
+        for (String path: mList){
+           fileList.add(new File(path));
+        }
+
+//        final JSONObject jsonObject = new JSONObject(params);
+        OkHttpUtils.post(ApiConstants.COMMUNITY_PUBLISH)//
+                .tag(this)//
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+                .addFileParams("imageList", fileList)
+                .execute(new StringDialogCallback(getActivity()) {
+                    @Override
+                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+                        ToastUtil.shortToast(R.string.commit_success);
+                    }
+                    @Override
+                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                        if(response != null) L.d("@@@@@>>", response.code());
+                    }
+
+                });
+//                .postJson(jsonObject.toString())//
+//                .execute(new StringDialogCallback {
+//                    @Override
+//                    public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
+//                    }
+//                    @Override
+//                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+//                        if(response != null) L.d("@@@@@>>", response.code());
+//                    }
+//                });code
     }
 
     @Override

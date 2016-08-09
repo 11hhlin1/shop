@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.shop.R;
+import com.gjj.shop.base.BaseRecyclerViewAdapter;
 import com.gjj.shop.widget.UnScrollableGridView;
 
 import java.util.ArrayList;
@@ -24,16 +25,17 @@ import butterknife.OnClick;
 /**
  * Created by Chuck on 2016/7/27.
  */
-public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.RvViewHolder> {
+public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<CommunityInfo> mInfoList;
+//    private List<CommunityInfo> mInfoList;
 
     public CommunityAdapter(Context context, List<CommunityInfo> infoList) {
+        super(context,infoList);
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        mInfoList = infoList;
+//        mInfoList = infoList;
     }
 
     @Override
@@ -42,27 +44,25 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.RvVi
         return new RvViewHolder(view);
     }
 
+
     @Override
-    public void onBindViewHolder(RvViewHolder holder, int position) {
-        CommunityInfo info = mInfoList.get(position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        RvViewHolder viewHolder = (RvViewHolder) holder;
+        CommunityInfo info = items.get(position);
         Glide.with(mContext)
                 .load(info.avatar)
                 .centerCrop()
                 .placeholder(R.mipmap.all_img_dot_pr)
                 .error(R.mipmap.all_img_dot_pr)
                 .bitmapTransform(new GlideCircleTransform(mContext))
-                .into(holder.mAvatar);
-        holder.mNickName.setText(info.nickname);
-        holder.mDesc.setText(info.desc);
-        holder.mTime.setText(info.time + "");
-        holder.mGridView.setAdapter(new GridAdapter(mContext, info.imgaeList));
-        holder.mShareBtn.setTag(info);
+                .into(viewHolder.mAvatar);
+        viewHolder.mNickName.setText(info.nickname);
+        viewHolder.mDesc.setText(info.desc);
+        viewHolder.mTime.setText(info.time + "");
+        viewHolder.mGridView.setAdapter(new GridAdapter(mContext, info.imgaeList));
+        viewHolder.mShareBtn.setTag(info);
     }
 
-    @Override
-    public int getItemCount() {
-        return mInfoList.size();
-    }
 
     static class RvViewHolder extends RecyclerView.ViewHolder {
 

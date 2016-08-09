@@ -151,7 +151,33 @@ public class RegisterFragment extends BaseFragment {
     }
 
     private void findPsw(HashMap<String, String> params) {
+        OkHttpUtils.post(ApiConstants.FIND_PSW)//
+                .tag(this)//
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+//                .postJson(jsonObject.toString())//
+                .execute(new JsonCallback<UserInfo>(UserInfo.class) {
+                    @Override
+                    public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
+                        Activity activity = getActivity();
+                        if(activity != null) {
+                            if(rspInfo != null) {
+                                L.d("@@@@@>>", rspInfo.token);
+                                PreferencesManager.getInstance().put(BundleKey.TOKEN, rspInfo.token);
+                                Intent intent = new Intent();
+                                intent.setClass(activity, MainActivity.class);
+                                startActivity(intent);
+                                activity.finish();
+                            }
+                        }
 
+                    }
+                    @Override
+                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                        if(response != null)
+                            L.d("@@@@@>>", response.code());
+                    }
+                });
     }
     private void register(HashMap<String, String> params) {
         OkHttpUtils.post(ApiConstants.REGISTER)//

@@ -32,7 +32,6 @@ import com.gjj.shop.widget.CustomProgressDialog;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
 
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
