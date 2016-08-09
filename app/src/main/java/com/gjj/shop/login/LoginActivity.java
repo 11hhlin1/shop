@@ -134,11 +134,12 @@ public class LoginActivity extends Activity {
         HashMap<String, String> params = new HashMap<>();
         params.put("username", phone);
         params.put("password", MD5Util.md5Hex(psw));
-        final JSONObject jsonObject = new JSONObject(params);
+//        final JSONObject jsonObject = new JSONObject(params);
         OkHttpUtils.post(ApiConstants.LOGIN)
                 .tag(this)
                 .cacheMode(CacheMode.NO_CACHE)
-                .postJson(jsonObject.toString())
+                .params(params)
+//                .postJson(jsonObject.toString())
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
                     public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {

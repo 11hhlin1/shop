@@ -101,11 +101,12 @@ public class RegisterFragment extends BaseFragment {
         //TODO 获取验证码
         HashMap<String, String> params = new HashMap<>();
         params.put("username", account);
-        final JSONObject jsonObject = new JSONObject(params);
+//        final JSONObject jsonObject = new JSONObject(params);
         OkHttpUtils.post(ApiConstants.GET_SMS_CODE)//
                 .tag(this)//
                 .cacheMode(CacheMode.NO_CACHE)
-                .postJson(jsonObject.toString())//
+                .params(params)
+//                .postJson(jsonObject.toString())//
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
                     public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
@@ -140,23 +141,24 @@ public class RegisterFragment extends BaseFragment {
         params.put("username", account);
         params.put("password", MD5Util.md5Hex(psw));
         params.put("phoneCode",code);
-        final JSONObject jsonObject = new JSONObject(params);
+//        final JSONObject jsonObject = new JSONObject(params);
         if(mIsRegister) {
-            register(jsonObject);
+            register(params);
         } else {
-            findPsw(jsonObject);
+            findPsw(params);
         }
 
     }
 
-    private void findPsw(JSONObject jsonObject) {
+    private void findPsw(HashMap<String, String> params) {
 
     }
-    private void register(JSONObject jsonObject) {
+    private void register(HashMap<String, String> params) {
         OkHttpUtils.post(ApiConstants.REGISTER)//
                 .tag(this)//
                 .cacheMode(CacheMode.NO_CACHE)
-                .postJson(jsonObject.toString())//
+                .params(params)
+//                .postJson(jsonObject.toString())//
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
                     public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
