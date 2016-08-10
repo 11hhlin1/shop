@@ -54,6 +54,7 @@
     <string name="share">分享</string>
     <string name="commit">提交</string>
     <string name="commit_success">提交成功</string>
+    <string name="fail">获取失败</string>
     <string name="all_select">全选</string>
     <string name="amount_money">合计:</string>
     <string name="dialog_default_cancel_title">取消</string>

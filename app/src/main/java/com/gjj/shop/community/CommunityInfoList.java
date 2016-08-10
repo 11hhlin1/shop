@@ -8,6 +8,6 @@ import java.util.List;
  */
 public class CommunityInfoList implements Serializable{
 
-    private static final long serialVersionUID = -3143882360259832559L;
+    private static final long serialVersionUID = -3877259797915414252L;
     public List<CommunityInfo> list;
 }

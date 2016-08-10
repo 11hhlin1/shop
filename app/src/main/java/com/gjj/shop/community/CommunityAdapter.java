@@ -63,6 +63,14 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
         viewHolder.mShareBtn.setTag(info);
     }
 
+    public void addData(List<CommunityInfo> albums) {
+        if (albums != items) {
+            int position = items.size() -1;
+            items.addAll(albums);
+//            notifyDataSetChanged();
+            notifyItemInserted(position >= 0 ? position : 0);
+        }
+    }
 
     static class RvViewHolder extends RecyclerView.ViewHolder {
 

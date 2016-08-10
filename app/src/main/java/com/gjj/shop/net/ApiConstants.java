@@ -12,4 +12,5 @@ public class ApiConstants {
     public static final String FIND_PSW = host+ "user/findPassword";
     public static final String COMMUNITY_PUBLISH = host+ "community/publish";
     public static final String COMMUNITY_LIST = host+ "community/infoList";
+    public static final String UPLOAD_IMAGE = host+ "service/upload/imageOutJson";
 }

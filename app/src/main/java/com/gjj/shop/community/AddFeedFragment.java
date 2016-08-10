@@ -76,8 +76,6 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
         for (String path: mList){
            fileList.add(new File(path));
         }
-
-//        final JSONObject jsonObject = new JSONObject(params);
         OkHttpUtils.post(ApiConstants.COMMUNITY_PUBLISH)//
                 .tag(this)//
                 .cacheMode(CacheMode.NO_CACHE)
@@ -87,6 +85,7 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
                     @Override
                     public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
                         ToastUtil.shortToast(R.string.commit_success);
+                        onBackPressed();
                     }
                     @Override
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
@@ -94,16 +93,6 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
                     }
 
                 });
-//                .postJson(jsonObject.toString())//
-//                .execute(new StringDialogCallback {
-//                    @Override
-//                    public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
-//                    }
-//                    @Override
-//                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-//                        if(response != null) L.d("@@@@@>>", response.code());
-//                    }
-//                });code
     }
 
     @Override

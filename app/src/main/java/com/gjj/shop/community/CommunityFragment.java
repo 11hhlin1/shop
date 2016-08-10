@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
@@ -43,6 +44,7 @@ public class CommunityFragment extends BaseFragment{
     ImageView mAddFeed;
     @Bind(R.id.tv_title)
     TextView mTitleTV;
+    private static final int SIZE = 20;
 
     @OnClick(R.id.add_feed_btn)
     void addFeed() {
@@ -51,7 +53,6 @@ public class CommunityFragment extends BaseFragment{
     }
     private List<CommunityInfo> mCommunityInfoList;
     private CommunityAdapter mAdapter;
-    private int mPage = 1;
 
     @Override
     public int getContentViewLayout() {
@@ -92,29 +93,47 @@ public class CommunityFragment extends BaseFragment{
     }
 
     private void requestData(final int start) {
-      //TODO
         HashMap<String, String> params = new HashMap<>();
         params.put("index", String.valueOf(start));
-        params.put("size", String.valueOf(20));
-        OkHttpUtils.post(ApiConstants.COMMUNITY_LIST)
+        params.put("size", String.valueOf(SIZE));
+        OkHttpUtils.get(ApiConstants.COMMUNITY_LIST)
                 .tag(this)
-                .cacheMode(CacheMode.NO_CACHE)
+                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                 .params(params)
 //                .postJson(jsonObject.toString())
                 .execute(new JsonCallback<CommunityInfoList>(CommunityInfoList.class) {
                     @Override
                     public void onResponse(boolean isFromCache, CommunityInfoList rspInfo, Request request, @Nullable Response response) {
-
-                        if(start == 0) {
-                            mAdapter.setData(rspInfo.list);
+                        if (start == 0) {
+                            mPtrLayout.onRefreshComplete();
                         } else {
+                            mRecyclerView.onLoadMoreComplete();
+                        }
+                        List<CommunityInfo> infoList;
+                        infoList = rspInfo.list;
+                        if(start == 0) {
+                            mAdapter.setData(infoList);
+                        } else {
+                            mAdapter.addData(infoList);
+                        }
+                        if(infoList.size() < SIZE) {
+                            mRecyclerView.setHasLoadMore(false);
+                        } else {
+                            mRecyclerView.setHasLoadMore(true);
                         }
                     }
                     @Override
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-
+                        if (start == 0) {
+                            mPtrLayout.onRefreshComplete();
+                        } else {
+                            mRecyclerView.onLoadMoreComplete();
+                        }
+                        if(!isFromCache)
+                        ToastUtil.shortToast(R.string.fail);
                     }
                 });
 
     }
+
 }
