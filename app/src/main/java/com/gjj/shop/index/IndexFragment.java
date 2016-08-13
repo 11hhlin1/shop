@@ -121,7 +121,12 @@ public class IndexFragment extends BaseFragment {
         mPtrClassicFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-
+                   runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           mPtrClassicFrameLayout.onRefreshComplete();
+                       }
+                   }, 200);
             }
         });
         List<String> stringList = new ArrayList<>();
