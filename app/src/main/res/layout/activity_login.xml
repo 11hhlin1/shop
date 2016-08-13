@@ -55,8 +55,9 @@
             android:id="@+id/psw"
             android:layout_below="@+id/username"
             style="@style/login_edittext"
+            android:paddingLeft=""
             android:layout_height="46dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="12dp"
             android:drawableLeft="@mipmap/login_icon_password"
             android:hint="@string/hint_login_pwd"
             android:imeOptions="actionDone"
@@ -103,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/margin_20p"
+                android:layout_marginTop="@dimen/margin_40p"
                 android:paddingLeft="@dimen/margin_120px"
                 android:paddingRight="@dimen/margin_120px">
 
@@ -113,7 +114,7 @@
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/share_icon_sina"/>
+                android:src="@mipmap/dlwb"/>
 
                 <ImageView
                     android:id="@+id/qq_login"
@@ -121,14 +122,14 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/share_icon_qq"/>
+                    android:src="@mipmap/dlqq"/>
                 <ImageView
                     android:id="@+id/wechat_login"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/share_icon_wechat"/>
+                    android:src="@mipmap/dlwxl"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

@@ -3,34 +3,37 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/margin_90px"
-    android:paddingRight="@dimen/margin_90px"
-    android:paddingTop="@dimen/margin_20p">
+    android:paddingLeft="36dp"
+    android:paddingRight="36dp"
+    android:paddingTop="17dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/register_et_bg"
+        android:paddingLeft="@dimen/margin_30p"
+        android:paddingRight="@dimen/margin_30p"
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_100p">
+            android:layout_height="@dimen/margin_110p">
             <Button
                 android:id="@+id/send_again_btn"
                 android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_width="71dp"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@color/green"
-                android:minWidth="104dp"
+                android:background="@mipmap/yzm_bg"
                 android:singleLine="true"
                 android:text="@string/send_sms"
-                android:textSize="15sp" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/et_username"
                 style="@style/login_edittext"
                 android:layout_alignParentLeft="true"
+                android:background="@null"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_24px"
                 android:layout_toLeftOf="@+id/send_again_btn"
@@ -43,30 +46,37 @@
         <EditText
             android:id="@+id/et_sms_code"
             style="@style/login_edittext"
-            android:layout_height="@dimen/margin_100p"
+            android:layout_height="@dimen/margin_110p"
             android:hint="@string/enter_sms"
             android:imeOptions="actionDone"
+            android:background="@null"
             android:inputType="number" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/register_et_bg"
+        android:paddingLeft="@dimen/margin_30p"
+        android:paddingRight="@dimen/margin_30p"
         android:orientation="vertical">
         <EditText
             android:id="@+id/et_psw"
             style="@style/login_edittext"
-            android:layout_height="@dimen/margin_100p"
+            android:layout_height="@dimen/margin_110p"
             android:hint="@string/enter_psw"
             android:imeOptions="actionDone"
+            android:background="@null"
             android:inputType="number" />
         <View
             style="@style/horizontal_line"/>
         <EditText
             android:id="@+id/et_psw_check"
             style="@style/login_edittext"
-            android:layout_height="@dimen/margin_100p"
+            android:layout_height="@dimen/margin_110p"
             android:hint="@string/enter_psw_again"
             android:imeOptions="actionDone"
+            android:background="@null"
             android:inputType="number" />
     </LinearLayout>
 
