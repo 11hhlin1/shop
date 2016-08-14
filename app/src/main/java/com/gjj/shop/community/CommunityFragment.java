@@ -8,10 +8,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.gjj.applibrary.http.callback.CommonCallback;
-import com.gjj.applibrary.http.callback.JsonCallback;
-import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
@@ -20,7 +19,7 @@ import com.gjj.shop.net.ApiConstants;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
 
-import org.json.JSONObject;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,14 +112,28 @@ public class CommunityFragment extends BaseFragment{
                     public CommunityInfoList parseNetworkResponse(Response response) throws Exception {
                         String responseData = response.body().string();
                         if (TextUtils.isEmpty(responseData)) return null;
-                        JSONObject jsonObject = new JSONObject(responseData);
-                        final String msg = jsonObject.optString("msg", "");
-                        final int code = jsonObject.optInt("code", 0);
-                        String data = jsonObject.optString("data", "");
+                        JSONObject jsonObject = JSON.parseObject(responseData);
+                        final String msg = jsonObject.getString("msg");
+                        final int code = jsonObject.getIntValue("code");
+                        String data = jsonObject.getString("data");
                         switch (code) {
                             case 0:
-                                ArrayList<CommunityInfo> list = JSON.parseObject(data, new TypeReference<ArrayList<CommunityInfo>>() {
-                                });
+
+                                JSONArray jsonArray = JSONArray.parseArray(data);
+                                int len = jsonArray.size();
+                                ArrayList<CommunityInfo> list = new ArrayList<CommunityInfo>();
+                                for (int i = 0 ; i< len; i++){
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    CommunityInfo info = new CommunityInfo();
+                                    info.thumbAvatar = object.getString("thumbAvatar");
+                                    info.nickname = object.getString("nickname");
+                                    info.content = object.getString("content");
+                                    info.time = object.getIntValue("time");
+
+                                    info.imageList = JSON.parseArray(object.getString("imageList"), String.class);
+                                    info.thumbList = JSON.parseArray(object.getString("thumbList"), String.class);
+                                    list.add(info);
+                                }
                                 CommunityInfoList communityInfoList = new CommunityInfoList();
                                 communityInfoList.list = list;
                                 return communityInfoList;

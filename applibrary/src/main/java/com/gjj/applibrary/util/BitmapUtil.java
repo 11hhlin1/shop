@@ -372,4 +372,6 @@ public class BitmapUtil {
         if (bitmap != null && !bitmap.isRecycled())
             bitmap.recycle();
     }
+
+
 }

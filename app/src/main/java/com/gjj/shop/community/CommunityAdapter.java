@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.glide.GlideCircleTransform;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseRecyclerViewAdapter;
+import com.gjj.shop.net.UrlUtil;
 import com.gjj.shop.widget.UnScrollableGridView;
 
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
         RvViewHolder viewHolder = (RvViewHolder) holder;
         CommunityInfo info = items.get(position);
         Glide.with(mContext)
-                .load(info.thumbAvatar)
+                .load(UrlUtil.getHttpUrl(info.thumbAvatar))
                 .centerCrop()
                 .placeholder(R.mipmap.all_img_dot_pr)
                 .error(R.mipmap.all_img_dot_pr)
@@ -137,7 +139,7 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
             }
             String url = mImageList.get(position);
             Glide.with(mContext)
-                    .load(url)
+                    .load(UrlUtil.getHttpUrl(url))
                     .centerCrop()
                     .placeholder(R.mipmap.ic_launcher)
                     .error(R.mipmap.ic_launcher)
