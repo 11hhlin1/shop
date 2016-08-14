@@ -62,7 +62,7 @@
                 app:canLoop="true"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="77.5dp"
                     android:orientation="horizontal"
                     android:background="@color/white">
 
@@ -74,7 +74,7 @@
                         android:textSize="@dimen/textsize_12sp"
                         android:gravity="center"
                         android:textColor="@color/black"
-                        android:drawablePadding="@dimen/margin_6p"
+                        android:drawablePadding="@dimen/margin_10p"
                         android:drawableTop="@mipmap/nav01"
                         android:text="@string/cheap_shop"/>
                     <com.gjj.shop.widget.DrawableCenterTextView

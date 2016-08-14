@@ -49,7 +49,7 @@
             android:layout_height="46dp"
             android:paddingLeft="7dp"
             android:digits="\@-+._0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ"
-            android:drawableLeft="@mipmap/login_icon_user"
+            android:drawableLeft="@mipmap/screen_icon"
             android:hint="@string/hint_login_username"
             android:imeOptions="actionNext"/>
         <EditText
@@ -59,7 +59,7 @@
             android:paddingLeft="7dp"
             android:layout_height="46dp"
             android:layout_marginTop="12dp"
-            android:drawableLeft="@mipmap/login_icon_password"
+            android:drawableLeft="@mipmap/password_icon"
             android:hint="@string/hint_login_pwd"
             android:imeOptions="actionDone"
             android:inputType="textPassword"/>

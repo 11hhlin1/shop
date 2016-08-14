@@ -1,14 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <RelativeLayout
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@mipmap/user_bg">
+        android:background="@color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/user_bg">
+            <RelativeLayout
+                android:id="@+id/avatar_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/user_tx_border">
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/user_tx_img"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/my_order_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_404040"
+            android:drawableLeft="@mipmap/indent"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/my_order"
+            android:drawablePadding="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:drawablePadding="6dp"
+            android:textColor="@color/color_999999"
+            android:textSize="13sp"
+            android:text="@string/check_all_order"
+            android:drawableRight="@mipmap/right_jt"/>
+        <ImageView
+            style="@style/bottom_horizontal_line"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <com.gjj.shop.widget.DrawableCenterTextView
+            android:id="@+id/pay_order"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/textsize_12sp"
+            android:gravity="center"
+            android:textColor="@color/color_737373"
+            android:drawablePadding="@dimen/margin_10p"
+            android:drawableTop="@mipmap/u_icon_01"
+            android:text="@string/pay_order"/>
+        <com.gjj.shop.widget.DrawableCenterTextView
+            android:id="@+id/accepting_order"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/textsize_12sp"
+            android:gravity="center"
+            android:textColor="@color/color_737373"
+            android:drawablePadding="@dimen/margin_10p"
+            android:drawableTop="@mipmap/u_icon_02"
+            android:text="@string/accepting_order"/>
+        <com.gjj.shop.widget.DrawableCenterTextView
+            android:id="@+id/accept_order"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/textsize_12sp"
+            android:includeFontPadding="false"
+            android:gravity="center"
+            android:textColor="@color/color_737373"
+            android:drawablePadding="@dimen/margin_10p"
+            android:drawableTop="@mipmap/u_icon_03"
+            android:text="@string/accept_order"/>
+        <com.gjj.shop.widget.DrawableCenterTextView
+            android:id="@+id/cancel_order"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/textsize_12sp"
+            android:gravity="center"
+            android:textColor="@color/color_737373"
+            android:drawablePadding="@dimen/margin_10p"
+            android:drawableTop="@mipmap/u_icon_04"
+            android:text="@string/acncle_order"/>
+        <com.gjj.shop.widget.DrawableCenterTextView
+            android:id="@+id/after_sale_order"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/textsize_12sp"
+            android:gravity="center"
+            android:textColor="@color/color_737373"
+            android:drawablePadding="@dimen/margin_10p"
+            android:drawableTop="@mipmap/u_icon_05"
+            android:text="@string/after_sale_order"/>
+    </LinearLayout>
+    <View
+        style="@style/horizontal_line" />
+    <RelativeLayout
+        android:id="@+id/collect_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+      <View
+          style="@style/top_horizontal_line" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_404040"
+            android:drawableLeft="@mipmap/collct"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/my_love"
+            android:drawablePadding="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:drawablePadding="6dp"
+            android:textColor="@color/color_999999"
+            android:textSize="13sp"
+            android:drawableRight="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/contact_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_404040"
+            android:drawableLeft="@mipmap/service"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/contact_service"
+            android:drawablePadding="6dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/about_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_404040"
+            android:drawableLeft="@mipmap/about"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/about_us"
+            android:drawablePadding="6dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+        <View
+            style="@style/top_horizontal_line" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_404040"
+            android:drawableLeft="@mipmap/set"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/setting"
+            android:drawablePadding="6dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
     </RelativeLayout>
 </LinearLayout>
+</ScrollView>

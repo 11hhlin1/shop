@@ -59,5 +59,16 @@
     <string name="amount_money">合计:</string>
     <string name="dialog_default_cancel_title">取消</string>
     <string name="dialog_default_confirm_title">确定</string>
+    <string name="my_order">我的订单</string>
+    <string name="check_all_order">查看所有订单</string>
+    <string name="my_love">我的收藏</string>
+    <string name="contact_service">联系客服</string>
+    <string name="about_us">关于我们</string>
+    <string name="setting">设置</string>
+    <string name="pay_order">代付款</string>
+    <string name="accepting_order">待收货</string>
+    <string name="accept_order">已收货</string>
+    <string name="acncle_order">已取消</string>
+    <string name="after_sale_order">售后</string>
 
 </resources>

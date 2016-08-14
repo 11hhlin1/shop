@@ -33,6 +33,7 @@
     <dimen name="margin_120px">40dp</dimen>
     <dimen name="margin_72px">24dp</dimen>
     <dimen name="margin_90px">30dp</dimen>
+    <dimen name="margin_90p">45dp</dimen>
 
     <!-- 720p距离 -->
     <dimen name="margin_70p">35dp</dimen>

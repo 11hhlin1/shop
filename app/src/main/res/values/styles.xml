@@ -101,6 +101,14 @@
         <item name="android:background">@color/line_color_gray</item>
     </style>
 
+    <style name="top_horizontal_line" parent="@style/horizontal_line">
+        <item name="android:layout_alignParentTop">true</item>
+    </style>
+
+
+    <style name="bottom_horizontal_line" parent="@style/horizontal_line">
+        <item name="android:layout_alignParentBottom">true</item>
+    </style>
     <style name="photo_grid_view">
         <item name="android:background">@color/white</item>
         <item name="android:cacheColorHint">@android:color/transparent</item>
