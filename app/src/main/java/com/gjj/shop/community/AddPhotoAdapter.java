@@ -110,27 +110,7 @@ public class AddPhotoAdapter extends BaseAdapter {
     private View.OnClickListener mPhotoAddClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String[] choiceItems= new String[2];
-            choiceItems[0] = "相机拍摄";  //拍照
-            choiceItems[1] = "本地相册";  //从相册中选择
-            ListAdapter adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, choiceItems);
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setTitle("添加图片");
-            builder.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case 0:  //相机
-                            mSelectListener.doTakePhoto();
-                            break;
-                        case 1:  //从图库相册中选取
-                            mSelectListener.doPickPhotoFromGallery();
-                            break;
-                    }
-                    dialog.dismiss();
-                }
-            });
-            builder.create().show();
+            mSelectListener.showDialog();
         }
     };
     public void setSelectPhotoListener(SelectPhotoListener listener) {
@@ -142,7 +122,8 @@ public class AddPhotoAdapter extends BaseAdapter {
     }
 
     public interface SelectPhotoListener {
-        void doTakePhoto();
-        void doPickPhotoFromGallery();
+        void showDialog();
+//        void doTakePhoto();
+//        void doPickPhotoFromGallery();
     }
 }

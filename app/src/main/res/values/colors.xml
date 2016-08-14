@@ -47,5 +47,10 @@
     <color name="color_4c4c4c">#4c4c4c</color>
     <color name="color_999999">#999999</color>
     <color name="color_737373">#737373</color>
+    <color name="color_FA5959">#FA5959</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_4486d8">#4486d8</color>
+    <color name="effect_tm_black">#cc000000</color>
+    <color name="color_808080">#808080</color>
 
 </resources>

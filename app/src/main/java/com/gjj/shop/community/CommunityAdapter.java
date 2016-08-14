@@ -50,16 +50,16 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
         RvViewHolder viewHolder = (RvViewHolder) holder;
         CommunityInfo info = items.get(position);
         Glide.with(mContext)
-                .load(info.avatar)
+                .load(info.thumbAvatar)
                 .centerCrop()
                 .placeholder(R.mipmap.all_img_dot_pr)
                 .error(R.mipmap.all_img_dot_pr)
                 .bitmapTransform(new GlideCircleTransform(mContext))
                 .into(viewHolder.mAvatar);
         viewHolder.mNickName.setText(info.nickname);
-        viewHolder.mDesc.setText(info.desc);
+        viewHolder.mDesc.setText(info.content);
         viewHolder.mTime.setText(info.time + "");
-        viewHolder.mGridView.setAdapter(new GridAdapter(mContext, info.imgaeList));
+        viewHolder.mGridView.setAdapter(new GridAdapter(mContext, info.thumbList));
         viewHolder.mShareBtn.setTag(info);
     }
 

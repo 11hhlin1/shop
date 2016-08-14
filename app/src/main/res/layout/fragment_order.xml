@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/top_rl"
+        android:layout_width="match_parent"
+        android:layout_height="42.3dp"
+        android:background="@color/white" >
+
+        <LinearLayout
+            android:id="@+id/project_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_line_height_120px"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/pay_order_btn"
+                style="@style/RadioButton_style"
+                android:checked="true"
+                android:text="@string/pay_order" />
+            <TextView
+                android:id="@+id/accepting_order_btn"
+                style="@style/RadioButton_style"
+                android:checked="true"
+                android:text="@string/accepting_order" />
+            <TextView
+                android:id="@+id/accept_order_btn"
+                style="@style/RadioButton_style"
+                android:text="@string/accept_order" />
+            <TextView
+                android:id="@+id/cancel_order_btn"
+                style="@style/RadioButton_style"
+                android:text="@string/cancel_order" />
+            <!--<TextView-->
+                <!--android:id="@+id/after_sale_order_btn"-->
+                <!--style="@style/RadioButton_style"-->
+                <!--android:text="@string/after_sale_order" />-->
+        </LinearLayout>
+
+        <View
+            android:id="@+id/bottom_line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_color_gray"
+            android:layout_alignParentBottom="true"/>
+
+        <com.gjj.shop.widget.NavLineView
+            android:id="@+id/tab_line_iv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_nav_scroll_line_height"
+            android:layout_above="@id/bottom_line"/>
+
+    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/page_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

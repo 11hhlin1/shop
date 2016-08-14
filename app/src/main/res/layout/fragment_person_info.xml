@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/avatar_item"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="71.5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/avatar" />
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:paddingRight="13dp"
+            android:src="@mipmap/user_tx_img"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/name_item"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:drawablePadding="6dp"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/textsize_15sp"
+            android:drawableRight="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/contact_way" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/textsize_15sp" />
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/address_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_404040"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/address"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/change_psw_item"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:background="@color/white">
+        <View
+            style="@style/top_horizontal_line"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_404040"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/change_psw"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/logout_btn"
+            android:layout_width="match_parent"
+            android:background="@mipmap/log_out_bg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_15sp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:layout_height="@dimen/single_line_height_132px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="85dp"
+            android:text="@string/logout"/>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -10,6 +10,9 @@ import android.widget.RelativeLayout;
 
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
+import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.community.AddFeedFragment;
+import com.gjj.shop.order.OrderFragment;
 import com.gjj.shop.widget.DrawableCenterTextView;
 
 import butterknife.Bind;
@@ -57,20 +60,33 @@ public class PersonalFragment extends BaseFragment {
 
     @OnClick({R.id.avatar_item, R.id.my_order_item, R.id.pay_order, R.id.accepting_order, R.id.accept_order, R.id.cancel_order, R.id.after_sale_order, R.id.collect_item, R.id.contact_item, R.id.about_item, R.id.setting_item})
     public void onClick(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.avatar_item:
+                PageSwitcher.switchToTopNavPage(getActivity(),PersonalInfoFragment.class,null,getString(R.string.person_info),null);
                 break;
             case R.id.my_order_item:
+                bundle.putInt("index", 0);
+                PageSwitcher.switchToTopNavPage(getActivity(),OrderFragment.class,bundle,getString(R.string.my_order),null);
                 break;
             case R.id.pay_order:
+                bundle.putInt("index", 0);
+                PageSwitcher.switchToTopNavPage(getActivity(),OrderFragment.class,bundle,getString(R.string.my_order),null);
                 break;
             case R.id.accepting_order:
+                bundle.putInt("index", 1);
+                PageSwitcher.switchToTopNavPage(getActivity(),OrderFragment.class,bundle,getString(R.string.my_order),null);
                 break;
             case R.id.accept_order:
+                bundle.putInt("index", 2);
+                PageSwitcher.switchToTopNavPage(getActivity(),OrderFragment.class,bundle,getString(R.string.my_order),null);
                 break;
             case R.id.cancel_order:
+                bundle.putInt("index", 3);
+                PageSwitcher.switchToTopNavPage(getActivity(),OrderFragment.class,bundle,getString(R.string.my_order),null);
                 break;
             case R.id.after_sale_order:
+                PageSwitcher.switchToTopNavPage(getActivity(),OrderFragment.class,bundle,getString(R.string.my_order),null);
                 break;
             case R.id.collect_item:
                 break;

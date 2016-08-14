@@ -13,4 +13,5 @@ public class ApiConstants {
     public static final String COMMUNITY_PUBLISH = host+ "community/publish";
     public static final String COMMUNITY_LIST = host+ "community/infoList";
     public static final String UPLOAD_IMAGE = host+ "service/upload/image";
+    public static final String UPDATE_USER_INFO = host+ "user/updateInfo";
 }

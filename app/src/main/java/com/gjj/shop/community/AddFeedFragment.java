@@ -2,13 +2,23 @@ package com.gjj.shop.community;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.StringDialogCallback;
@@ -58,6 +68,7 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
     private ArrayList<String> mList;
     private AddPhotoAdapter mAdapter;
     private String mPhotoUrl;
+    private PopupWindow mPickUpPopWindow;
 
     @Override
     public int getContentViewLayout() {
@@ -71,38 +82,21 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
             return;
         }
         HashMap<String, String> params = new HashMap<>();
-        params.put("desc", mDesc.getText().toString());
+        params.put("content", mDesc.getText().toString());
         List<File> fileList = new ArrayList<>();
         for (String path: mList){
            fileList.add(new File(path));
         }
 
-        OkHttpUtils.post(ApiConstants.UPLOAD_IMAGE)//
-                .tag(this)//
-                .cacheMode(CacheMode.NO_CACHE)
-//                .params(params)
-                .addFileParams("imageList", fileList)
-                .execute(new StringDialogCallback(getActivity()) {
-                    @Override
-                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-                        ToastUtil.shortToast(R.string.commit_success);
-                    }
-                    @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        if(response != null) L.d("@@@@@>>", response.code());
-                    }
-
-                });
-//        OkHttpUtils.post(ApiConstants.COMMUNITY_PUBLISH)//
+//        OkHttpUtils.post(ApiConstants.UPLOAD_IMAGE)//
 //                .tag(this)//
 //                .cacheMode(CacheMode.NO_CACHE)
-//                .params(params)
+////                .params(params)
 //                .addFileParams("imageList", fileList)
 //                .execute(new StringDialogCallback(getActivity()) {
 //                    @Override
 //                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
 //                        ToastUtil.shortToast(R.string.commit_success);
-//                        onBackPressed();
 //                    }
 //                    @Override
 //                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
@@ -110,6 +104,26 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
 //                    }
 //
 //                });
+        OkHttpUtils.post(ApiConstants.COMMUNITY_PUBLISH)//
+                .tag(this)//
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+                .addFileParams("imageList", fileList)
+                .execute(new StringDialogCallback(getActivity()) {
+                    @Override
+                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+                        ToastUtil.shortToast(R.string.commit_success);
+                        onBackPressed();
+                    }
+                    @Override
+                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                        if(response != null)
+                            L.d("@@@@@>>", response.code());
+                        ToastUtil.shortToast(R.string.fail);
+
+                    }
+
+                });
     }
 
     @Override
@@ -132,7 +146,17 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
 //        }
 //        mAdapter.notifyDataSetChanged();
 //    }
-
+    /**
+     * 取消工程消息弹出框
+     *
+     * @return
+     */
+    private void dismissConstructNoticeWindow() {
+        PopupWindow pickUpPopWindow = mPickUpPopWindow;
+        if (null != pickUpPopWindow && pickUpPopWindow.isShowing()) {
+            pickUpPopWindow.dismiss();
+        }
+    }
     public void doPickPhotoFromGallery() {
         Intent intent;
         if (Build.VERSION.SDK_INT < 19) {
@@ -209,5 +233,60 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
             mAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    @Override
+    public void showDialog() {
+        View contentView;
+        PopupWindow popupWindow = mPickUpPopWindow;
+        if (popupWindow == null) {
+            contentView = LayoutInflater.from(getActivity()).inflate(
+                    R.layout.choose_pic_pop, null);
+            TextView takePhoto = (TextView) contentView.findViewById(R.id.take_photo);
+            TextView takeGallery = (TextView) contentView.findViewById(R.id.take_gallery);
+            TextView cancle = (TextView) contentView.findViewById(R.id.btn_cancel);
+            takePhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    doTakePhoto();
+                    dismissConstructNoticeWindow();
+                }
+            });
+            takeGallery.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    doPickPhotoFromGallery();
+                    dismissConstructNoticeWindow();
+                }
+            });
+            cancle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dismissConstructNoticeWindow();
+                }
+            });
+            contentView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismissConstructNoticeWindow();
+                }
+            });
+            popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, false);
+            mPickUpPopWindow = popupWindow;
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            popupWindow.setAnimationStyle(R.style.popwin_anim_style);
+            mPickUpPopWindow.setOutsideTouchable(true);
+            popupWindow.setFocusable(true);
+
+        } else {
+            contentView = popupWindow.getContentView();
+        }
+        //判读window是否显示，消失了就执行动画
+        if (!popupWindow.isShowing()) {
+            Animation animation2 = AnimationUtils.loadAnimation(getActivity(), R.anim.effect_bg_show);
+            contentView.startAnimation(animation2);
+        }
+
+        popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
     }
 }

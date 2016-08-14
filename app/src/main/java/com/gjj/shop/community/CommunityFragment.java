@@ -2,10 +2,16 @@ package com.gjj.shop.community;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.TypeReference;
+import com.gjj.applibrary.http.callback.CommonCallback;
 import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
@@ -13,6 +19,8 @@ import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.net.ApiConstants;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,17 +108,36 @@ public class CommunityFragment extends BaseFragment{
                 .tag(this)
                 .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                 .params(params)
-//                .postJson(jsonObject.toString())
-                .execute(new JsonCallback<CommunityInfoList>(CommunityInfoList.class) {
+                .execute(new CommonCallback<CommunityInfoList>() {
                     @Override
-                    public void onResponse(boolean isFromCache, CommunityInfoList rspInfo, Request request, @Nullable Response response) {
+                    public CommunityInfoList parseNetworkResponse(Response response) throws Exception {
+                        String responseData = response.body().string();
+                        if (TextUtils.isEmpty(responseData)) return null;
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        final String msg = jsonObject.optString("msg", "");
+                        final int code = jsonObject.optInt("code", 0);
+                        String data = jsonObject.optString("data", "");
+                        switch (code) {
+                            case 0:
+                                ArrayList<CommunityInfo> list = JSON.parseObject(data, new TypeReference<ArrayList<CommunityInfo>>() {
+                                });
+                                CommunityInfoList communityInfoList = new CommunityInfoList();
+                                communityInfoList.list = list;
+                                return communityInfoList;
+                            default:
+                                throw new IllegalStateException("错误代码：" + code + "，错误信息：" + msg);
+                        }
+                    }
+
+                    @Override
+                    public void onResponse(boolean isFromCache, CommunityInfoList communityInfoList, Request request, @Nullable Response response) {
                         if (start == 0) {
                             mPtrLayout.onRefreshComplete();
                         } else {
                             mRecyclerView.onLoadMoreComplete();
                         }
                         List<CommunityInfo> infoList;
-                        infoList = rspInfo.list;
+                        infoList = communityInfoList.list;
                         if(start == 0) {
                             mAdapter.setData(infoList);
                         } else {
@@ -122,6 +149,7 @@ public class CommunityFragment extends BaseFragment{
                             mRecyclerView.setHasLoadMore(true);
                         }
                     }
+
                     @Override
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                         if (start == 0) {
@@ -133,6 +161,39 @@ public class CommunityFragment extends BaseFragment{
                         ToastUtil.shortToast(R.string.fail);
                     }
                 });
+//                .postJson(jsonObject.toString())
+//                .execute(new CommonCallback<Object>(CommunityInfoList.class) {
+//                    @Override
+//                    public void onResponse(boolean isFromCache, CommunityInfoList rspInfo, Request request, @Nullable Response response) {
+//                        if (start == 0) {
+//                            mPtrLayout.onRefreshComplete();
+//                        } else {
+//                            mRecyclerView.onLoadMoreComplete();
+//                        }
+//                        List<CommunityInfo> infoList;
+//                        infoList = rspInfo.list;
+//                        if(start == 0) {
+//                            mAdapter.setData(infoList);
+//                        } else {
+//                            mAdapter.addData(infoList);
+//                        }
+//                        if(infoList.size() < SIZE) {
+//                            mRecyclerView.setHasLoadMore(false);
+//                        } else {
+//                            mRecyclerView.setHasLoadMore(true);
+//                        }
+//                    }
+//                    @Override
+//                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+//                        if (start == 0) {
+//                            mPtrLayout.onRefreshComplete();
+//                        } else {
+//                            mRecyclerView.onLoadMoreComplete();
+//                        }
+//                        if(!isFromCache)
+//                        ToastUtil.shortToast(R.string.fail);
+//                    }
+//                });
 
     }
 

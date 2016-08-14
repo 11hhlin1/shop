@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="50dp">
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textsize_15sp"
+        android:textColor="@color/color_333333"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/name" />
+
+    <com.gjj.shop.widget.EditTextWithDel
+        android:id="@+id/name_et"
+        android:layout_toRightOf="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="left|center_vertical"
+        android:textSize="@dimen/textsize_15sp"
+        android:background="@null"
+        android:textColorHint="@color/color_999999"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="25dp" />
+    <View
+        style="@style/bottom_horizontal_line" />
+</RelativeLayout>

@@ -1,38 +1,30 @@
 package com.gjj.applibrary.http.callback;
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.gjj.applibrary.log.L;
 import com.lzy.okhttputils.OkHttpUtils;
-import com.lzy.okhttputils.callback.AbsCallback;
 
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
+import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by chuck on 16/7/17.
+ * Created by Administrator on 2016/8/14.
  */
-public abstract class JsonCallback<T> extends CommonCallback<T> {
-
+public abstract class ListCallback<T extends BaseList> extends CommonCallback<T>{
     private Class<T> clazz;
-    private Type type;
-
-    public JsonCallback(Class<T> clazz) {
+    public ListCallback(Class<T> clazz) {
         this.clazz = clazz;
     }
-
-    public JsonCallback(Type type) {
-        this.type = type;
-    }
-
-    //该方法是子线程处理，不能做ui相关的工作
     @Override
     public T parseNetworkResponse(Response response) throws Exception {
         String responseData = response.body().string();
@@ -52,12 +44,12 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
                  * code = 0 代表成功，默认实现了Gson解析成相应的实体Bean返回，可以自己替换成fastjson等
                  * 对于返回参数，先支持 String，然后优先支持class类型的字节码，最后支持type类型的参数
                  */
-                if (clazz == String.class) return (T) data;
                 if (clazz != null) {
 //                    JSONObject jsonObj = new JSONObject(data);
 //                    if(jsonObj instanceof JSONObject) {
+
                     T object = JSON.parseObject(data, clazz);
-                        L.d("@@@@", object);
+                    L.d("@@@@", object);
 //                    } else  {
 //                        JSONArray jsonArray = new JSONArray();
 //                        object = JSON.parseObject(data, clazz);
@@ -67,7 +59,6 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
                     return object;
 
                 }
-                if (type != null) return JSON.parseObject(data, type);
                 break;
             case 104:
                 //比如：用户授权信息无效，在此实现相应的逻辑，弹出对话或者跳转到其他页面等,该抛出错误，会在onError中回调。
@@ -93,4 +84,6 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
         });
         return null;
     }
+
+
 }

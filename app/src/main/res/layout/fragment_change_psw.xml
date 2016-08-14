@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="29dp"
+    android:paddingRight="29dp"
+    android:paddingTop="35dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/register_et_bg"
+        android:paddingLeft="@dimen/margin_30p"
+        android:paddingRight="@dimen/margin_30p"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/et_sms_code"
+            style="@style/login_edittext"
+            android:layout_height="@dimen/margin_110p"
+            android:hint="@string/enter_sms"
+            android:imeOptions="actionDone"
+            android:background="@null"
+            android:inputType="textPassword" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/register_et_bg"
+        android:paddingLeft="@dimen/margin_30p"
+        android:paddingRight="@dimen/margin_30p"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/et_psw"
+            style="@style/login_edittext"
+            android:layout_height="@dimen/margin_110p"
+            android:hint="@string/enter_psw"
+            android:imeOptions="actionDone"
+            android:background="@null"
+            android:inputType="textPassword" />
+        <View
+            style="@style/horizontal_line"/>
+        <EditText
+            android:id="@+id/et_psw_check"
+            style="@style/login_edittext"
+            android:layout_height="@dimen/margin_110p"
+            android:hint="@string/enter_psw_again"
+            android:imeOptions="actionDone"
+            android:background="@null"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_commit"
+        style="@style/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/single_line_height_132px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="47dp"
+        android:text="@string/commit"/>
+</LinearLayout>

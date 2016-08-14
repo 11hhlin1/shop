@@ -9,10 +9,11 @@ import java.util.List;
 public class CommunityInfo implements Serializable {
 
     private static final long serialVersionUID = -3143882360259832554L;
-    public String avatar;
+    public String thumbAvatar;
     public String nickname;
-    public String desc;
+    public String content;
     public long time;
-    public List<String> imgaeList;
+    public List<String> imageList;
+    public List<String> thumbList;
 
 }

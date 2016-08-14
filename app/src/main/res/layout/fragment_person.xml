@@ -115,7 +115,7 @@
             android:textColor="@color/color_737373"
             android:drawablePadding="@dimen/margin_10p"
             android:drawableTop="@mipmap/u_icon_04"
-            android:text="@string/acncle_order"/>
+            android:text="@string/cancel_order"/>
         <com.gjj.shop.widget.DrawableCenterTextView
             android:id="@+id/after_sale_order"
             android:layout_width="0dp"
