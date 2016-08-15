@@ -120,31 +120,31 @@ public class CommunityFragment extends BaseFragment{
                         switch (code) {
                             case 0:
 
-                                JSONArray jsonArray = JSONArray.parseArray(data);
-                                int len = jsonArray.size();
-                                ArrayList<CommunityInfo> list = new ArrayList<CommunityInfo>();
-                                for (int i = 0 ; i< len; i++){
-                                    JSONObject object = jsonArray.getJSONObject(i);
-                                    CommunityInfo info = new CommunityInfo();
-                                    info.thumbAvatar = object.getString("thumbAvatar");
-                                    info.nickname = object.getString("nickname");
-                                    info.content = object.getString("content");
-                                    info.time = object.getIntValue("time");
-                                    String [] images = object.getString("imageList").split(",");
-//                                    info.imageList = JSON.parseArray(object.getString("imageList"), String.class);
-//                                    info.thumbList = JSON.parseArray(object.getString("thumbList"), String.class);
-                                    List<String> imageList = new ArrayList<String>();
-                                    Collections.addAll(imageList, images);
-
-                                    info.imageList = imageList;
-                                    String [] thumbs = object.getString("thumbList").split(",");
-                                    List<String> thumbList = new ArrayList<String>();
-                                    Collections.addAll(thumbList, thumbs);
-                                    info.thumbList = thumbList;
-                                    list.add(info);
-                                }
+//                                JSONArray jsonArray = JSONArray.parseArray(data);
+//                                int len = jsonArray.size();
+//                                ArrayList<CommunityInfo> list = new ArrayList<CommunityInfo>();
+//                                for (int i = 0 ; i< len; i++){
+//                                    JSONObject object = jsonArray.getJSONObject(i);
+//                                    CommunityInfo info = new CommunityInfo();
+//                                    info.thumbAvatar = object.getString("thumbAvatar");
+//                                    info.nickname = object.getString("nickname");
+//                                    info.content = object.getString("content");
+//                                    info.time = object.getIntValue("time");
+//                                    String [] images = object.getString("imageList").split(",");
+////                                    info.imageList = JSON.parseArray(object.getString("imageList"), String.class);
+////                                    info.thumbList = JSON.parseArray(object.getString("thumbList"), String.class);
+//                                    List<String> imageList = new ArrayList<String>();
+//                                    Collections.addAll(imageList, images);
+//
+//                                    info.imageList = imageList;
+//                                    String [] thumbs = object.getString("thumbList").split(",");
+//                                    List<String> thumbList = new ArrayList<String>();
+//                                    Collections.addAll(thumbList, thumbs);
+//                                    info.thumbList = thumbList;
+//                                    list.add(info);
+//                                }
                                 CommunityInfoList communityInfoList = new CommunityInfoList();
-                                communityInfoList.list = list;
+                                communityInfoList.list = JSON.parseArray(data, CommunityInfo.class);
                                 return communityInfoList;
                             default:
                                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + msg);
