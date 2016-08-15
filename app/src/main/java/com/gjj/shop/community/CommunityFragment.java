@@ -22,6 +22,7 @@ import com.lzy.okhttputils.cache.CacheMode;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -129,9 +130,17 @@ public class CommunityFragment extends BaseFragment{
                                     info.nickname = object.getString("nickname");
                                     info.content = object.getString("content");
                                     info.time = object.getIntValue("time");
+                                    String [] images = object.getString("imageList").split(",");
+//                                    info.imageList = JSON.parseArray(object.getString("imageList"), String.class);
+//                                    info.thumbList = JSON.parseArray(object.getString("thumbList"), String.class);
+                                    List<String> imageList = new ArrayList<String>();
+                                    Collections.addAll(imageList, images);
 
-                                    info.imageList = JSON.parseArray(object.getString("imageList"), String.class);
-                                    info.thumbList = JSON.parseArray(object.getString("thumbList"), String.class);
+                                    info.imageList = imageList;
+                                    String [] thumbs = object.getString("thumbList").split(",");
+                                    List<String> thumbList = new ArrayList<String>();
+                                    Collections.addAll(thumbList, thumbs);
+                                    info.thumbList = thumbList;
                                     list.add(info);
                                 }
                                 CommunityInfoList communityInfoList = new CommunityInfoList();
