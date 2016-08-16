@@ -18,6 +18,7 @@ import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.base.SpaceItemDecoration;
 import com.gjj.shop.net.ApiConstants;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
@@ -91,7 +92,8 @@ public class CommunityFragment extends BaseFragment{
                 requestData(mAdapter.getItemCount() - 1);
             }
         });
-
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_20p);
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         mPtrLayout.setLastUpdateTimeRelateObject(this);
         mPtrLayout.disableWhenHorizontalMove(true);
         mPtrLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
@@ -109,7 +111,7 @@ public class CommunityFragment extends BaseFragment{
         params.put("size", String.valueOf(SIZE));
         OkHttpUtils.get(ApiConstants.COMMUNITY_LIST)
                 .tag(this)
-                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                .cacheMode(CacheMode.NO_CACHE)
                 .params(params)
                 .execute(new ListCallback<CommunityInfo>(CommunityInfo.class) {
                     @Override
@@ -119,8 +121,10 @@ public class CommunityFragment extends BaseFragment{
                         } else {
                             mRecyclerView.onLoadMoreComplete();
                         }
-                        List<CommunityInfo> infoList;
-                        infoList = baseList.list;
+                        List<CommunityInfo> infoList = new ArrayList<CommunityInfo>();
+                        if(baseList != null) {
+                            infoList = baseList.list;
+                        }
                         if(start == 0) {
                             mAdapter.setData(infoList);
                         } else {

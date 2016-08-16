@@ -141,7 +141,25 @@ public class Util {
         bottomSlideOutAnim.setDuration(150);
         return bottomSlideOutAnim;
     }
-
+    /**
+     * 获取目录
+     *
+     * @return
+     */
+    public static File getDirectory() {
+        File dirFile;
+        Context context = AppLib.getContext();
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            dirFile = context.getExternalFilesDir("savePic");
+        } else {
+            dirFile = context.getFilesDir();
+        }
+        if (dirFile == null) {
+            dirFile = new File("/sdcard/Android/data/" + context.getPackageName() + "/files/savePic");
+            dirFile.mkdirs();
+        }
+        return dirFile;
+    }
     public static File getImageFilesDir(Context context) {
         File file = new File(context.getFilesDir().getAbsolutePath() + "/image");
         if (file.getParentFile().exists()) {

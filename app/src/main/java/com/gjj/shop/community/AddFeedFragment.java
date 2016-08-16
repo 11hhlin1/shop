@@ -23,7 +23,11 @@ import android.widget.TextView;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.StringDialogCallback;
 import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.task.ForegroundTaskExecutor;
+import com.gjj.applibrary.task.MainTaskExecutor;
+import com.gjj.applibrary.util.ImageCompress;
 import com.gjj.applibrary.util.ToastUtil;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.event.EventOfAddPhoto;
@@ -32,6 +36,7 @@ import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.widget.UnScrollableGridView;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+import com.lzy.okhttputils.request.BaseRequest;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -81,12 +86,10 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
         if(TextUtils.isEmpty(mDesc.getText().toString())){
             return;
         }
-        HashMap<String, String> params = new HashMap<>();
-        params.put("content", mDesc.getText().toString());
-        List<File> fileList = new ArrayList<>();
-        for (String path: mList){
-           fileList.add(new File(path));
-        }
+
+//        for (String path: mList){
+//           fileList.add(new File(path));
+//        }
 
 //        OkHttpUtils.post(ApiConstants.UPLOAD_IMAGE)//
 //                .tag(this)//
@@ -104,28 +107,64 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
 //                    }
 //
 //                });
-        OkHttpUtils.post(ApiConstants.COMMUNITY_PUBLISH)//
-                .tag(this)//
-                .cacheMode(CacheMode.NO_CACHE)
-                .params(params)
-                .addFileParams("imageList", fileList)
-                .execute(new StringDialogCallback(getActivity()) {
+        ForegroundTaskExecutor.executeTask(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> params = new HashMap<>();
+                params.put("content", mDesc.getText().toString());
+                final List<File> fileList = new ArrayList<>();
+                for (String path: mList){
+                    File file = compressImage(path);
+                    L.d("@@@@@" + file.getAbsolutePath());
+                    fileList.add(file);
+                }
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-                        ToastUtil.shortToast(R.string.commit_success);
-                        onBackPressed();
-                    }
-                    @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        if(response != null)
-                            L.d("@@@@@>>", response.code());
-                        ToastUtil.shortToast(R.string.fail);
+                    public void run() {
+                        OkHttpUtils.post(ApiConstants.COMMUNITY_PUBLISH)//
+                                .tag(AddFeedFragment.this)//
+                                .cacheMode(CacheMode.NO_CACHE)
+                                .params(params)
+                                .addFileParams("imageList", fileList)
+                                .execute(new StringDialogCallback(getActivity()) {
+                                    @Override
+                                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+                                        ToastUtil.shortToast(R.string.commit_success);
+                                        onBackPressed();
+                                    }
+                                    @Override
+                                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                                        if(response != null)
+                                            L.d("@@@@@>>", response.code());
+                                        ToastUtil.shortToast(R.string.fail);
 
-                    }
+                                    }
 
+                                });
+                    }
                 });
-    }
 
+            }
+        });
+
+    }
+    /**
+     * 图片压缩
+     *
+     * @return
+     */
+    private File compressImage(String fileUrl) {
+        ImageCompress compress = new ImageCompress();
+        ImageCompress.CompressOptions options = new ImageCompress.CompressOptions();
+        options.uri = fileUrl;
+        StringBuilder filename = Util.getThreadSafeStringBuilder();
+        filename.append(Util.getDirectory().getAbsoluteFile()).append(getPhotoName(System.currentTimeMillis() / 1000)) ;
+        options.destFile = new File(filename.toString());
+//        options.fileKey = this.fileKey;
+//        options.isUploadTest = mIsUploadTest;
+        compress.compressImageFile(options);
+        return options.destFile;
+    }
     @Override
     public void initView() {
         mList = new ArrayList<>();

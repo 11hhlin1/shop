@@ -54,8 +54,8 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
         Glide.with(mContext)
                 .load(UrlUtil.getHttpUrl(info.thumbAvatar))
                 .centerCrop()
-                .placeholder(R.mipmap.all_img_dot_pr)
-                .error(R.mipmap.all_img_dot_pr)
+                .placeholder(R.mipmap.s_user)
+                .error(R.mipmap.s_user)
                 .bitmapTransform(new GlideCircleTransform(mContext))
                 .into(viewHolder.mAvatar);
         viewHolder.mNickName.setText(info.nickname);
@@ -141,8 +141,8 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
             Glide.with(mContext)
                     .load(UrlUtil.getHttpUrl(url))
                     .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher)
-                    .error(R.mipmap.ic_launcher)
+                    .placeholder(R.mipmap.s_sq_03)
+                    .error(R.mipmap.s_sq_03)
                     .into(viewTag.imageView);
             return convertView;
         }
