@@ -10,7 +10,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.gjj.applibrary.http.callback.BaseList;
 import com.gjj.applibrary.http.callback.CommonCallback;
+import com.gjj.applibrary.http.callback.ListCallback;
+import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
@@ -108,58 +111,16 @@ public class CommunityFragment extends BaseFragment{
                 .tag(this)
                 .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                 .params(params)
-                .execute(new CommonCallback<CommunityInfoList>() {
+                .execute(new ListCallback<CommunityInfo>(CommunityInfo.class) {
                     @Override
-                    public CommunityInfoList parseNetworkResponse(Response response) throws Exception {
-                        String responseData = response.body().string();
-                        if (TextUtils.isEmpty(responseData)) return null;
-                        JSONObject jsonObject = JSON.parseObject(responseData);
-                        final String msg = jsonObject.getString("msg");
-                        final int code = jsonObject.getIntValue("code");
-                        String data = jsonObject.getString("data");
-                        switch (code) {
-                            case 0:
-
-//                                JSONArray jsonArray = JSONArray.parseArray(data);
-//                                int len = jsonArray.size();
-//                                ArrayList<CommunityInfo> list = new ArrayList<CommunityInfo>();
-//                                for (int i = 0 ; i< len; i++){
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-//                                    CommunityInfo info = new CommunityInfo();
-//                                    info.thumbAvatar = object.getString("thumbAvatar");
-//                                    info.nickname = object.getString("nickname");
-//                                    info.content = object.getString("content");
-//                                    info.time = object.getIntValue("time");
-//                                    String [] images = object.getString("imageList").split(",");
-////                                    info.imageList = JSON.parseArray(object.getString("imageList"), String.class);
-////                                    info.thumbList = JSON.parseArray(object.getString("thumbList"), String.class);
-//                                    List<String> imageList = new ArrayList<String>();
-//                                    Collections.addAll(imageList, images);
-//
-//                                    info.imageList = imageList;
-//                                    String [] thumbs = object.getString("thumbList").split(",");
-//                                    List<String> thumbList = new ArrayList<String>();
-//                                    Collections.addAll(thumbList, thumbs);
-//                                    info.thumbList = thumbList;
-//                                    list.add(info);
-//                                }
-                                CommunityInfoList communityInfoList = new CommunityInfoList();
-                                communityInfoList.list = JSON.parseArray(data, CommunityInfo.class);
-                                return communityInfoList;
-                            default:
-                                throw new IllegalStateException("错误代码：" + code + "，错误信息：" + msg);
-                        }
-                    }
-
-                    @Override
-                    public void onResponse(boolean isFromCache, CommunityInfoList communityInfoList, Request request, @Nullable Response response) {
+                    public void onResponse(boolean isFromCache, BaseList baseList, Request request, @Nullable Response response) {
                         if (start == 0) {
                             mPtrLayout.onRefreshComplete();
                         } else {
                             mRecyclerView.onLoadMoreComplete();
                         }
                         List<CommunityInfo> infoList;
-                        infoList = communityInfoList.list;
+                        infoList = baseList.list;
                         if(start == 0) {
                             mAdapter.setData(infoList);
                         } else {
@@ -174,6 +135,7 @@ public class CommunityFragment extends BaseFragment{
 
                     @Override
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                        super.onError(isFromCache, call, response, e);
                         if (start == 0) {
                             mPtrLayout.onRefreshComplete();
                         } else {
@@ -183,6 +145,102 @@ public class CommunityFragment extends BaseFragment{
                         ToastUtil.shortToast(R.string.fail);
                     }
                 });
+//        OkHttpUtils.get(ApiConstants.COMMUNITY_LIST)
+//                .tag(this)
+//                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+//                .params(params)
+//                .execute(new CommonCallback<CommunityInfoList>() {
+//                    @Override
+//                    public CommunityInfoList parseNetworkResponse(Response response) throws Exception {
+//                        String responseData = response.body().string();
+//                        if (TextUtils.isEmpty(responseData)) return null;
+//                        JSONObject jsonObject = JSON.parseObject(responseData);
+//                        final String msg = jsonObject.getString("msg");
+//                        final int code = jsonObject.getIntValue("code");
+//                        String data = jsonObject.getString("data");
+//                        switch (code) {
+//                            case 0:
+//
+////                                JSONArray jsonArray = JSONArray.parseArray(data);
+////                                int len = jsonArray.size();
+////                                ArrayList<CommunityInfo> list = new ArrayList<CommunityInfo>();
+////                                for (int i = 0 ; i< len; i++){
+////                                    JSONObject object = jsonArray.getJSONObject(i);
+////                                    CommunityInfo info = new CommunityInfo();
+////                                    info.thumbAvatar = object.getString("thumbAvatar");
+////                                    info.nickname = object.getString("nickname");
+////                                    info.content = object.getString("content");
+////                                    info.time = object.getIntValue("time");
+////                                    String [] images = object.getString("imageList").split(",");
+//////                                    info.imageList = JSON.parseArray(object.getString("imageList"), String.class);
+//////                                    info.thumbList = JSON.parseArray(object.getString("thumbList"), String.class);
+////                                    List<String> imageList = new ArrayList<String>();
+////                                    Collections.addAll(imageList, images);
+////
+////                                    info.imageList = imageList;
+////                                    String [] thumbs = object.getString("thumbList").split(",");
+////                                    List<String> thumbList = new ArrayList<String>();
+////                                    Collections.addAll(thumbList, thumbs);
+////                                    info.thumbList = thumbList;
+////                                    list.add(info);
+////                                }
+//
+//                                List<CommunityInfo> communityInfos = new ArrayList<CommunityInfo>();
+//                                CommunityInfo communityInfo = new CommunityInfo();
+//                                communityInfo.content = "dsdada";
+//                                communityInfo.nickname = "哈哈";
+//                                communityInfo.thumbAvatar= "http://blog.csdn.net/gaojinshan/article/details/30260707";
+//                                ArrayList<String> strings = new ArrayList<String>();
+//                                strings.add("http://www.chuchaiyi.com/swagger/ui/index#!/Flight/Flight_GetFlightLocations");
+//                                strings.add("http://www.chuchaiyi.com/swagger/ui/index#!/Flight/Flight_GetFlightLocations");
+//                                communityInfo.imageList =strings;
+//                                ArrayList<String> strings2 = new ArrayList<String>();
+//                                strings2.add("http://www.chuchaiyi.com/swagger/ui/index#!/Flight/Flight_GetFlightLocations");
+//                                strings2.add("http://www.chuchaiyi.com/swagger/ui/index#!/Flight/Flight_GetFlightLocations");
+//                                communityInfo.thumbList =strings2;
+//                                communityInfos.add(communityInfo);
+//                                String jsonString2 = JSON.toJSONString(communityInfos);
+//                                L.d("@@@@@" +jsonString2);
+//                                CommunityInfoList communityInfoList = new CommunityInfoList();
+//                                communityInfoList.list = JSON.parseArray(jsonString2, CommunityInfo.class);
+//                                return communityInfoList;
+//                            default:
+//                                throw new IllegalStateException("错误代码：" + code + "，错误信息：" + msg);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onResponse(boolean isFromCache, CommunityInfoList communityInfoList, Request request, @Nullable Response response) {
+//                        if (start == 0) {
+//                            mPtrLayout.onRefreshComplete();
+//                        } else {
+//                            mRecyclerView.onLoadMoreComplete();
+//                        }
+//                        List<CommunityInfo> infoList;
+//                        infoList = communityInfoList.list;
+//                        if(start == 0) {
+//                            mAdapter.setData(infoList);
+//                        } else {
+//                            mAdapter.addData(infoList);
+//                        }
+//                        if(infoList.size() < SIZE) {
+//                            mRecyclerView.setHasLoadMore(false);
+//                        } else {
+//                            mRecyclerView.setHasLoadMore(true);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+//                        if (start == 0) {
+//                            mPtrLayout.onRefreshComplete();
+//                        } else {
+//                            mRecyclerView.onLoadMoreComplete();
+//                        }
+//                        if(!isFromCache)
+//                        ToastUtil.shortToast(R.string.fail);
+//                    }
+//                });
 //                .postJson(jsonObject.toString())
 //                .execute(new CommonCallback<Object>(CommunityInfoList.class) {
 //                    @Override

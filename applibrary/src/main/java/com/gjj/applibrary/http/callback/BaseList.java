@@ -1,10 +1,15 @@
 package com.gjj.applibrary.http.callback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/14.
  */
-public class BaseList<K> {
-    public ArrayList<K> list;
+public class BaseList<T> {
+//    public Class<T> clazz;
+//    public BaseList(Class<T> clazz) {
+//        this.clazz = clazz;
+//    }
+    public List<T> list;
 }
