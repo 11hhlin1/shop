@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:paddingLeft="12dp"
+    android:paddingRight="12dp"
     android:paddingTop="13dp">
 
     <LinearLayout
@@ -41,17 +42,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:cacheColorHint="@android:color/transparent"
-        android:horizontalSpacing="2dp"
+        android:horizontalSpacing="5dp"
         android:layout_marginTop="@dimen/margin_30p"
         android:listSelector="@android:color/transparent"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="2dp"
+        android:verticalSpacing="6dp"
         android:gravity="center"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="17dp"
+        android:paddingBottom="17dp">
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
@@ -64,7 +66,7 @@
             android:id="@+id/share_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/fx_icon"/>
     </RelativeLayout>
 </LinearLayout>
