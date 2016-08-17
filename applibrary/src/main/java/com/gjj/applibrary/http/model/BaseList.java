@@ -1,4 +1,4 @@
-package com.gjj.applibrary.http.callback;
+package com.gjj.applibrary.http.model;
 
 import java.util.ArrayList;
 import java.util.List;

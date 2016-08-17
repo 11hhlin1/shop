@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.gjj.applibrary.http.model.BaseList;
 import com.lzy.okhttputils.OkHttpUtils;
 
 import org.json.JSONObject;

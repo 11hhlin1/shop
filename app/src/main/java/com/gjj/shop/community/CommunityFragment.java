@@ -2,18 +2,11 @@ package com.gjj.shop.community;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
-import com.gjj.applibrary.http.callback.BaseList;
-import com.gjj.applibrary.http.callback.CommonCallback;
+import com.gjj.applibrary.http.model.BaseList;
 import com.gjj.applibrary.http.callback.ListCallback;
-import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
@@ -26,7 +19,6 @@ import com.lzy.okhttputils.cache.CacheMode;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 

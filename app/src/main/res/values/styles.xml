@@ -150,4 +150,16 @@
         <item name="android:windowEnterAnimation">@anim/popup_window_show</item>
         <item name="android:windowExitAnimation">@anim/popup_window_dismiss</item>
     </style>
+    <style name="AnimBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/effect_bg_show</item>
+        <item name="android:windowExitAnimation">@anim/popup_window_dismiss</item>
+    </style>
+    <style name="MyDialogStyleTop" >
+        <item name="android:windowAnimationStyle">@style/AnimBottom</item>
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsTranslucent">true</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
 </resources>
