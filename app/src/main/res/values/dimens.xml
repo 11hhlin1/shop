@@ -56,7 +56,7 @@
     <dimen name="margin_15p">7.5dp</dimen>
     <dimen name="margin_18p">9dp</dimen>
     <dimen name="margin_10p">5dp</dimen>
-    <dimen name="margin_6p">3dp</dimen>
+    <dimen name="margin_2p">1dp</dimen>
 
     <!-- 控件的宽度，最好为48dp -->
     <dimen name="line_height">1px</dimen>

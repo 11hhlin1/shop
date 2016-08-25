@@ -24,6 +24,7 @@ import com.gjj.applibrary.util.MD5Util;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
+import com.gjj.shop.app.BaseApplication;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.main.MainActivity;
 import com.gjj.shop.model.UserInfo;
@@ -146,7 +147,7 @@ public class LoginActivity extends Activity {
                         dismissProgressDialog();
                             if(rspInfo != null) {
                                 L.d("@@@@@>>", rspInfo.token);
-                                PreferencesManager.getInstance().put(BundleKey.TOKEN, rspInfo.token);
+                                BaseApplication.getUserMgr().saveUserInfo(rspInfo);
                                 Intent intent = new Intent();
                                 intent.setClass(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);

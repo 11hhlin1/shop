@@ -19,6 +19,7 @@ import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
+import com.gjj.shop.app.BaseApplication;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.main.MainActivity;
 import com.gjj.shop.model.UserInfo;
@@ -163,7 +164,7 @@ public class RegisterFragment extends BaseFragment {
                         if(activity != null) {
                             if(rspInfo != null) {
                                 L.d("@@@@@>>", rspInfo.token);
-                                PreferencesManager.getInstance().put(BundleKey.TOKEN, rspInfo.token);
+                                BaseApplication.getUserMgr().saveUserInfo(rspInfo);
                                 Intent intent = new Intent();
                                 intent.setClass(activity, MainActivity.class);
                                 startActivity(intent);

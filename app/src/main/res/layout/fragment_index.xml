@@ -74,7 +74,6 @@
                         android:textSize="@dimen/textsize_12sp"
                         android:gravity="center"
                         android:textColor="@color/black"
-                        android:drawablePadding="@dimen/margin_10p"
                         android:drawableTop="@mipmap/nav01"
                         android:text="@string/cheap_shop"/>
                     <com.gjj.shop.widget.DrawableCenterTextView
@@ -85,7 +84,6 @@
                         android:textSize="@dimen/textsize_12sp"
                         android:gravity="center"
                         android:textColor="@color/black"
-                        android:drawablePadding="@dimen/margin_6p"
                         android:drawableTop="@mipmap/nav02"
                         android:text="@string/foreign_shop"/>
                     <com.gjj.shop.widget.DrawableCenterTextView
@@ -97,7 +95,6 @@
                         android:includeFontPadding="false"
                         android:gravity="center"
                         android:textColor="@color/black"
-                        android:drawablePadding="@dimen/margin_6p"
                         android:drawableTop="@mipmap/nav03"
                         android:text="@string/supermarket_shop"/>
                     <com.gjj.shop.widget.DrawableCenterTextView
@@ -108,7 +105,6 @@
                         android:textSize="@dimen/textsize_12sp"
                         android:gravity="center"
                         android:textColor="@color/black"
-                        android:drawablePadding="@dimen/margin_6p"
                         android:drawableTop="@mipmap/nav04"
                         android:text="@string/factory_shop"/>
                     <com.gjj.shop.widget.DrawableCenterTextView
@@ -119,7 +115,6 @@
                         android:textSize="@dimen/textsize_12sp"
                         android:gravity="center"
                         android:textColor="@color/black"
-                        android:drawablePadding="@dimen/margin_6p"
                         android:drawableTop="@mipmap/nav05"
                         android:text="@string/factory_shop"/>
                 </LinearLayout>
@@ -155,7 +150,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/margin_6p"
+                    android:layout_marginTop="@dimen/margin_2p"
                     android:background="@color/white"
                     android:orientation="vertical">
                     <View

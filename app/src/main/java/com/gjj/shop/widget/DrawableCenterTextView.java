@@ -35,7 +35,7 @@ public class DrawableCenterTextView extends TextView {
         int drawHeight = drawable.getIntrinsicHeight();
         int drawPadding = getCompoundDrawablePadding();
         float contentHeight = textSize + drawHeight + drawPadding;
-        int topPadding = (int) (getHeight() - contentHeight);
+        int topPadding = Util.dip2px(5);
         setPadding(0, topPadding , 0, 0);
         float dy = (contentHeight - getHeight())/2;
         canvas.translate(0, dy);
