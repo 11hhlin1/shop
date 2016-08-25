@@ -52,11 +52,14 @@ public class IndexFragment extends BaseFragment {
     @Bind(R.id.product_grid)
     UnScrollableGridView mUnScrollableGridView;
 
+    @Bind(R.id.shop_grid)
+    UnScrollableGridView mShopGridView;
+
     @Bind(R.id.scrollView)
     ScrollView mScrollView;
 
-    @Bind(R.id.cheap_shop)
-    TextView mCheapShop;
+//    @Bind(R.id.cheap_shop)
+//    TextView mCheapShop;
 
     @Bind(R.id.category)
     ImageView mCategory;
@@ -79,23 +82,23 @@ public class IndexFragment extends BaseFragment {
     void category() {
 
     }
-
-    @OnClick(R.id.cheap_shop)
+    private String[] mNames ;
+//    @OnClick(R.id.cheap_shop)
     void goCheapShop() {
         PageSwitcher.switchToTopNavPage(getActivity(),CheapShopListFragment.class,null,getString(R.string.cheap_shop),"");
     }
 
-    @OnClick(R.id.foreign_shop)
+//    @OnClick(R.id.foreign_shop)
     void goForeignShop() {
         PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
     }
 
-    @OnClick(R.id.factory_shop)
+//    @OnClick(R.id.factory_shop)
     void goFactoryShop() {
         PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
     }
 
-    @OnClick(R.id.supermarket_shop)
+//    @OnClick(R.id.supermarket_shop)
     void goSuperMaketShop() {
         PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
     }
@@ -170,6 +173,36 @@ public class IndexFragment extends BaseFragment {
             productInfo.mUrl = images[0];
             list.add(productInfo);
         }
+        mNames = new String[5];
+        mNames[0]  = getString(R.string.cheap_shop);
+        mNames[1]  = getString(R.string.foreign_shop);
+        mNames[2]  = getString(R.string.supermarket_shop);
+        mNames[3]  = getString(R.string.factory_shop);
+        mNames[4]  = getString(R.string.food_shop);
+        ShopGridAdapter shopGridAdapter = new ShopGridAdapter(getActivity(), mNames);
+        mShopGridView.setAdapter(shopGridAdapter);
+        mShopGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i) {
+                    case 0:
+                        goCheapShop();
+                        break;
+                    case 1:
+                        goForeignShop();
+                        break;
+                    case 2:
+                        goFactoryShop();
+                        break;
+                    case 3:
+                        goSuperMaketShop();
+                        break;
+                    case 4:
+                        goSuperMaketShop();
+                        break;
+                }
+            }
+        });
 //        AdviceProductAdapter productAdapter = new AdviceProductAdapter(getActivity(), list);
 //        mProductAdapter = productAdapter;
 //        mAdviceList.setItemAnimator(null);
