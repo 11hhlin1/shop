@@ -58,8 +58,8 @@ public class GridAdapter extends BaseAdapter {
         Glide.with(mContext)
                 .load(productInfo.mUrl)
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.cj_sp_01)
+                .error(R.mipmap.cj_sp_01)
                 .into(viewTag.mProductIv);
         viewTag.mProductName.setText(productInfo.mName);
         return convertView;

@@ -184,6 +184,7 @@
                         android:id="@+id/product_grid"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/activity_bg_gray"
                         android:cacheColorHint="@android:color/transparent"
                         android:horizontalSpacing="5dp"
                         android:listSelector="@android:color/transparent"

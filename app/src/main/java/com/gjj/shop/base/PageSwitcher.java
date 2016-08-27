@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.gjj.applibrary.app.AppLib;
-import com.gjj.shop.main.MainActivity;
 import com.gjj.shop.wxapi.BundleKeyConstant;
 import com.gjj.shop.wxapi.WXEntryActivity;
 
@@ -26,6 +25,25 @@ public class PageSwitcher {
      * @param title 顶部导航标题，空则隐藏按钮
      * @param rightTitle 右边按钮标题，空则隐藏按钮
      */
+    public static void switchToTopNavPageNoTitle(Activity act, Class<? extends Fragment> fragment,
+                                          Bundle bundle, String title, String rightTitle) {
+        if (null == bundle) {
+            bundle = new Bundle();
+        }
+        bundle.putString(TopNavSubActivity.PARAM_TOP_TITLE, title);
+        bundle.putString(TopNavSubActivity.PARAM_TOP_RIGHT, rightTitle);
+        bundle.putInt(TopNavSubActivity.PARAM_TOP_HAS_TITLE, -1);
+        switchToTopNavPage(act, fragment, bundle);
+    }
+    /**
+     * 切换到带顶部导航界面
+     *
+     * @param act
+     * @param fragment
+     * @param bundle
+     * @param title 顶部导航标题，空则隐藏按钮
+     * @param rightTitle 右边按钮标题，空则隐藏按钮
+     */
     public static void switchToTopNavPage(Activity act, Class<? extends Fragment> fragment,
                                           Bundle bundle, String title, String rightTitle) {
         if (null == bundle) {
@@ -33,6 +51,7 @@ public class PageSwitcher {
         }
         bundle.putString(TopNavSubActivity.PARAM_TOP_TITLE, title);
         bundle.putString(TopNavSubActivity.PARAM_TOP_RIGHT, rightTitle);
+        bundle.putInt(TopNavSubActivity.PARAM_TOP_HAS_TITLE, 0);
         switchToTopNavPage(act, fragment, bundle);
     }
 

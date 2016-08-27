@@ -1,22 +1,15 @@
 package com.gjj.shop.base;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.gjj.applibrary.log.L;
 import com.gjj.shop.R;
-import com.gjj.shop.community.AddFeedFragment;
-import com.gjj.shop.event.EventOfAddPhoto;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,12 +21,14 @@ import butterknife.OnClick;
 public class TopNavSubActivity extends BaseSubActivity {
     public static final String PARAM_TOP_TITLE = "top_title";
     public static final String PARAM_TOP_RIGHT = "right_title";
-
+    public static final String PARAM_TOP_HAS_TITLE = "has_title";
     @Bind(R.id.back_icon)
     ImageView mBackIV;
 
     @Bind(R.id.tv_title)
     TextView mTopTitleTV;
+    @Bind(R.id.top_layout)
+    RelativeLayout mTopLayout;
     @Bind(R.id.right_btn)
     TextView mRightTitleTV;
 
@@ -70,10 +65,16 @@ public class TopNavSubActivity extends BaseSubActivity {
     protected void handleArgs(Bundle bundle) {
         super.handleArgs(bundle);
         if (null != bundle) {
-            String tp = bundle.getString(PARAM_TOP_TITLE);
-            setTopTitleTV(tp);
-            String tr = bundle.getString(PARAM_TOP_RIGHT);
-            setRightBtnText(tr);
+            int title = bundle.getInt(PARAM_TOP_HAS_TITLE);
+            if(title == 0) {
+                mTopLayout.setVisibility(View.VISIBLE);
+                String tp = bundle.getString(PARAM_TOP_TITLE);
+                setTopTitleTV(tp);
+                String tr = bundle.getString(PARAM_TOP_RIGHT);
+                setRightBtnText(tr);
+            } else {
+                mTopLayout.setVisibility(View.GONE);
+            }
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content);
             if (null != fragment && fragment instanceof BaseFragment) {
                 ((BaseFragment) fragment).handleArgs(bundle);

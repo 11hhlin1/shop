@@ -159,7 +159,7 @@ public class IndexFragment extends BaseFragment {
         mHorizontalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PageSwitcher.switchToTopNavPage(getActivity(),ShopFragment.class,null,"","");
+                PageSwitcher.switchToTopNavPageNoTitle(getActivity(),ShopFragment.class, null,"","");
             }
         });
 //        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
