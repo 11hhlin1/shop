@@ -1,7 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:orientation="vertical">
+<FrameLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/sj_bg">
+
+            <ImageView
+                android:id="@+id/shop_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/sj_logo"/>
+            <TextView
+                android:id="@+id/shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="7dp"
+                android:textSize="@dimen/textsize_18sp"
+                android:layout_below="@+id/shop_icon"
+                android:text="海绵宝宝"/>
+            <Button
+                android:id="@+id/contact_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shop_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:text="@string/call_service"
+                android:textColor="@color/white"
+                android:background="@mipmap/lxkf_btn_bg"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/shop_msg"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:gravity="left|center_vertical"
+            android:background="@color/white"
+            android:textColor="@color/color_404040"
+            android:paddingLeft="12dp"
+            android:textSize="@dimen/textsize_12sp"/>
+
+        <com.gjj.shop.widget.UnScrollableGridView
+            android:id="@+id/gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:horizontalSpacing="5dp"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="2"
+            android:padding="@dimen/margin_36px"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="6dp"
+            android:gravity="center">
+
+        </com.gjj.shop.widget.UnScrollableGridView>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/icon_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/fanhui"/>
 </FrameLayout>
+</ScrollView>

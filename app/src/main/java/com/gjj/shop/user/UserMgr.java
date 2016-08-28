@@ -40,6 +40,7 @@ public class UserMgr {
         PreferencesManager.getInstance().put(BundleKey.TOKEN, userInfo.getToken());
 //        BaseApplication.getDaoSession(AppLib.getContext()).getUserInfoDao().deleteAll();
         PreferencesManager.getInstance().put(userInfo);
+        mUserInfo = userInfo;
 //        BaseApplication.getDaoSession(AppLib.getContext()).getUserInfoDao().insert(userInfo);
     }
 

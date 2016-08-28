@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/advice_et"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@android:color/white"
+        android:ems="10"
+        android:gravity="start"
+        android:hint="@string/des_start_up"
+        android:maxLength="200"
+        android:minLines="4"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="@dimen/margin_30p"
+        android:scrollbars="vertical"
+        android:textColor="@color/black"
+        android:textColorHint="@color/secondary_gray"
+        android:textSize="@dimen/textsize_14sp" />
+    <View style="@style/horizontal_line" />
+
+    <Button
+        android:id="@+id/btn_commit"
+        style="@style/login_btn"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/single_line_height_132px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_30p"
+        android:text="@string/sure"/>
+</LinearLayout>

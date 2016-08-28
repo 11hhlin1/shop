@@ -1,6 +1,9 @@
 package com.gjj.shop.index;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Paint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +13,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gjj.shop.R;
+import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.model.ProductInfo;
+import com.gjj.shop.net.UrlUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +34,29 @@ public class GridAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
     }
 
+    public void setData(List<ProductInfo> msg) {
+        if (msg != mProductList) {
+            if (mProductList != null) {
+                mProductList.clear();
+            }
+            this.mProductList = msg;
+        }
+        notifyDataSetChanged();
+    }
+    public void addData(List<ProductInfo> albums) {
+        if (albums != mProductList) {
+            int position = mProductList.size() -1;
+            mProductList.addAll(albums);
+            notifyDataSetChanged();
+        }
+    }
     @Override
     public int getCount() {
         return mProductList.size();
     }
 
     @Override
-    public Object getItem(int position) {
+    public ProductInfo getItem(int position) {
         return mProductList.get(position);
     }
 
@@ -56,12 +77,15 @@ public class GridAdapter extends BaseAdapter {
         }
         ProductInfo productInfo = mProductList.get(position);
         Glide.with(mContext)
-                .load(productInfo.mUrl)
+                .load(UrlUtil.getHttpUrl(productInfo.logo))
                 .centerCrop()
                 .placeholder(R.mipmap.cj_sp_01)
                 .error(R.mipmap.cj_sp_01)
                 .into(viewTag.mProductIv);
-        viewTag.mProductName.setText(productInfo.mName);
+        viewTag.mProductName.setText(productInfo.name);
+        viewTag.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        viewTag.mProductName.setTag(position);
+
         return convertView;
     }
 
@@ -80,6 +104,17 @@ public class GridAdapter extends BaseAdapter {
 
         public ItemViewTag(View itemView) {
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = (int) mProductName.getTag();
+                    ProductInfo productInfo = getItem(pos);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("goodsId",String.valueOf(productInfo.goodsId));
+                    PageSwitcher.switchToTopNavPageNoTitle((Activity) mContext,ProductDetailFragment.class,bundle,"","");
+
+                }
+            });
         }
     }
 

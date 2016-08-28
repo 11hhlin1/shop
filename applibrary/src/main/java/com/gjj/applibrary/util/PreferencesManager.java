@@ -12,6 +12,7 @@ import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
 
 import com.gjj.applibrary.app.AppLib;
+import com.gjj.applibrary.log.L;
 
 import java.io.File;
 import java.util.Set;
@@ -150,6 +151,7 @@ public class PreferencesManager {
 		try {
 			Editor edit = preferences.edit();
 			String json = JsonMananger.beanToJson(t);
+			L.d("@@@@:" + t.getClass().getSimpleName());
 			edit.putString(t.getClass().getSimpleName(), json);
 			edit.commit();
 		}catch (Exception e) {
@@ -195,7 +197,8 @@ public class PreferencesManager {
 	public <T> Object get(Class<T> cls) {
 		Object obj = null;
 		try {
-			String json = preferences.getString(cls.getClass().getSimpleName(), "");
+			L.d("@@@@:" + cls.getSimpleName());
+			String json = preferences.getString(cls.getSimpleName(), "");
 			if(!TextUtils.isEmpty(json)){
 				obj = JsonMananger.jsonToBean(json, cls);
 			}

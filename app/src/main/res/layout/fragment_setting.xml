@@ -1,6 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/my_news_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:background="@color/white">
+        <View
+            style="@style/top_horizontal_line" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/my_news"
+            android:drawablePadding="6dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/version_item"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="@dimen/margin_90p"
+        android:background="@color/white">
+        <View
+            style="@style/top_horizontal_line" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="版本更新"
+            android:drawablePadding="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#b2b2b2"
+            android:textSize="@dimen/textsize_14sp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:drawablePadding="7dp"
+            android:text="1.0"
+            android:drawableRight="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/clean_data_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="清除缓存"
+            android:drawablePadding="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#b2b2b2"
+            android:textSize="@dimen/textsize_14sp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:drawablePadding="7dp"
+            android:text="1.2m"
+            android:drawableRight="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/advice_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/advice"
+            android:drawablePadding="6dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_jt"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_90p"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="接收通知"
+            android:drawablePadding="6dp"/>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            />
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
 </LinearLayout>

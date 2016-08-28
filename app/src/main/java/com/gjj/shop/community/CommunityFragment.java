@@ -48,7 +48,7 @@ public class CommunityFragment extends BaseFragment{
     ImageView mAddFeed;
     @Bind(R.id.tv_title)
     TextView mTitleTV;
-    private static final int SIZE = 20;
+    private static final int SIZE = 2;
 
     @OnClick(R.id.add_feed_btn)
     void addFeed() {
@@ -81,11 +81,12 @@ public class CommunityFragment extends BaseFragment{
         mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void loadMore() {
-                requestData(mAdapter.getItemCount() - 1);
+                requestData(mAdapter.getItemCount());
             }
         });
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_20p);
         mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+        mRecyclerView.setItemAnimator(null);
         mPtrLayout.setLastUpdateTimeRelateObject(this);
         mPtrLayout.disableWhenHorizontalMove(true);
         mPtrLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
@@ -166,7 +167,7 @@ public class CommunityFragment extends BaseFragment{
 ////                                    info.thumbAvatar = object.getString("thumbAvatar");
 ////                                    info.nickname = object.getString("nickname");
 ////                                    info.content = object.getString("content");
-////                                    info.time = object.getIntValue("time");
+////                                    info.createTime = object.getIntValue("createTime");
 ////                                    String [] images = object.getString("imageList").split(",");
 //////                                    info.imageList = JSON.parseArray(object.getString("imageList"), String.class);
 //////                                    info.thumbList = JSON.parseArray(object.getString("thumbList"), String.class);

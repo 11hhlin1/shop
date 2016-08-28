@@ -18,10 +18,9 @@
             android:id="@+id/et_sms_code"
             style="@style/login_edittext"
             android:layout_height="@dimen/margin_110p"
-            android:hint="@string/enter_sms"
+            android:hint="@string/hint_login_username"
             android:imeOptions="actionDone"
-            android:background="@null"
-            android:inputType="textPassword" />
+            android:background="@null" />
 
     </LinearLayout>
     <LinearLayout
@@ -33,20 +32,20 @@
         android:paddingRight="@dimen/margin_30p"
         android:orientation="vertical">
         <EditText
-            android:id="@+id/et_psw"
+            android:id="@+id/et_old_psw"
             style="@style/login_edittext"
             android:layout_height="@dimen/margin_110p"
-            android:hint="@string/enter_psw"
+            android:hint="@string/enter_old_psw"
             android:imeOptions="actionDone"
             android:background="@null"
             android:inputType="textPassword" />
         <View
             style="@style/horizontal_line"/>
         <EditText
-            android:id="@+id/et_psw_check"
+            android:id="@+id/et_new_psw"
             style="@style/login_edittext"
             android:layout_height="@dimen/margin_110p"
-            android:hint="@string/enter_psw_again"
+            android:hint="@string/enter_new_psw"
             android:imeOptions="actionDone"
             android:background="@null"
             android:inputType="textPassword" />

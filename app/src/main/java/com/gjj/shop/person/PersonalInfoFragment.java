@@ -25,16 +25,28 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.glide.GlideCircleTransform;
+import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.StringDialogCallback;
 import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.task.ForegroundTaskExecutor;
+import com.gjj.applibrary.util.ImageCompress;
 import com.gjj.applibrary.util.ToastUtil;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
+import com.gjj.shop.app.BaseApplication;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.community.AddFeedFragment;
+import com.gjj.shop.event.UpdateUserInfo;
+import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.ApiConstants;
+import com.gjj.shop.net.UrlUtil;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -63,6 +75,10 @@ public class PersonalInfoFragment extends BaseFragment {
     RelativeLayout changePswItem;
     @Bind(R.id.logout_btn)
     Button logoutBtn;
+    @Bind(R.id.name_tv)
+    TextView nameTV;
+    @Bind(R.id.phone_tv)
+    TextView phoneTV;
     @Bind(R.id.avatar)
     ImageView avatarIv;
 
@@ -79,7 +95,19 @@ public class PersonalInfoFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
+        UserInfo userInfo = BaseApplication.getUserMgr().getUser();
+        if(userInfo != null) {
+            Glide.with(getActivity())
+                    .load(UrlUtil.getHttpUrl(userInfo.getAvatar()))
+                    .centerCrop()
+                    .placeholder(R.mipmap.user_tx_img)
+                    .error(R.mipmap.user_tx_img)
+                    .bitmapTransform(new GlideCircleTransform(getActivity()))
+                    .into(avatarIv);
+            nameTV.setText(userInfo.nickname);
+            phoneTV.setText(userInfo.getPhone());
+        }
+     EventBus.getDefault().register(this);
     }
 
     @OnClick({R.id.avatar_item, R.id.name_item, R.id.address_item, R.id.change_psw_item})
@@ -248,40 +276,108 @@ public class PersonalInfoFragment extends BaseFragment {
         }
 
     }
-
+    /**
+     * 图片压缩
+     *
+     * @return
+     */
+    private File compressImage(String fileUrl) {
+        ImageCompress compress = new ImageCompress();
+        ImageCompress.CompressOptions options = new ImageCompress.CompressOptions();
+        options.uri = fileUrl;
+        StringBuilder filename = Util.getThreadSafeStringBuilder();
+        filename.append(Util.getDirectory().getAbsoluteFile()).append(getPhotoName(System.currentTimeMillis() / 1000)) ;
+        options.destFile = new File(filename.toString());
+//        options.fileKey = this.fileKey;
+//        options.isUploadTest = mIsUploadTest;
+        compress.compressImageFile(options);
+        return options.destFile;
+    }
 
     void setAvatar() {
+//        Glide.with(getActivity())
+//                .load(mPhotoUrl)
+//                .centerCrop()
+//                .placeholder(R.mipmap.all_img_dot_pr)
+//                .error(R.mipmap.all_img_dot_pr)
+//                .bitmapTransform(new GlideCircleTransform(getActivity()))
+//                .into(avatarIv);
+        ForegroundTaskExecutor.executeTask(new Runnable() {
+            @Override
+            public void run() {
+                final File file = compressImage(mPhotoUrl);
+//                HashMap<String, String> params = new HashMap<>();
+//                params.put("nickname", "");
+                List<File> fileList = new ArrayList<>();
+                fileList.add(file);
+
+                showLoadingDialog(R.string.committing,true);
+                OkHttpUtils.post(ApiConstants.UPDATE_USER_INFO)//
+                        .tag(this)//
+                        .cacheMode(CacheMode.NO_CACHE)
+//                        .params(params)
+                        .addFileParams("avatar", fileList)
+                        .execute(new JsonCallback<UserInfo>(UserInfo.class) {
+                            @Override
+                            public void onResponse(boolean isFromCache, UserInfo user, Request request, @Nullable Response response) {
+                               dismissLoadingDialog();
+                                ToastUtil.shortToast(R.string.commit_success);
+                                BaseApplication.getUserMgr().saveUserInfo(user);
+                                EventBus.getDefault().post(new UpdateUserInfo());
+                            }
+                            @Override
+                            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                                dismissLoadingDialog();
+                                if(response != null)
+                                    L.d("@@@@@>>", response.code());
+                                ToastUtil.shortToast(R.string.fail);
+
+                            }
+
+                        });
+
+            }
+        });
+
+
+//        HashMap<String, String> params = new HashMap<>();
+//        params.put("nickname", "");
+//        List<File> fileList = new ArrayList<>();
+//        fileList.add(new File(mPhotoUrl));
+//
+//        OkHttpUtils.post(ApiConstants.UPDATE_USER_INFO)//
+//                .tag(this)//
+//                .cacheMode(CacheMode.NO_CACHE)
+//                .params(params)
+//                .addFileParams("avatar", fileList)
+//                .execute(new StringDialogCallback(getActivity()) {
+//                    @Override
+//                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+//                        ToastUtil.shortToast(R.string.commit_success);
+////                        onBackPressed();
+//                    }
+//                    @Override
+//                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+//                        if(response != null)
+//                            L.d("@@@@@>>", response.code());
+//                        ToastUtil.shortToast(R.string.fail);
+//
+//                    }
+//
+//                });
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void setUserInfo(UpdateUserInfo event) {
+        UserInfo userInfo = BaseApplication.getUserMgr().getUser();
         Glide.with(getActivity())
-                .load(mPhotoUrl)
+                .load(UrlUtil.getHttpUrl(userInfo.avatar))
                 .centerCrop()
-                .placeholder(R.mipmap.all_img_dot_pr)
-                .error(R.mipmap.all_img_dot_pr)
+                .placeholder(R.mipmap.s_user)
+                .error(R.mipmap.s_user)
                 .bitmapTransform(new GlideCircleTransform(getActivity()))
                 .into(avatarIv);
-        HashMap<String, String> params = new HashMap<>();
-        params.put("nickname", "骂老子");
-        List<File> fileList = new ArrayList<>();
-        fileList.add(new File(mPhotoUrl));
-
-        OkHttpUtils.post(ApiConstants.UPDATE_USER_INFO)//
-                .tag(this)//
-                .cacheMode(CacheMode.NO_CACHE)
-                .params(params)
-                .addFileParams("avatar", fileList)
-                .execute(new StringDialogCallback(getActivity()) {
-                    @Override
-                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-                        ToastUtil.shortToast(R.string.commit_success);
-//                        onBackPressed();
-                    }
-                    @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        if(response != null)
-                            L.d("@@@@@>>", response.code());
-                        ToastUtil.shortToast(R.string.fail);
-
-                    }
-
-                });
+        nameTV.setText(userInfo.nickname);
     }
 }

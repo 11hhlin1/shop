@@ -23,6 +23,7 @@ import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.MD5Util;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.applibrary.util.ToastUtil;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.app.BaseApplication;
 import com.gjj.shop.base.PageSwitcher;
@@ -123,6 +124,10 @@ public class LoginActivity extends Activity {
         String phone = login_phone_number.getText().toString().trim().replaceAll(" ", "");
         if (TextUtils.isEmpty(phone)) {
             ToastUtil.shortToast(R.string.hint_login_username);
+            return;
+        }
+        if (!Util.isMobileNO(phone)) {
+            ToastUtil.shortToast(R.string.enter_mobile_error);
             return;
         }
         String psw = login_psw.getText().toString().trim()

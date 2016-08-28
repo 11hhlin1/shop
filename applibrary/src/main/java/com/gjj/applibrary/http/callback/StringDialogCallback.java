@@ -33,6 +33,7 @@ public abstract class StringDialogCallback extends CommonCallback<String> {
 
     @Override
     public String parseNetworkResponse(Response response) throws Exception {
+
         return response.body().string();
     }
 

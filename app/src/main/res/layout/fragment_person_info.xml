@@ -49,6 +49,7 @@
             android:text="@string/name" />
 
         <TextView
+            android:id="@+id/name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -77,6 +78,7 @@
             android:text="@string/contact_way" />
 
         <TextView
+            android:id="@+id/phone_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

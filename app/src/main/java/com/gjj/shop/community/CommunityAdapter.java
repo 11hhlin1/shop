@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
+import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseRecyclerViewAdapter;
@@ -66,8 +67,8 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
                 .bitmapTransform(new GlideCircleTransform(mContext))
                 .into(viewHolder.mAvatar);
         viewHolder.mNickName.setText(info.nickname);
-        viewHolder.mDesc.setText(info.content);
-        viewHolder.mTime.setText(getTimeLineTitle(info.time));
+        viewHolder.mDesc.setText(info.details);
+        viewHolder.mTime.setText(getTimeLineTitle(info.createTime));
         viewHolder.mGridView.setAdapter(new GridAdapter(mContext, info.thumbList));
         viewHolder.mShareBtn.setTag(info);
     }
@@ -80,9 +81,13 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
     private String getTimeLineTitle(long timeMs) {
         Calendar dateCalendar = Calendar.getInstance();
         dateCalendar.setTimeInMillis(timeMs);
+        L.d("@@@@@timeMs:" + timeMs);
+        String dateStr = Util.formatTimeDate(timeMs);
         Calendar targetCalendar = Calendar.getInstance();
         long current = System.currentTimeMillis();
+        String currentStr = Util.formatTimeDate(current);
         targetCalendar.setTimeInMillis(current - current % 1000);
+        L.d("@@@@@current:" + current);
         //注意Calendar的set方法，不会立即刷新，get() 和 add() 会让 Calendar 立刻刷新
         targetCalendar.set(Calendar.HOUR_OF_DAY, 0);
         targetCalendar.set(Calendar.MINUTE, 0);
@@ -90,7 +95,7 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
         targetCalendar.get(Calendar.HOUR_OF_DAY);
         targetCalendar.get(Calendar.MINUTE);
         targetCalendar.get(Calendar.SECOND);
-        if (dateCalendar.equals(targetCalendar)) {
+        if (dateStr.equals(currentStr)) {
             String todaySDF = "HH:mm";
             SimpleDateFormat sfd = new SimpleDateFormat(todaySDF);
             return sfd.format(timeMs);
@@ -102,14 +107,14 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
         }
         // String otherSDF = "MM.dd";
 //        SimpleDateFormat sfd = new SimpleDateFormat(Util.M_D_FORMAT1_STR);
-        return Util.formatTimeDate3_MD(timeMs);
+        return Util.formatTimeDate3(timeMs);
     }
     public void addData(List<CommunityInfo> albums) {
         if (albums != items) {
             int position = items.size() -1;
             items.addAll(albums);
-//            notifyDataSetChanged();
-            notifyItemInserted(position >= 0 ? position : 0);
+            notifyDataSetChanged();
+//            notifyItemInserted(position >= 0 ? position : 0);
         }
     }
 
@@ -133,7 +138,7 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
             if(info != null) {
                 String url = "http://www.android100.org/html/201504/06/132445.html";
                 Bitmap bitmap = BitmapFactory.decodeResource(AppLib.getResources(), R.mipmap.nav05);
-                PageSwitcher.switchToShareActivity((Activity) mContext,url, info.content,info.content,info.thumbList.get(0),bitmap);
+                PageSwitcher.switchToShareActivity((Activity) mContext,url, info.details, info.details,info.thumbList.get(0),bitmap);
             }
         }
         public RvViewHolder(View itemView) {

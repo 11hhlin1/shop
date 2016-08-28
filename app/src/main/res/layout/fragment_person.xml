@@ -11,25 +11,38 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="220dp"
             android:background="@mipmap/user_bg">
             <RelativeLayout
                 android:id="@+id/avatar_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="76.5dp"
+                android:layout_height="76.5dp"
                 android:layout_centerInParent="true"
                 android:background="@mipmap/user_tx_border">
                 <ImageView
                     android:id="@+id/avatar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="71dp"
+                    android:layout_height="71dp"
                     android:layout_centerInParent="true"
                     android:src="@mipmap/user_tx_img"/>
             </RelativeLayout>
+            <TextView
+                android:id="@+id/nick_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/white"
+                android:text="水水"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/avatar_item"
+                 />
         </RelativeLayout>
+
     </LinearLayout>
 
     <RelativeLayout
@@ -64,70 +77,82 @@
         <ImageView
             style="@style/bottom_horizontal_line"/>
     </RelativeLayout>
-
-    <LinearLayout
+    <com.gjj.shop.widget.UnScrollableGridView
+        android:id="@+id/order_grid"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:cacheColorHint="@android:color/transparent"
+        android:horizontalSpacing="5dp"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="5"
+        android:padding="@dimen/margin_36px"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="6dp"
+        android:gravity="center"/>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:background="@color/white">-->
 
-        <com.gjj.shop.widget.DrawableCenterTextView
-            android:id="@+id/pay_order"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/textsize_12sp"
-            android:gravity="center"
-            android:textColor="@color/color_737373"
-            android:drawablePadding="@dimen/margin_10p"
-            android:drawableTop="@mipmap/u_icon_01"
-            android:text="@string/pay_order"/>
-        <com.gjj.shop.widget.DrawableCenterTextView
-            android:id="@+id/accepting_order"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/textsize_12sp"
-            android:gravity="center"
-            android:textColor="@color/color_737373"
-            android:drawablePadding="@dimen/margin_10p"
-            android:drawableTop="@mipmap/u_icon_02"
-            android:text="@string/accepting_order"/>
-        <com.gjj.shop.widget.DrawableCenterTextView
-            android:id="@+id/accept_order"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/textsize_12sp"
-            android:includeFontPadding="false"
-            android:gravity="center"
-            android:textColor="@color/color_737373"
-            android:drawablePadding="@dimen/margin_10p"
-            android:drawableTop="@mipmap/u_icon_03"
-            android:text="@string/accept_order"/>
-        <com.gjj.shop.widget.DrawableCenterTextView
-            android:id="@+id/cancel_order"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/textsize_12sp"
-            android:gravity="center"
-            android:textColor="@color/color_737373"
-            android:drawablePadding="@dimen/margin_10p"
-            android:drawableTop="@mipmap/u_icon_04"
-            android:text="@string/cancel_order"/>
-        <com.gjj.shop.widget.DrawableCenterTextView
-            android:id="@+id/after_sale_order"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/textsize_12sp"
-            android:gravity="center"
-            android:textColor="@color/color_737373"
-            android:drawablePadding="@dimen/margin_10p"
-            android:drawableTop="@mipmap/u_icon_05"
-            android:text="@string/after_sale_order"/>
-    </LinearLayout>
+        <!--<com.gjj.shop.widget.DrawableCenterTextView-->
+            <!--android:id="@+id/pay_order"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:textSize="@dimen/textsize_12sp"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/color_737373"-->
+            <!--android:drawablePadding="@dimen/margin_10p"-->
+            <!--android:drawableTop="@mipmap/u_icon_01"-->
+            <!--android:text="@string/pay_order"/>-->
+        <!--<com.gjj.shop.widget.DrawableCenterTextView-->
+            <!--android:id="@+id/accepting_order"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:textSize="@dimen/textsize_12sp"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/color_737373"-->
+            <!--android:drawablePadding="@dimen/margin_10p"-->
+            <!--android:drawableTop="@mipmap/u_icon_02"-->
+            <!--android:text="@string/accepting_order"/>-->
+        <!--<com.gjj.shop.widget.DrawableCenterTextView-->
+            <!--android:id="@+id/accept_order"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:textSize="@dimen/textsize_12sp"-->
+            <!--android:includeFontPadding="false"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/color_737373"-->
+            <!--android:drawablePadding="@dimen/margin_10p"-->
+            <!--android:drawableTop="@mipmap/u_icon_03"-->
+            <!--android:text="@string/accept_order"/>-->
+        <!--<com.gjj.shop.widget.DrawableCenterTextView-->
+            <!--android:id="@+id/cancel_order"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:textSize="@dimen/textsize_12sp"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/color_737373"-->
+            <!--android:drawablePadding="@dimen/margin_10p"-->
+            <!--android:drawableTop="@mipmap/u_icon_04"-->
+            <!--android:text="@string/cancel_order"/>-->
+        <!--<com.gjj.shop.widget.DrawableCenterTextView-->
+            <!--android:id="@+id/after_sale_order"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:textSize="@dimen/textsize_12sp"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/color_737373"-->
+            <!--android:drawablePadding="@dimen/margin_10p"-->
+            <!--android:drawableTop="@mipmap/u_icon_05"-->
+            <!--android:text="@string/after_sale_order"/>-->
+    <!--</LinearLayout>-->
     <View
         style="@style/horizontal_line" />
     <RelativeLayout

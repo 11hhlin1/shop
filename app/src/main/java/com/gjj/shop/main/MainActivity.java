@@ -8,6 +8,7 @@ import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
+import com.gjj.shop.app.BaseApplication;
 import com.gjj.shop.base.BaseMainActivity;
 import com.gjj.shop.community.CommunityFragment;
 import com.gjj.shop.index.IndexFragment;
@@ -143,7 +144,7 @@ public class MainActivity extends BaseMainActivity {
                     public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
                         if(rspInfo != null) {
                             L.d("@@@@@>>", rspInfo.phone);
-
+                            BaseApplication.getUserMgr().saveUserInfo(rspInfo);
                         }
                     }
                     @Override

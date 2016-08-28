@@ -487,7 +487,7 @@ public class Util {
             df = new SimpleDateFormat(YYYY_MM_DD_FORMAT1_STR);
             THREAD_SAFE_YYYY_MM_DD_FORMAT1.set(df);
         }
-        return df.format(timeMillis * 1000l);
+        return df.format(timeMillis);
     }
     /**
      * 格式化时间，例如2004.5.16
@@ -557,7 +557,7 @@ public class Util {
             df = new SimpleDateFormat(MM_DD_FORMAT_STR);
             THREAD_SAFE_MM_DD_FORMAT.set(df);
         }
-        return df.format(timeSecond * 1000);
+        return df.format(timeSecond);
     }
 
     /**
@@ -580,7 +580,7 @@ public class Util {
             df = new SimpleDateFormat(M_D_FORMAT_STR);
             THREAD_SAFE_M_D_FORMAT.set(df);
         }
-        return df.format(timeSecond * 1000);
+        return df.format(timeSecond / 1000);
     }
 
 

@@ -12,8 +12,8 @@ public class CommunityInfo implements Serializable {
     private static final long serialVersionUID = -3143882360259832554L;
     public String thumbAvatar;
     public String nickname;
-    public String content;
-    public long time;
+    public String details;
+    public long createTime;
     public List<String> imageList;
     public List<String> thumbList;
 

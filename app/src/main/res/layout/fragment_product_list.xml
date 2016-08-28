@@ -13,7 +13,7 @@
         app:ptr_duration_to_close="300"
         app:ptr_duration_to_close_header="2000"
         app:ptr_keep_header_when_refresh="true">
-    <GridView
+    <cn.finalteam.loadingviewfinal.GridViewFinal
         android:id="@+id/product_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

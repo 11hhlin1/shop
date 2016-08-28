@@ -41,6 +41,8 @@ import com.lzy.okhttputils.request.BaseRequest;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -111,7 +113,7 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
             @Override
             public void run() {
                 final HashMap<String, String> params = new HashMap<>();
-                params.put("content", mDesc.getText().toString());
+                params.put("details", mDesc.getText().toString());
                 final List<File> fileList = new ArrayList<>();
                 for (String path: mList){
                     File file = compressImage(path);
@@ -129,8 +131,20 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
                                 .execute(new StringDialogCallback(getActivity()) {
                                     @Override
                                     public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-                                        ToastUtil.shortToast(R.string.commit_success);
-                                        onBackPressed();
+                                        JSONObject jsonObject = null;
+                                        try {
+                                            jsonObject = new JSONObject(s);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        final int code = jsonObject.optInt("code", 1);
+                                        if(code == 0) {
+                                            ToastUtil.shortToast(R.string.commit_success);
+                                            onBackPressed();
+                                        } else {
+                                            ToastUtil.shortToast(getActivity(),response.message());
+                                        }
+
                                     }
                                     @Override
                                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {

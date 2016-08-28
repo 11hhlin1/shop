@@ -40,22 +40,15 @@
                 android:textSize="@dimen/textsize_15sp"
                 android:text="￥20.00"/>
 
-            <FrameLayout
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/old_price"
+                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_a6a6a6"
                     android:textSize="@dimen/textsize_14sp"
                     android:text="￥26.00"/>
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/color_a6a6a6"/>
-            </FrameLayout>
+
 
         </LinearLayout>
 

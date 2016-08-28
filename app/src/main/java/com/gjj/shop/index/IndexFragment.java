@@ -72,6 +72,7 @@ public class IndexFragment extends BaseFragment {
 
     @Bind(R.id.shop_list)
     HorizontalListView mHorizontalListView;
+    private int[] mIcons = {R.mipmap.nav01,R.mipmap.nav02,R.mipmap.nav03,R.mipmap.nav04,R.mipmap.nav05};
 
     @OnClick(R.id.search_btn)
     void search() {
@@ -169,8 +170,8 @@ public class IndexFragment extends BaseFragment {
         ArrayList<ProductInfo> list = new ArrayList<ProductInfo>();
         for (int i = 0; i< 10; i++) {
             ProductInfo productInfo = new ProductInfo();
-            productInfo.mName = "的撒旦";
-            productInfo.mUrl = images[0];
+            productInfo.name = "的撒旦";
+            productInfo.logo = images[0];
             list.add(productInfo);
         }
         mNames = new String[5];
@@ -179,7 +180,7 @@ public class IndexFragment extends BaseFragment {
         mNames[2]  = getString(R.string.supermarket_shop);
         mNames[3]  = getString(R.string.factory_shop);
         mNames[4]  = getString(R.string.food_shop);
-        ShopGridAdapter shopGridAdapter = new ShopGridAdapter(getActivity(), mNames);
+        ShopGridAdapter shopGridAdapter = new ShopGridAdapter(getActivity(), mNames,mIcons);
         mShopGridView.setAdapter(shopGridAdapter);
         mShopGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -215,6 +216,7 @@ public class IndexFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ToastUtil.shortToast(view.getContext(), "product:"+position);
+                PageSwitcher.switchToTopNavPageNoTitle(getActivity(),ProductDetailFragment.class,null,"","");
             }
         });
         MainTaskExecutor.scheduleTaskOnUiThread(500, new Runnable() {

@@ -20,13 +20,12 @@ public class ShopGridAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context mContext;
     private String[] mNames;
+    private int[] mIcons;
 
-    private int[] mIcons = {R.mipmap.nav01,R.mipmap.nav02,R.mipmap.nav03,R.mipmap.nav04,R.mipmap.nav05};
 
-
-    public ShopGridAdapter(Context context, String [] names) {
+    public ShopGridAdapter(Context context, String [] names,int [] icons) {
         mContext = context;
-//        mIcons = icons;
+        mIcons = icons;
         mNames = names;
         mInflater = LayoutInflater.from(context);
     }

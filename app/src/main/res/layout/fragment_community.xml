@@ -26,6 +26,11 @@
 
 
     </RelativeLayout>
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+
     <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
         android:id="@+id/community_layout"
         android:layout_width="match_parent"
@@ -46,4 +51,5 @@
     </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
 
     <!--<include layout="@layout/layout_empty_view"/>-->
+    <!--</FrameLayout>-->
 </LinearLayout>

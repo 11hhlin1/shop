@@ -25,7 +25,7 @@
 
     <string name="login">登录</string>
     <string name="register">注册</string>
-    <string name="hint_login_username">请输入账号/手机号</string>
+    <string name="hint_login_username">请输入手机号</string>
     <string name="hint_login_pwd">请输入密码</string>
     <string name="forget_psw">忘记密码？</string>
     <string name="other_login">第三方登录</string>
@@ -37,6 +37,8 @@
     <string name="register_failed">注册失败</string>
     <string name="enter_sms">请输入短信验证码</string>
     <string name="enter_psw">请设置密码</string>
+    <string name="enter_old_psw">请输入旧密码</string>
+    <string name="enter_new_psw">请输入新密码</string>
     <string name="enter_psw_again">请再次确认密码</string>
     <string name="sure">确定</string>
     <string name="enter_mobile">请输入手机号</string>
@@ -55,6 +57,7 @@
     <string name="share">分享</string>
     <string name="commit">提交</string>
     <string name="commit_success">提交成功</string>
+    <string name="success">成功</string>
     <string name="fail">获取失败</string>
     <string name="all_select">全选</string>
     <string name="amount_money">合计:</string>
@@ -75,6 +78,8 @@
     <string name="name">姓名</string>
     <string name="contact_way">联系方式</string>
     <string name="address">收货地址</string>
+    <string name="change_address">修改地址</string>
+    <string name="add_address">新增地址</string>
     <string name="change_psw">修改登录密码</string>
     <string name="change_name">修改姓名</string>
     <string name="person_info">个人资料</string>
@@ -93,4 +98,18 @@
     <string name="share_success">分享成功</string>
     <string name="share_cancel">取消分享</string>
     <string name="share_fail">分享失败</string>
+    <string name="call_service">联系客服</string>
+    <string name="buy_now">立即购买</string>
+    <string name="add_shop">加入购物车</string>
+    <string name="choose_detail">选择规格</string>
+    <string name="pic_detail">图片详情</string>
+    <string name="user_advice">用户评价</string>
+    <string name="call">拨打</string>
+    <string name="advice">意见反馈</string>
+    <string name="my_news">我的消息</string>
+    <string name="amount">数量</string>
+    <string name="check_order">确认订单</string>
+    <string name="contact">联系人</string>
+    <string name="delete_address">删除当前地址</string>
+    <string name="committing">提交中</string>
 </resources>
