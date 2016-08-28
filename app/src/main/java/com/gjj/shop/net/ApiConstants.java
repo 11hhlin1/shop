@@ -4,7 +4,7 @@ package com.gjj.shop.net;
  * Created by user on 16/7/16.
  */
 public class ApiConstants {
-    public static final String host = "http://192.168.1.110:8080/";
+    public static final String host = "http://120.24.69.203:8080/";
     public static final String LOGIN = host + "user/login";
     public static final String REGISTER = host+ "user/register";
     public static final String GET_SMS_CODE = host+ "user/getsmscode";
