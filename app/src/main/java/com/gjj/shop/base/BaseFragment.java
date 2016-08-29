@@ -57,7 +57,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 展示加载中对话框
      */
-    protected void showLoadingDialog(int tipResId, boolean cancelable) {
+    public void showLoadingDialog(int tipResId, boolean cancelable) {
         CustomProgressDialog loadingDialog = mLoadingDialog;
         if (null == loadingDialog) {
             loadingDialog = new CustomProgressDialog(getActivity());
@@ -85,7 +85,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 关闭对话框
      */
-    protected void dismissLoadingDialog() {
+    public void dismissLoadingDialog() {
         CustomProgressDialog loadingDialog = mLoadingDialog;
         if (null != loadingDialog && loadingDialog.isShowing()) {
             loadingDialog.dismiss();

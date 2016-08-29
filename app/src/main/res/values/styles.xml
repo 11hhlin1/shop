@@ -16,8 +16,47 @@
     <style name="Theme.NoTitle.Transparent.Fullscreen" parent="Theme.NoTitle.Transparent">
         <item name="android:windowFullscreen">true</item>
     </style>
-    <style name="Splash" parent="Theme.NoTitle.Transparent.Fullscreen">
+    <style name="Splash" parent="Theme.NoTitle.Transparent">
         <item name="android:windowDisablePreview">true</item>
+    </style>
+    <style name="PhotoViewer" parent="Theme.NoTitle.Transparent">
+        <item name="android:windowAnimationStyle">@style/FadeAnimTheme</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+    <style name="Theme.NoTitle.Gray" parent="Theme.NoTitle.Transparent">
+        <item name="android:windowBackground">@color/activity_bg_gray</item>
+    </style>
+    <style name="FadeAnimTheme" parent="@android:style/Animation.Translucent">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_window_dismiss</item>
+    </style>
+    <style name="TopNavSub" parent="Theme.NoTitle.Transparent">
+        <item name="android:windowAnimationStyle">@style/SubActivityAnimTheme</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+    <style name="SubActivityAnimTheme" parent="@android:style/Animation.Activity">
+        <!--<item name="android:windowEnterAnimation">@anim/base_stay_orig</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/base_stay_orig</item>-->
+
+        <item name="android:activityOpenEnterAnimation">@anim/right_side_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/base_stay_orig</item>
+        <item name="android:activityCloseEnterAnimation">@anim/base_stay_orig</item>
+        <item name="android:activityCloseExitAnimation">@anim/right_side_out</item>
+        <item name="android:taskOpenEnterAnimation">@anim/right_side_in</item>
+        <item name="android:taskOpenExitAnimation">@anim/base_stay_orig</item>
+        <item name="android:taskCloseEnterAnimation">@anim/base_stay_orig</item>
+        <item name="android:taskCloseExitAnimation">@anim/right_side_out</item>
+        <item name="android:taskToFrontEnterAnimation">@anim/right_side_in</item>
+        <item name="android:taskToFrontExitAnimation">@anim/base_stay_orig</item>
+        <item name="android:taskToBackEnterAnimation">@anim/base_stay_orig</item>
+        <item name="android:taskToBackExitAnimation">@anim/right_side_out</item>
+        <!--<item name="fragmentOpenEnterAnimation">@anim/right_side_in</item>-->
+        <!--<item name="fragmentOpenExitAnimation">@anim/base_stay_orig</item>-->
+        <!--<item name="fragmentCloseEnterAnimation">@anim/base_stay_orig</item>-->
+        <!--<item name="fragmentCloseExitAnimation">@anim/right_side_out</item>-->
+        <!--<item name="fragmentFadeEnterAnimation">@null</item>-->
+        <!--<item name="fragmentFadeExitAnimation">@null</item>-->
     </style>
 
 

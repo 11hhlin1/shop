@@ -32,7 +32,7 @@ public class AddressFragment extends BaseFragment {
 
     @OnClick(R.id.add_address_btn)
     void setAddAddressBtn(){
-        PageSwitcher.switchToTopNavPage(getActivity(),AddAddressFragment.class, null, getString(R.string.add_address), "");
+        PageSwitcher.switchToTopNavPage(getActivity(),AddAddressFragment.class, null, getString(R.string.add_address), getString(R.string.save));
 
     }
     private AddressListAdapter mAdapter;

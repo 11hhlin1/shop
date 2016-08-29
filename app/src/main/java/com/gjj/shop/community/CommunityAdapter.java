@@ -2,14 +2,17 @@ package com.gjj.shop.community;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +24,8 @@ import com.gjj.shop.R;
 import com.gjj.shop.base.BaseRecyclerViewAdapter;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.net.UrlUtil;
+import com.gjj.shop.photo.PhotoData;
+import com.gjj.shop.photo.PhotoViewActivity;
 import com.gjj.shop.widget.UnScrollableGridView;
 
 import java.text.SimpleDateFormat;
@@ -58,7 +63,7 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         RvViewHolder viewHolder = (RvViewHolder) holder;
-        CommunityInfo info = items.get(position);
+        final CommunityInfo info = items.get(position);
         Glide.with(mContext)
                 .load(UrlUtil.getHttpUrl(info.thumbAvatar))
                 .centerCrop()
@@ -69,7 +74,32 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
         viewHolder.mNickName.setText(info.nickname);
         viewHolder.mDesc.setText(info.details);
         viewHolder.mTime.setText(getTimeLineTitle(info.createTime));
-        viewHolder.mGridView.setAdapter(new GridAdapter(mContext, info.thumbList));
+        if(viewHolder.mGridView.getTag() == null) {
+            GridAdapter adapter = new GridAdapter(mContext, info.thumbList, info.imageList);
+            viewHolder.mGridView.setAdapter(adapter);
+            viewHolder.mGridView.setTag(adapter);
+//            viewHolder.mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    int size = info.thumbList.size();
+//                    ArrayList<PhotoData> photoDataList = new ArrayList<PhotoData>(size);
+//                    for (int i = 0; i < size; i++) {
+//                        PhotoData data = new PhotoData();
+//                        data.photoUrl = UrlUtil.getHttpUrl(info.imageList.get(i));
+//                        data.thumbUrl = UrlUtil.getHttpUrl(info.thumbList.get(i));
+//                        photoDataList.add(data);
+//                    }
+//                    Intent intent = new Intent(mContext, PhotoViewActivity.class);
+//                    intent.putExtra("photoDataList", photoDataList);
+//                    intent.putExtra("index", position);
+//                    mContext.startActivity(intent);
+//                }
+//            });
+        } else {
+            GridAdapter adapter = (GridAdapter) viewHolder.mGridView.getTag();
+            viewHolder.mGridView.setAdapter(adapter);
+        }
+
         viewHolder.mShareBtn.setTag(info);
     }
     /**
@@ -148,14 +178,16 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
     }
 
     class GridAdapter extends BaseAdapter {
+        private List<String> mThumbList = new ArrayList<String>();
         private List<String> mImageList = new ArrayList<String>();
         private LayoutInflater mInflater;
         private Context mContext;
 
-        public GridAdapter(Context context, List<String> imageList) {
+        public GridAdapter(Context context, List<String> thumbList, List<String> imageList) {
             mContext = context;
             mImageList = imageList;
             mInflater = LayoutInflater.from(context);
+            mThumbList = thumbList;
         }
 
         @Override
@@ -183,22 +215,42 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
             } else {
                 viewTag = (ItemViewTag) convertView.getTag();
             }
-            String url = mImageList.get(position);
+            String url = mThumbList.get(position);
             Glide.with(mContext)
                     .load(UrlUtil.getHttpUrl(url))
                     .centerCrop()
                     .placeholder(R.mipmap.s_sq_03)
                     .error(R.mipmap.s_sq_03)
                     .into(viewTag.imageView);
+            viewTag.rootLl.setTag(R.id.list_index, position);
             return convertView;
         }
 
         class ItemViewTag {
             @Bind(R.id.imageView)
             ImageView imageView;
-
-            public ItemViewTag(View itemView) {
+            @Bind(R.id.root)
+            LinearLayout rootLl;
+            public ItemViewTag(final View itemView) {
                 ButterKnife.bind(this, itemView);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = (int) rootLl.getTag(R.id.list_index);
+                        int size = mThumbList.size();
+                        ArrayList<PhotoData> photoDataList = new ArrayList<PhotoData>(size);
+                        for (int i = 0; i < size; i++) {
+                            PhotoData data = new PhotoData();
+                            data.photoUrl = UrlUtil.getHttpUrl(mImageList.get(i));
+                            data.thumbUrl = UrlUtil.getHttpUrl(mThumbList.get(i));
+                            photoDataList.add(data);
+                        }
+                        Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                        intent.putExtra("photoDataList", photoDataList);
+                        intent.putExtra("index", position);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
         }
 

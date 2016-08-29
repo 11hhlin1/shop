@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.gjj.applibrary.http.callback.CommonCallback;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.StringDialogCallback;
 import com.gjj.applibrary.log.L;
@@ -62,9 +63,9 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
     public static final int GET_PHOTO_CODE = 2;
     public static final int GET_CAMERA_CODE = 3;
 
-    private  String DCIM = Environment.getExternalStorageDirectory() + "/"
+    private String DCIM = Environment.getExternalStorageDirectory() + "/"
             + Environment.DIRECTORY_DCIM + "/Camera/";
-    private  File rootDir = new File(DCIM);
+    private File rootDir = new File(DCIM);
 
     @Bind(R.id.desc_tv)
     EditText mDesc;
@@ -85,83 +86,87 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
     @Override
     public void onRightBtnClick() {
         super.onRightBtnClick();
-        if(TextUtils.isEmpty(mDesc.getText().toString())){
+        if (TextUtils.isEmpty(mDesc.getText().toString())) {
             return;
         }
-
-//        for (String path: mList){
-//           fileList.add(new File(path));
-//        }
-
-//        OkHttpUtils.post(ApiConstants.UPLOAD_IMAGE)//
-//                .tag(this)//
-//                .cacheMode(CacheMode.NO_CACHE)
-////                .params(params)
-//                .addFileParams("imageList", fileList)
-//                .execute(new StringDialogCallback(getActivity()) {
-//                    @Override
-//                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-//                        ToastUtil.shortToast(R.string.commit_success);
-//                    }
-//                    @Override
-//                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-//                        if(response != null) L.d("@@@@@>>", response.code());
-//                    }
-//
-//                });
+        if (Util.isListEmpty(mList)) {
+            return;
+        }
         ForegroundTaskExecutor.executeTask(new Runnable() {
             @Override
             public void run() {
+                showLoadingDialog(R.string.committing, false);
                 final HashMap<String, String> params = new HashMap<>();
                 params.put("details", mDesc.getText().toString());
                 final List<File> fileList = new ArrayList<>();
-                for (String path: mList){
+                for (String path : mList) {
                     File file = compressImage(path);
                     L.d("@@@@@" + file.getAbsolutePath());
                     fileList.add(file);
                 }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        OkHttpUtils.post(ApiConstants.COMMUNITY_PUBLISH)//
-                                .tag(AddFeedFragment.this)//
-                                .cacheMode(CacheMode.NO_CACHE)
-                                .params(params)
-                                .addFileParams("imageList", fileList)
-                                .execute(new StringDialogCallback(getActivity()) {
-                                    @Override
-                                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-                                        JSONObject jsonObject = null;
-                                        try {
-                                            jsonObject = new JSONObject(s);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                        final int code = jsonObject.optInt("code", 1);
-                                        if(code == 0) {
-                                            ToastUtil.shortToast(R.string.commit_success);
-                                            onBackPressed();
-                                        } else {
-                                            ToastUtil.shortToast(getActivity(),response.message());
-                                        }
+                OkHttpUtils.post(ApiConstants.COMMUNITY_PUBLISH)//
+                        .tag(AddFeedFragment.this)//
+                        .cacheMode(CacheMode.NO_CACHE)
+                        .params(params)
+                        .addFileParams("imageList", fileList)
+                        .execute(new CommonCallback<String>() {
+                            @Override
+                            public String parseNetworkResponse(Response response) throws Exception {
+                                return response.body().string();
+                            }
 
-                                    }
+                            @Override
+                            public void onAfter(boolean isFromCache, @Nullable String s, Call call, @Nullable Response response, @Nullable Exception e) {
+                                super.onAfter(isFromCache, s, call, response, e);
+                                dismissLoadingDialog();
+                            }
+                            @Override
+                            public void onResponse(boolean isFromCache, String s, Request request, @Nullable final Response response) {
+                                JSONObject jsonObject = null;
+                                try {
+                                    jsonObject = new JSONObject(s);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                if (jsonObject != null) {
+                                    final int code = jsonObject.optInt("code", 1);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (code == 0) {
+                                                ToastUtil.shortToast(R.string.commit_success);
+                                                onBackPressed();
+                                            } else {
+                                                assert response != null;
+                                                ToastUtil.shortToast(getActivity(), response.message());
+                                            }
+                                        }
+                                    });
+
+                                }
+                            }
+
+                            @Override
+                            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                                if (response != null)
+                                    L.d("@@@@@>>", response.code());
+                                runOnUiThread(new Runnable() {
                                     @Override
-                                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                                        if(response != null)
-                                            L.d("@@@@@>>", response.code());
+                                    public void run() {
                                         ToastUtil.shortToast(R.string.fail);
-
                                     }
-
                                 });
-                    }
-                });
+
+                            }
+
+                        });
+
 
             }
         });
 
     }
+
     /**
      * 图片压缩
      *
@@ -172,21 +177,22 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
         ImageCompress.CompressOptions options = new ImageCompress.CompressOptions();
         options.uri = fileUrl;
         StringBuilder filename = Util.getThreadSafeStringBuilder();
-        filename.append(Util.getDirectory().getAbsoluteFile()).append(getPhotoName(System.currentTimeMillis() / 1000)) ;
+        filename.append(Util.getDirectory().getAbsoluteFile()).append(getPhotoName(System.currentTimeMillis() / 1000));
         options.destFile = new File(filename.toString());
 //        options.fileKey = this.fileKey;
 //        options.isUploadTest = mIsUploadTest;
         compress.compressImageFile(options);
         return options.destFile;
     }
+
     @Override
     public void initView() {
         mList = new ArrayList<>();
         mAdapter = new AddPhotoAdapter(getActivity(), mList);
         mGridView.setAdapter(mAdapter);
         mAdapter.setSelectPhotoListener(this);
-//        EventBus.getDefault().register(this);
     }
+
 //
 //    @Subscribe(threadMode = ThreadMode.MAIN)
 //    public void addPhoto(EventOfAddPhoto event) {
@@ -199,6 +205,7 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
 //        }
 //        mAdapter.notifyDataSetChanged();
 //    }
+
     /**
      * 取消工程消息弹出框
      *
@@ -210,6 +217,7 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
             pickUpPopWindow.dismiss();
         }
     }
+
     public void doPickPhotoFromGallery() {
         Intent intent;
         if (Build.VERSION.SDK_INT < 19) {
@@ -230,6 +238,7 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
         mPhotoUrl = file.getAbsolutePath();
         getActivity().startActivityForResult(intent, AddFeedFragment.GET_CAMERA_CODE);
     }
+
     /**
      * 照片保存名字
      *
@@ -243,7 +252,7 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(getActivity() == null) {
+        if (getActivity() == null) {
             return;
         }
         if (resultCode != getActivity().RESULT_OK) {
@@ -257,7 +266,7 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
                 }
             }
         } else if (requestCode == AddFeedFragment.GET_CAMERA_CODE) {
-            if(!mList.contains(mPhotoUrl))
+            if (!mList.contains(mPhotoUrl))
                 mList.add(mPhotoUrl);
             mAdapter.notifyDataSetChanged();
         }
@@ -270,7 +279,7 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
      * @param selectedImage
      */
     protected void sendPicByUri(Uri selectedImage) {
-        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -281,7 +290,7 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
             if (picturePath == null || picturePath.equals("null")) {
                 return;
             }
-            if(!mList.contains(picturePath))
+            if (!mList.contains(picturePath))
                 mList.add(picturePath);
             mAdapter.notifyDataSetChanged();
         }

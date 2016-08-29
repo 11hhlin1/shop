@@ -1,5 +1,6 @@
 package com.gjj.shop.address;
 
+import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 
 /**
@@ -8,7 +9,7 @@ import com.gjj.shop.base.BaseFragment;
 public class AddAddressFragment extends BaseFragment{
     @Override
     public int getContentViewLayout() {
-        return 0;
+        return R.layout.fragment_add_address;
     }
 
     @Override

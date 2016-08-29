@@ -101,7 +101,7 @@
             android:layout_marginLeft="17dp"
             android:layout_gravity="center_vertical"
             android:text="详细地址"/>
-        <TextView
+        <EditText
             android:id="@+id/address_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -109,7 +109,8 @@
             android:textSize="@dimen/textsize_15sp"
             android:layout_marginLeft="100dp"
             android:layout_gravity="center_vertical"
-            android:text="我家大顶顶顶顶"
+            android:hint="我家大顶顶顶顶"
+            android:background="@null"
             />
     </FrameLayout>
     <View
@@ -136,7 +137,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/selector_check_box"
             android:button="@null"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginRight="10dp"/>
     </RelativeLayout>
     <View
         android:layout_marginTop="32dp"
@@ -147,7 +148,7 @@
         android:layout_height="46dp"
         android:textSize="@dimen/textsize_16sp"
         android:textColor="@color/color_ed394a"
-        android:text="@string/delete_address"
+        android:text="@string/save_address"
         android:background="@color/white"/>
     <View
         style="@style/horizontal_line"/>

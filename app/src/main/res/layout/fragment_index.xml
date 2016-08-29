@@ -43,7 +43,7 @@
         app:ptr_duration_to_close_header="2000"
         app:ptr_keep_header_when_refresh="true">
 
-        <ScrollView
+        <com.gjj.shop.widget.IndexScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -205,6 +205,6 @@
                         <!--app:noLoadMoreHideView="false"/>-->
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+        </com.gjj.shop.widget.IndexScrollView>
     </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
 </LinearLayout>

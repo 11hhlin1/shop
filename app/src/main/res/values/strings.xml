@@ -112,4 +112,8 @@
     <string name="contact">联系人</string>
     <string name="delete_address">删除当前地址</string>
     <string name="committing">提交中</string>
+
+    <!-- 工具类 -->
+    <string name="index_of_length">%1$s/%2$s</string>
+    <string name="save_address">保存地址</string>
 </resources>

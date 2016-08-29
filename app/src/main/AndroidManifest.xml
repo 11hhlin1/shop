@@ -95,7 +95,12 @@
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:theme="@style/TopNavSub"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name=".photo.PhotoViewActivity"
+            android:exported="false"
+            android:theme="@style/PhotoViewer"/>
         <!-- 分享 -->
         <activity
             android:name=".wxapi.WXEntryActivity"

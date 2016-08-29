@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.inputmethod.InputMethodManager;
 
+import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
 import com.gjj.applibrary.log.L;
 import com.gjj.shop.R;
 
@@ -239,10 +240,14 @@ public class BaseSubActivity extends FragmentActivity {
 
         FragmentTransaction fT = fm.beginTransaction();
 //        fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
         Fragment preFragment = fm.findFragmentById(R.id.content);
         if (null != preFragment) {
             fT.hide(preFragment);
-            fT.setCustomAnimations(R.anim.right_side_in, 0, 0, R.anim.right_side_out);
+//            FragmentTransactionExtended fragmentTransactionExtended = new FragmentTransactionExtended(getApplicationContext(), fT, preFragment, fragment, R.id.content);
+//            fragmentTransactionExtended.addTransition(FragmentTransactionExtended.GLIDE);
+//            fragmentTransactionExtended.commit();
+            fT.setCustomAnimations(R.anim.right_side_in, 0, 0, 0);
         }
 
         fT.add(R.id.content, fragment);

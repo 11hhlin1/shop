@@ -3,14 +3,14 @@
     android:shareInterpolator="false"
     android:zAdjustment="top" >
 
-    <alpha
-        android:duration="150"
-        android:fillAfter="true"
-        android:fillBefore="false"
-        android:fillEnabled="true"
-        android:fromAlpha="1.0"
-        android:interpolator="@android:anim/accelerate_interpolator"
-        android:toAlpha="0.0" />
+    <!--<alpha-->
+        <!--android:duration="150"-->
+        <!--android:fillAfter="true"-->
+        <!--android:fillBefore="false"-->
+        <!--android:fillEnabled="true"-->
+        <!--android:fromAlpha="1.0"-->
+        <!--android:interpolator="@android:anim/accelerate_interpolator"-->
+        <!--android:toAlpha="0.0" />-->
 
     <translate
         android:duration="250"
@@ -20,5 +20,11 @@
         android:fromXDelta="0%"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:toXDelta="5%" />
-
+    <!--<alpha-->
+        <!--android:duration="350"-->
+        <!--android:fillAfter="true"-->
+        <!--android:fillBefore="true"-->
+        <!--android:fillEnabled="true"-->
+        <!--android:fromXDelta="0%"-->
+        <!--android:toXDelta="5%" />-->
 </set>
