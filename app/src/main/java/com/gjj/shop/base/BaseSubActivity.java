@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.inputmethod.InputMethodManager;
 
-import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
 import com.gjj.applibrary.log.L;
 import com.gjj.shop.R;
 
