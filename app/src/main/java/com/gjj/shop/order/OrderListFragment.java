@@ -14,6 +14,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
+import cn.finalteam.loadingviewfinal.PtrDefaultHandler;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 
 /**
@@ -39,15 +40,22 @@ public class OrderListFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        mPtrFrame.setOnRefreshListener(new OnDefaultRefreshListener() {
+//        mPtrFrame.setOnRefreshListener(new OnDefaultRefreshListener() {
+//            @Override
+//            public void onRefreshBegin(PtrFrameLayout frame) {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mPtrFrame.onRefreshComplete();
+//                    }
+//                }, 200);
+//            }
+//        });
+
+        mPtrFrame.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPtrFrame.onRefreshComplete();
-                    }
-                }, 200);
+                mPtrFrame.refreshComplete();
             }
         });
     }

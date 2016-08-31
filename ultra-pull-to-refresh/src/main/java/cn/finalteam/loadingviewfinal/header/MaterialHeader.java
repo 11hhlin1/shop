@@ -13,7 +13,6 @@ import android.view.animation.Transformation;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 import cn.finalteam.loadingviewfinal.PtrUIHandler;
 import cn.finalteam.loadingviewfinal.PtrUIHandlerHook;
-import cn.finalteam.loadingviewfinal.indicator.PtrIndicator;
 
 public class MaterialHeader extends View implements PtrUIHandler {
 
@@ -162,9 +161,8 @@ public class MaterialHeader extends View implements PtrUIHandler {
     }
 
     @Override
-    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
-
-        float percent = Math.min(1f, ptrIndicator.getCurrentPercent());
+    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, int oldPosition, int currentPosition, float oldPercent, float currentPercent) {
+        float percent = Math.min(1f, currentPercent);
 
         if (status == PtrFrameLayout.PTR_STATUS_PREPARE) {
             mDrawable.setAlpha((int) (255 * percent));

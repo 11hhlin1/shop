@@ -1,8 +1,5 @@
 package cn.finalteam.loadingviewfinal;
 
-
-import cn.finalteam.loadingviewfinal.indicator.PtrIndicator;
-
 /**
  * A single linked list to wrap PtrUIHandler
  */
@@ -113,9 +110,6 @@ class PtrUIHandlerHolder implements PtrUIHandler {
 
     @Override
     public void onUIRefreshPrepare(PtrFrameLayout frame) {
-        if (!hasHandler()) {
-            return;
-        }
         PtrUIHandlerHolder current = this;
         do {
             final PtrUIHandler handler = current.getHandler();
@@ -148,12 +142,12 @@ class PtrUIHandlerHolder implements PtrUIHandler {
     }
 
     @Override
-    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
+    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, int oldPosition, int currentPosition, float oldPercent, float currentPercent) {
         PtrUIHandlerHolder current = this;
         do {
             final PtrUIHandler handler = current.getHandler();
             if (null != handler) {
-                handler.onUIPositionChange(frame, isUnderTouch, status, ptrIndicator);
+                handler.onUIPositionChange(frame, isUnderTouch, status, oldPosition, currentPosition, oldPercent, currentPercent);
             }
         } while ((current = current.mNext) != null);
     }

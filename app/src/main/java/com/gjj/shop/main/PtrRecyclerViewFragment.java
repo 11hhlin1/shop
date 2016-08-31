@@ -85,13 +85,13 @@ public class PtrRecyclerViewFragment extends BaseFragment {
         });
 
         mPtrRvLayout.setLastUpdateTimeRelateObject(this);
-        mPtrRvLayout.disableWhenHorizontalMove(true);
-        mPtrRvLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                requestData(1);
-            }
-        });
+//        mPtrRvLayout.disableWhenHorizontalMove(true);
+//        mPtrRvLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
+//            @Override
+//            public void onRefreshBegin(PtrFrameLayout frame) {
+//                requestData(1);
+//            }
+//        });
         mPtrRvLayout.autoRefresh();
     }
 

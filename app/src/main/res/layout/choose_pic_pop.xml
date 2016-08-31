@@ -50,7 +50,7 @@
             android:text="@string/dialog_default_cancel_title"
             android:background="@drawable/register_et_bg"
             android:textSize="@dimen/textsize_16sp"
-            android:textColor="@color/color_4486d8"
+            android:textColor="@color/color_ed394a"
             android:gravity="center"/>
     </LinearLayout>
 </RelativeLayout>

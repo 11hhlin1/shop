@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="128dp"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/product_cover"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="12dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:src="@mipmap/w_sp_01"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/product_cover"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_14sp"
+            android:text="皮毛大衣"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_404040"
+            android:textSize="@dimen/textsize_12sp"
+            android:layout_marginTop="5dp"
+            android:text="颜色 红"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/new_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_ed394a"
+                android:textSize="@dimen/textsize_15sp"
+                android:text="￥20.00"/>
+
+            <TextView
+                android:id="@+id/old_price"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_a6a6a6"
+                android:textSize="@dimen/textsize_14sp"
+                android:text="￥26.00"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

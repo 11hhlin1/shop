@@ -121,9 +121,13 @@ public class PhotoPagerAdapter extends PagerAdapter implements OnPhotoTapListene
                             int height = bitmap.getHeight();
                             int width = bitmap.getWidth();
                             int imageHeight = Util.getScreenHeight(mActivity) * width / height;
+                            if(imageHeight > Util.getScreenHeight(mActivity)) {
+                                imageHeight = Util.getScreenHeight(mActivity);
+                            }
                             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                                     imageHeight);
                             params.gravity = Gravity.CENTER;
+                            holder.photoView.setScaleType(ScaleType.CENTER);
                             holder.photoView.setLayoutParams(params);
                         }
                         Glide.with(mActivity)

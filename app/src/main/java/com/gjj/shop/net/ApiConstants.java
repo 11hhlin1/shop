@@ -7,7 +7,7 @@ public class ApiConstants {
     public static final String host = "http://120.24.69.203:8080/";
     public static final String LOGIN = host + "user/login";
     public static final String REGISTER = host+ "user/register";
-    public static final String GET_SMS_CODE = host+ "user/getsmscode";
+    public static final String GET_SMS_CODE = host+ "servlet/sendPhoneCode";
     public static final String CHANGE_PSW = host+ "user/updatePassword";
     public static final String GET_USER_INFO = host+ "user/info";
     public static final String FIND_PSW = host+ "user/findPassword";

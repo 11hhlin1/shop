@@ -15,9 +15,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.finalteam.loadingviewfinal.indicator.PtrIndicator;
 import cn.finalteam.loadingviewfinal.uptr.R;
-
 
 public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler {
 
@@ -66,14 +64,6 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
         mProgressBar = header.findViewById(R.id.ptr_classic_header_rotate_view_progressbar);
 
         resetView();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (mLastUpdateTimeUpdater != null) {
-            mLastUpdateTimeUpdater.stop();
-        }
     }
 
     public void setRotateAniTime(int time) {
@@ -235,12 +225,8 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
     }
 
     @Override
-    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
-
+    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, int lastPos, int currentPos, float oldPercent, float currentPercent) {
         final int mOffsetToRefresh = frame.getOffsetToRefresh();
-        final int currentPos = ptrIndicator.getCurrentPosY();
-        final int lastPos = ptrIndicator.getLastPosY();
-
         if (currentPos < mOffsetToRefresh && lastPos >= mOffsetToRefresh) {
             if (isUnderTouch && status == PtrFrameLayout.PTR_STATUS_PREPARE) {
                 crossRotateLineFromBottomUnderTouch(frame);

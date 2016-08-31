@@ -38,6 +38,7 @@
     <string name="enter_sms">请输入短信验证码</string>
     <string name="enter_psw">请设置密码</string>
     <string name="enter_old_psw">请输入旧密码</string>
+    <string name="old_psw">当前密码</string>
     <string name="enter_new_psw">请输入新密码</string>
     <string name="enter_psw_again">请再次确认密码</string>
     <string name="sure">确定</string>

@@ -13,19 +13,17 @@ import java.util.ArrayList;
 
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 import cn.finalteam.loadingviewfinal.PtrUIHandler;
-import cn.finalteam.loadingviewfinal.indicator.PtrIndicator;
 import cn.finalteam.loadingviewfinal.util.PtrLocalDisplay;
-
 
 public class StoreHouseHeader extends View implements PtrUIHandler {
 
     public ArrayList<StoreHouseBarItem> mItemList = new ArrayList<StoreHouseBarItem>();
 
-    private int mLineWidth = -1;
+    private int mLineWidth = PtrLocalDisplay.dp2px(1);
     private float mScale = 1;
-    private int mDropHeight = -1;
-    private float mInternalAnimationFactor = 0.7f;
-    private int mHorizontalRandomness = -1;
+    private int mDropHeight = PtrLocalDisplay.dp2px(40);
+    private float internalAnimationFactor = 0.7f;
+    private int horizontalRandomness = PtrLocalDisplay.SCREEN_WIDTH_PIXELS / 2;
 
     private float mProgress = 0;
 
@@ -62,10 +60,6 @@ public class StoreHouseHeader extends View implements PtrUIHandler {
     }
 
     private void initView() {
-        PtrLocalDisplay.init(getContext());
-        mLineWidth = PtrLocalDisplay.dp2px(1);
-        mDropHeight = PtrLocalDisplay.dp2px(40);
-        mHorizontalRandomness = PtrLocalDisplay.SCREEN_WIDTH_PIXELS / 2;
     }
 
     private void setProgress(float progress) {
@@ -170,7 +164,7 @@ public class StoreHouseHeader extends View implements PtrUIHandler {
             drawHeight = Math.max(drawHeight, endPoint.y);
 
             StoreHouseBarItem item = new StoreHouseBarItem(i, startPoint, endPoint, mTextColor, mLineWidth);
-            item.resetPosition(mHorizontalRandomness);
+            item.resetPosition(horizontalRandomness);
             mItemList.add(item);
         }
         mDrawZoneWidth = (int) Math.ceil(drawWidth);
@@ -211,12 +205,12 @@ public class StoreHouseHeader extends View implements PtrUIHandler {
             } else {
 
                 if (progress == 0) {
-                    storeHouseBarItem.resetPosition(mHorizontalRandomness);
+                    storeHouseBarItem.resetPosition(horizontalRandomness);
                     continue;
                 }
 
-                float startPadding = (1 - mInternalAnimationFactor) * i / len;
-                float endPadding = 1 - mInternalAnimationFactor - startPadding;
+                float startPadding = (1 - internalAnimationFactor) * i / len;
+                float endPadding = 1 - internalAnimationFactor - startPadding;
 
                 // done
                 if (progress == 1 || progress >= 1 - endPadding) {
@@ -227,7 +221,7 @@ public class StoreHouseHeader extends View implements PtrUIHandler {
                     if (progress <= startPadding) {
                         realProgress = 0;
                     } else {
-                        realProgress = Math.min(1, (progress - startPadding) / mInternalAnimationFactor);
+                        realProgress = Math.min(1, (progress - startPadding) / internalAnimationFactor);
                     }
                     offsetX += storeHouseBarItem.translationX * (1 - realProgress);
                     offsetY += -mDropHeight * (1 - realProgress);
@@ -252,7 +246,7 @@ public class StoreHouseHeader extends View implements PtrUIHandler {
     public void onUIReset(PtrFrameLayout frame) {
         loadFinish();
         for (int i = 0; i < mItemList.size(); i++) {
-            mItemList.get(i).resetPosition(mHorizontalRandomness);
+            mItemList.get(i).resetPosition(horizontalRandomness);
 
         }
     }
@@ -273,9 +267,8 @@ public class StoreHouseHeader extends View implements PtrUIHandler {
     }
 
     @Override
-    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
-
-        float currentPercent = Math.min(1f, ptrIndicator.getCurrentPercent());
+    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, int oldPosition, int currentPosition, float oldPercent, float currentPercent) {
+        currentPercent = Math.min(1f, currentPercent);
         setProgress(currentPercent);
         invalidate();
     }

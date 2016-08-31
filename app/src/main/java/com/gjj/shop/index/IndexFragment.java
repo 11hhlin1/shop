@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
+import cn.finalteam.loadingviewfinal.PtrDefaultHandler;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 import cn.finalteam.loadingviewfinal.RecyclerViewFinal;
 
@@ -122,15 +123,21 @@ public class IndexFragment extends BaseFragment {
     @Override
     public void initView() {
         mTitleTV.setText(R.string.app_name);
-        mPtrClassicFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
+//        mPtrClassicFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
+//            @Override
+//            public void onRefreshBegin(PtrFrameLayout frame) {
+//                   runOnUiThread(new Runnable() {
+//                       @Override
+//                       public void run() {
+//                           mPtrClassicFrameLayout.onRefreshComplete();
+//                       }
+//                   }, 200);
+//            }
+//        });
+        mPtrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                   runOnUiThread(new Runnable() {
-                       @Override
-                       public void run() {
-                           mPtrClassicFrameLayout.onRefreshComplete();
-                       }
-                   }, 200);
+                mPtrClassicFrameLayout.refreshComplete();
             }
         });
         List<String> stringList = new ArrayList<>();

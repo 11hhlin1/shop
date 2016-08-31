@@ -36,8 +36,9 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;  
 import android.view.GestureDetector.OnGestureListener;  
 import android.view.MotionEvent;  
-import android.view.View;  
-import android.widget.AdapterView;  
+import android.view.View;
+import android.view.ViewParent;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;  
 import android.widget.Scroller;  
   
@@ -332,8 +333,11 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
             synchronized(HorizontalListView.this){  
                 mNextX += (int)distanceX;  
             }  
-            requestLayout();  
-              
+            requestLayout();
+            ViewParent viewParent = getParent();
+            if (viewParent != null) {
+                viewParent.requestDisallowInterceptTouchEvent(true);
+            }
             return true;  
         }  
   

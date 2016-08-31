@@ -101,7 +101,7 @@ public class RegisterFragment extends BaseFragment {
     private void sendGetSmsReq(String account) {
         //TODO 获取验证码
         HashMap<String, String> params = new HashMap<>();
-        params.put("username", account);
+        params.put("phone", account);
 //        final JSONObject jsonObject = new JSONObject(params);
         OkHttpUtils.post(ApiConstants.GET_SMS_CODE)//
                 .tag(this)//

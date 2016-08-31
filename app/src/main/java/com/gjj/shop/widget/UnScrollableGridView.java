@@ -24,11 +24,11 @@ public class UnScrollableGridView extends GridView{
 
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
-            return true;//forbid its child(gridview) to scroll
-        }
-        return super.dispatchTouchEvent(ev);
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+//            return true;//forbid its child(gridview) to scroll
+//        }
+//        return super.dispatchTouchEvent(ev);
+//    }
 }

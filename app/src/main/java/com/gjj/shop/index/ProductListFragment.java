@@ -31,6 +31,7 @@ import cn.finalteam.loadingviewfinal.GridViewFinal;
 import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.OnLoadMoreListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
+import cn.finalteam.loadingviewfinal.PtrDefaultHandler;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 import okhttp3.Call;
 import okhttp3.Request;
@@ -73,8 +74,14 @@ public class ProductListFragment extends BaseFragment {
         });
 
         mPtrLayout.setLastUpdateTimeRelateObject(this);
-        mPtrLayout.disableWhenHorizontalMove(true);
-        mPtrLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
+//        mPtrLayout.disableWhenHorizontalMove(true);
+//        mPtrLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
+//            @Override
+//            public void onRefreshBegin(PtrFrameLayout frame) {
+//                requestData(0);
+//            }
+//        });
+        mPtrLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 requestData(0);
@@ -95,7 +102,7 @@ public class ProductListFragment extends BaseFragment {
                     @Override
                     public void onResponse(boolean isFromCache, BaseList baseList, Request request, @Nullable Response response) {
                         if (start == 0) {
-                            mPtrLayout.onRefreshComplete();
+                            mPtrLayout.refreshComplete();
                         } else {
                             mProductGrid.onLoadMoreComplete();
                         }
@@ -119,7 +126,7 @@ public class ProductListFragment extends BaseFragment {
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                         super.onError(isFromCache, call, response, e);
                         if (start == 0) {
-                            mPtrLayout.onRefreshComplete();
+                            mPtrLayout.refreshComplete();
                         } else {
                             mProductGrid.onLoadMoreComplete();
                         }

@@ -116,6 +116,7 @@ public class PersonalFragment extends BaseFragment {
                 PageSwitcher.switchToTopNavPage(getActivity(),OrderFragment.class,bundle,getString(R.string.my_order),null);
                 break;
             case R.id.collect_item:
+                PageSwitcher.switchToTopNavPage(getActivity(),MyCollectFragment.class,bundle,getString(R.string.my_love),null);
                 break;
             case R.id.contact_item:
                 CallUtil.askForMakeCall(getActivity(),"","400-82838838888");

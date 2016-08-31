@@ -1,10 +1,5 @@
 package cn.finalteam.loadingviewfinal;
 
-/**
- * Run a hook runnable, the runnable will run only once.
- * After the runnable is done, call resume to resume.
- * Once run, call takeover will directory call the resume action
- */
 public abstract class PtrUIHandlerHook implements Runnable {
 
     private Runnable mResumeAction;
@@ -45,11 +40,6 @@ public abstract class PtrUIHandlerHook implements Runnable {
         mStatus = STATUS_RESUMED;
     }
 
-    /**
-     * Hook should always have a resume action, which is hooked by this hook.
-     *
-     * @param runnable
-     */
     public void setResumeAction(Runnable runnable) {
         mResumeAction = runnable;
     }

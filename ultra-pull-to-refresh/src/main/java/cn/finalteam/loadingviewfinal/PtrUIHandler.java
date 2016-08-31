@@ -1,8 +1,5 @@
 package cn.finalteam.loadingviewfinal;
 
-
-import cn.finalteam.loadingviewfinal.indicator.PtrIndicator;
-
 /**
  *
  */
@@ -32,5 +29,5 @@ public interface PtrUIHandler {
      */
     public void onUIRefreshComplete(PtrFrameLayout frame);
 
-    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator);
+    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, int oldPosition, int currentPosition, float oldPercent, float currentPercent);
 }

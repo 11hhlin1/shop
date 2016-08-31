@@ -15,19 +15,11 @@
  */
 package cn.finalteam.loadingviewfinal.header;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
+import android.graphics.*;
 import android.graphics.Paint.Style;
-import android.graphics.Path;
-import android.graphics.PixelFormat;
-import android.graphics.RadialGradient;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Shader;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -35,16 +27,12 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
+import android.view.animation.*;
 import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.Transformation;
 
 import java.util.ArrayList;
 
 import cn.finalteam.loadingviewfinal.util.PtrLocalDisplay;
-
 
 /**
  * Fancy progress indicator for Material theme.
@@ -164,8 +152,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
         setUp(mWidth);
     }
 
-    private void setUp(final double diameter) {
-        PtrLocalDisplay.init(mParent.getContext());
+    @SuppressLint("NewApi") private void setUp(final double diameter) {
         final int shadowYOffset = PtrLocalDisplay.dp2px(Y_OFFSET);
         final int shadowXOffset = PtrLocalDisplay.dp2px(X_OFFSET);
         int mShadowRadius = PtrLocalDisplay.dp2px(SHADOW_RADIUS);

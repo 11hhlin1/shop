@@ -27,6 +27,7 @@ import butterknife.OnClick;
 import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.OnLoadMoreListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
+import cn.finalteam.loadingviewfinal.PtrDefaultHandler;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 import cn.finalteam.loadingviewfinal.RecyclerViewFinal;
 import okhttp3.Call;
@@ -53,7 +54,6 @@ public class CommunityFragment extends BaseFragment{
     @OnClick(R.id.add_feed_btn)
     void addFeed() {
         PageSwitcher.switchToTopNavPage(getActivity(),AddFeedFragment.class,null,getString(R.string.share),getString(R.string.commit));
-
     }
     private List<CommunityInfo> mCommunityInfoList;
     private CommunityAdapter mAdapter;
@@ -88,8 +88,14 @@ public class CommunityFragment extends BaseFragment{
         mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         mRecyclerView.setItemAnimator(null);
         mPtrLayout.setLastUpdateTimeRelateObject(this);
-        mPtrLayout.disableWhenHorizontalMove(true);
-        mPtrLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
+//        mPtrLayout.disableWhenHorizontalMove(true);
+//        mPtrLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
+//            @Override
+//            public void onRefreshBegin(PtrFrameLayout frame) {
+//                requestData(0);
+//            }
+//        });
+        mPtrLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 requestData(0);
@@ -110,7 +116,7 @@ public class CommunityFragment extends BaseFragment{
                     @Override
                     public void onResponse(boolean isFromCache, BaseList baseList, Request request, @Nullable Response response) {
                         if (start == 0) {
-                            mPtrLayout.onRefreshComplete();
+                            mPtrLayout.refreshComplete();
                         } else {
                             mRecyclerView.onLoadMoreComplete();
                         }
@@ -134,7 +140,7 @@ public class CommunityFragment extends BaseFragment{
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                         super.onError(isFromCache, call, response, e);
                         if (start == 0) {
-                            mPtrLayout.onRefreshComplete();
+                            mPtrLayout.refreshComplete();
                         } else {
                             mRecyclerView.onLoadMoreComplete();
                         }

@@ -35,19 +35,19 @@ public class ProductInfo implements Serializable{
 
     public long goodsId;
     public int prePrice;
-//    public List<String> thumbList;
-//    public String marks;
-//    public String title;
-//    public String type;
+    public List<String> thumbList;
+    public String marks;
+    public String title;
+    public String type;
     public long createTime;
     public String logoThumb;
     public String name;
     public String logo;
     public String details;
     public int curPrice;
-//    public int id;
-//    public long shopId;
-//    public List<String> imageList;
+    public int id;
+    public long shopId;
+    public List<String> imageList;
     public String status;
     public String shopName;
     public String shopLogo;

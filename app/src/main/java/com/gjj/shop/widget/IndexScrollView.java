@@ -20,24 +20,24 @@ public class IndexScrollView extends ScrollView {
 
     public IndexScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mGestureDetector = new GestureDetector(new YScrollDetector());
-        setFadingEdgeLength(0);
+//        mGestureDetector = new GestureDetector(new YScrollDetector());
+//        setFadingEdgeLength(0);
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev)
-                && mGestureDetector.onTouchEvent(ev);
-    }
-
-    class YScrollDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                float distanceX, float distanceY) {
-            if (Math.abs(distanceY) > Math.abs(distanceX)) {
-                return true;
-            }
-            return false;
-        }
-    }
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        return super.onInterceptTouchEvent(ev)
+//                && mGestureDetector.onTouchEvent(ev);
+//    }
+//
+//    class YScrollDetector extends GestureDetector.SimpleOnGestureListener {
+//        @Override
+//        public boolean onScroll(MotionEvent e1, MotionEvent e2,
+//                                float distanceX, float distanceY) {
+//            if (Math.abs(distanceY) > Math.abs(distanceX)) {
+//                return true;
+//            }
+//            return false;
+//        }
+//    }
 }
