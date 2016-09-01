@@ -33,6 +33,7 @@ import com.gjj.applibrary.util.ImageCompress;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
+import com.gjj.shop.address.AddressFragment;
 import com.gjj.shop.app.BaseApplication;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
@@ -120,6 +121,7 @@ public class PersonalInfoFragment extends BaseFragment {
                 PageSwitcher.switchToTopNavPage(getActivity(),ChangeNameFragment.class,null,getString(R.string.change_name),getString(R.string.save));
                 break;
             case R.id.address_item:
+                PageSwitcher.switchToTopNavPage(getActivity(),AddressFragment.class, null, getString(R.string.address), "");
                 break;
             case R.id.change_psw_item:
                 PageSwitcher.switchToTopNavPage(getActivity(),ChangePswFragment.class,null,getString(R.string.change_psw),null);
@@ -302,6 +304,7 @@ public class PersonalInfoFragment extends BaseFragment {
 //                .error(R.mipmap.all_img_dot_pr)
 //                .bitmapTransform(new GlideCircleTransform(getActivity()))
 //                .into(avatarIv);
+        showLoadingDialog(R.string.committing,true);
         ForegroundTaskExecutor.executeTask(new Runnable() {
             @Override
             public void run() {
@@ -311,7 +314,6 @@ public class PersonalInfoFragment extends BaseFragment {
                 List<File> fileList = new ArrayList<>();
                 fileList.add(file);
 
-                showLoadingDialog(R.string.committing,true);
                 OkHttpUtils.post(ApiConstants.UPDATE_USER_INFO)//
                         .tag(this)//
                         .cacheMode(CacheMode.NO_CACHE)
@@ -319,52 +321,34 @@ public class PersonalInfoFragment extends BaseFragment {
                         .addFileParams("avatar", fileList)
                         .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                             @Override
-                            public void onResponse(boolean isFromCache, UserInfo user, Request request, @Nullable Response response) {
-                               dismissLoadingDialog();
-                                ToastUtil.shortToast(R.string.commit_success);
-                                BaseApplication.getUserMgr().saveUserInfo(user);
-                                EventBus.getDefault().post(new UpdateUserInfo());
+                            public void onResponse(boolean isFromCache, final UserInfo user, Request request, @Nullable Response response) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dismissLoadingDialog();
+                                        ToastUtil.shortToast(R.string.commit_success);
+                                        BaseApplication.getUserMgr().saveUserInfo(user);
+                                        EventBus.getDefault().post(new UpdateUserInfo());
+                                    }
+                                });
                             }
                             @Override
-                            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                                dismissLoadingDialog();
-                                if(response != null)
-                                    L.d("@@@@@>>", response.code());
-                                ToastUtil.shortToast(R.string.fail);
-
+                            public void onError(boolean isFromCache, Call call, @Nullable final Response response, @Nullable Exception e) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dismissLoadingDialog();
+                                        if(response != null)
+                                            L.d("@@@@@>>" + response.code());
+                                        ToastUtil.shortToast(R.string.fail);
+                                    }
+                                });
                             }
 
                         });
 
             }
         });
-
-
-//        HashMap<String, String> params = new HashMap<>();
-//        params.put("nickname", "");
-//        List<File> fileList = new ArrayList<>();
-//        fileList.add(new File(mPhotoUrl));
-//
-//        OkHttpUtils.post(ApiConstants.UPDATE_USER_INFO)//
-//                .tag(this)//
-//                .cacheMode(CacheMode.NO_CACHE)
-//                .params(params)
-//                .addFileParams("avatar", fileList)
-//                .execute(new StringDialogCallback(getActivity()) {
-//                    @Override
-//                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-//                        ToastUtil.shortToast(R.string.commit_success);
-////                        onBackPressed();
-//                    }
-//                    @Override
-//                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-//                        if(response != null)
-//                            L.d("@@@@@>>", response.code());
-//                        ToastUtil.shortToast(R.string.fail);
-//
-//                    }
-//
-//                });
     }
 
 

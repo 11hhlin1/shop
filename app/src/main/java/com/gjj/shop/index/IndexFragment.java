@@ -20,8 +20,10 @@ import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.R;
 import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.category.ProductCategoryFragment;
 import com.gjj.shop.index.cheap.CheapShopListFragment;
 import com.gjj.shop.model.ProductInfo;
+import com.gjj.shop.search.SearchFragment;
 import com.gjj.shop.widget.HorizontalListView;
 import com.gjj.shop.widget.UnScrollableGridView;
 
@@ -77,12 +79,12 @@ public class IndexFragment extends BaseFragment {
 
     @OnClick(R.id.search_btn)
     void search() {
-
+        PageSwitcher.switchToTopNavPageNoTitle(getActivity(),SearchFragment.class,null,"","");
     }
 
     @OnClick(R.id.category)
     void category() {
-
+        PageSwitcher.switchToTopNavPage(getActivity(),ProductCategoryFragment.class,null,getString(R.string.category),"");
     }
     private String[] mNames ;
 //    @OnClick(R.id.cheap_shop)

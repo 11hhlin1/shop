@@ -143,14 +143,14 @@ public class MainActivity extends BaseMainActivity {
                     @Override
                     public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
                         if(rspInfo != null) {
-                            L.d("@@@@@>>", rspInfo.phone);
+                            L.d("@@@@@>>" + rspInfo.phone);
                             BaseApplication.getUserMgr().saveUserInfo(rspInfo);
                         }
                     }
                     @Override
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                         if(response != null)
-                            L.d("@@@@@>>", response.code());
+                            L.d("@@@@@>>" + response.code());
                     }
                 });
     }

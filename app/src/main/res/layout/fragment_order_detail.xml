@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/address_rl"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_marginLeft="17.5dp">
+            <TextView
+                android:id="@+id/receive_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_404040"
+                android:textSize="@dimen/textsize_16sp"
+                android:text="收到人"/>
+            <TextView
+                android:id="@+id/address_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_999999"
+                android:layout_marginTop="7dp"
+                android:textSize="@dimen/textsize_14sp"
+                android:text="我家马路"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/shop_icon_rl"
+        android:layout_below="@+id/address_rl"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+        <View
+            style="@style/top_horizontal_line" />
+        <ImageView
+            android:id="@+id/shop_avatar"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginLeft="6dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/wddd_user_tx"/>
+        <TextView
+            android:id="@+id/shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:textColor="@color/color_737373"
+            android:textSize="@dimen/textsize_12sp"
+            android:layout_toRightOf="@+id/shop_avatar"
+            android:text="海绵宝宝"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/order_num_rl"
+        android:layout_below="@+id/shop_icon_rl"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@color/white">
+        <View
+            style="@style/top_horizontal_line" />
+        <TextView
+            android:id="@+id/order_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/color_737373"
+            android:textSize="@dimen/textsize_12sp"
+            android:text="海绵宝宝"/>
+
+        <TextView
+            android:id="@+id/order_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:textColor="@color/color_ed394a"
+            android:textSize="@dimen/textsize_12sp"
+            android:text="待支付"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/shop_detail_rl"
+        android:layout_below="@+id/order_num_rl"
+        android:layout_width="match_parent"
+        android:layout_height="103dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/product_avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="6dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/product_avatar"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_1a1a1a"
+                android:textSize="@dimen/textsize_16sp"
+                />
+            <TextView
+                android:id="@+id/product_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/color_737373"
+                android:textSize="@dimen/textsize_12sp"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+                <TextView
+                    android:id="@+id/product_price_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_ed394a"
+                    android:textSize="@dimen/textsize_18sp"
+                    android:layout_alignParentLeft="true"
+                    />
+                <TextView
+                    android:id="@+id/product_price_old"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/product_price_new"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/color_808080"
+                    android:textSize="@dimen/textsize_12sp"
+                    />
+                <TextView
+                    android:id="@+id/product_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/color_808080"
+                    android:textSize="@dimen/textsize_12sp"
+                    android:text="x1"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/contact_item"
+        android:layout_below="@+id/shop_detail_rl"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/qq_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/qq"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="3dp"
+                android:text="QQ客服" />
+        </LinearLayout>
+
+        <View
+            style="@style/vertical_line"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:id="@+id/tel_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/tel"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="3dp"
+                android:text="联系商家" />
+        </LinearLayout>
+
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/my_comment"
+        android:layout_below="@+id/contact_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/comment_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/color_999999"
+            android:layout_marginTop="12.5dp"
+            android:text="我的评论" />
+
+
+        <LinearLayout
+            android:id="@+id/star_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_below="@+id/comment_title"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/sel_box_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null" />
+            <CheckBox
+                android:id="@+id/sel_box_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null"
+                android:layout_marginLeft="3dp"/>
+            <CheckBox
+                android:id="@+id/sel_box_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null"
+                android:layout_marginLeft="3dp"/>
+
+            <CheckBox
+                android:id="@+id/sel_box_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null"
+                android:layout_marginLeft="3dp"/>
+
+            <CheckBox
+                android:id="@+id/sel_box_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null"
+                android:layout_marginLeft="3dp"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/color_999999"
+            android:layout_marginTop="12.5dp"
+            android:layout_alignParentRight="true"
+            android:text="2016-03-05" />
+
+        <TextView
+            android:id="@+id/comment_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_ed394a"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/star_item"
+            android:text="商品很好和哈哈哈和" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/my_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="@dimen/margin_20p"
+        android:paddingRight="@dimen/margin_20p"
+        android:paddingTop="@dimen/margin_25p"
+        android:paddingBottom="@dimen/margin_25p"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="创建时间"
+                android:textColor="@color/color_404040"
+                android:textSize="@dimen/textsize_14sp"
+                android:layout_alignParentLeft="true"/>
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016-03-05"
+                android:textColor="@color/color_404040"
+                android:textSize="@dimen/textsize_14sp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_18sp"
+            android:textColor="@color/color_ed394a"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="合计:2400" />
+
+        <Button
+            android:id="@+id/sure_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_15sp"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/lj_btn_bg"
+            android:text="@string/check_order"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+        <Button
+            android:id="@+id/order_left_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_15sp"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/qxdd_btn_bg"
+            android:text="@string/check_order"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/sure_order"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:textSize="@dimen/textsize_18sp"
+        android:textColor="@color/color_404040"
+        android:drawableLeft="@mipmap/max_radio02"
+        android:gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:text="恭喜支付成功"/>
+
+    <TextView
+        android:id="@+id/pay_money"
+        android:layout_marginTop="@dimen/margin_50p"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:textSize="@dimen/textsize_16sp"
+        android:textColor="@color/color_404040"
+        android:text="恭喜支付成功"/>
+    <TextView
+        android:id="@+id/pay_way"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:textSize="@dimen/textsize_16sp"
+        android:textColor="@color/color_404040"
+        android:text="恭喜支付成功"/>
+    <TextView
+        android:id="@+id/pay_order_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:textSize="@dimen/textsize_16sp"
+        android:textColor="@color/color_404040"
+        android:text="恭喜支付成功"/>
+    <Button
+        android:id="@+id/back_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:textSize="@dimen/textsize_15sp"
+        android:textColor="@color/white"
+        android:background="@mipmap/qxdd_btn_bg"
+        android:gravity="center"
+        android:text="返回首页"/>
+</LinearLayout>

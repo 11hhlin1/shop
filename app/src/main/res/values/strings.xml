@@ -117,4 +117,6 @@
     <!-- 工具类 -->
     <string name="index_of_length">%1$s/%2$s</string>
     <string name="save_address">保存地址</string>
+    <string name="comment">星级评分</string>
+    <string name="category">分类</string>
 </resources>

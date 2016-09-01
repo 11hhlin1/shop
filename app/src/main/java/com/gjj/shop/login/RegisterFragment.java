@@ -26,7 +26,10 @@ import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.ApiConstants;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+import com.lzy.okhttputils.callback.StringCallback;
+import com.lzy.okhttputils.model.HttpHeaders;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -99,7 +102,6 @@ public class RegisterFragment extends BaseFragment {
     }
 
     private void sendGetSmsReq(String account) {
-        //TODO 获取验证码
         HashMap<String, String> params = new HashMap<>();
         params.put("phone", account);
 //        final JSONObject jsonObject = new JSONObject(params);
@@ -108,14 +110,27 @@ public class RegisterFragment extends BaseFragment {
                 .cacheMode(CacheMode.NO_CACHE)
                 .params(params)
 //                .postJson(jsonObject.toString())//
-                .execute(new JsonCallback<UserInfo>(UserInfo.class) {
+                .execute(new JsonCallback<String>(String.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
-                        countDownSms();
+                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                countDownSms();
+                            }
+                        });
                     }
+
                     @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        if(response != null) L.d("@@@@@>>", response.code());
+                    public void onError(boolean isFromCache, Call call, @Nullable final Response response, @Nullable Exception e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(response != null)
+                                    L.d("@@@@@>>" + response.code() + "msg>>" + response.message());
+                                ToastUtil.shortToast(R.string.fail);
+                            }
+                        });
                     }
                 });
     }
@@ -152,6 +167,7 @@ public class RegisterFragment extends BaseFragment {
     }
 
     private void findPsw(HashMap<String, String> params) {
+        showLoadingDialog(R.string.committing, false);
         OkHttpUtils.post(ApiConstants.FIND_PSW)//
                 .tag(this)//
                 .cacheMode(CacheMode.NO_CACHE)
@@ -159,28 +175,39 @@ public class RegisterFragment extends BaseFragment {
 //                .postJson(jsonObject.toString())//
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
-                        Activity activity = getActivity();
-                        if(activity != null) {
-                            if(rspInfo != null) {
-                                L.d("@@@@@>>", rspInfo.token);
-                                BaseApplication.getUserMgr().saveUserInfo(rspInfo);
-                                Intent intent = new Intent();
-                                intent.setClass(activity, MainActivity.class);
-                                startActivity(intent);
-                                activity.finish();
-                            }
-                        }
-
+                    public void onResponse(boolean isFromCache, final UserInfo rspInfo, Request request, @Nullable Response response) {
+                           runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   dismissLoadingDialog();
+                                   if(rspInfo != null) {
+                                       Activity activity = getActivity();
+                                       L.d("@@@@@>>" + rspInfo.token);
+                                       BaseApplication.getUserMgr().saveUserInfo(rspInfo);
+                                       Intent intent = new Intent();
+                                       intent.setClass(activity, MainActivity.class);
+                                       startActivity(intent);
+                                       activity.finish();
+                                   }
+                               }
+                           });
                     }
                     @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        if(response != null)
-                            L.d("@@@@@>>", response.code());
+                    public void onError(boolean isFromCache, Call call, @Nullable final Response response, @Nullable Exception e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(response != null)
+                                    L.d("@@@@@>>" + response.code() + "msg>>" + response.message());
+                                dismissLoadingDialog();
+                                ToastUtil.shortToast(R.string.fail);
+                            }
+                        });
                     }
                 });
     }
     private void register(HashMap<String, String> params) {
+        showLoadingDialog(R.string.committing, false);
         OkHttpUtils.post(ApiConstants.REGISTER)//
                 .tag(this)//
                 .cacheMode(CacheMode.NO_CACHE)
@@ -188,24 +215,34 @@ public class RegisterFragment extends BaseFragment {
 //                .postJson(jsonObject.toString())//
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
-                        Activity activity = getActivity();
-                        if(activity != null) {
-                            if(rspInfo != null) {
-                                L.d("@@@@@>>", rspInfo.token);
-                                PreferencesManager.getInstance().put(BundleKey.TOKEN, rspInfo.token);
-                                Intent intent = new Intent();
-                                intent.setClass(activity, MainActivity.class);
-                                startActivity(intent);
-                                activity.finish();
-                            }
-                        }
-
+                    public void onResponse(boolean isFromCache, final UserInfo rspInfo, Request request, @Nullable Response response) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dismissLoadingDialog();
+                                    if(rspInfo != null) {
+                                        Activity activity = getActivity();
+                                        L.d("@@@@@>>" + rspInfo.token);
+                                        PreferencesManager.getInstance().put(BundleKey.TOKEN, rspInfo.token);
+                                        Intent intent = new Intent();
+                                        intent.setClass(activity, MainActivity.class);
+                                        startActivity(intent);
+                                        activity.finish();
+                                    }
+                                }
+                            });
                     }
                     @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        if(response != null)
-                            L.d("@@@@@>>", response.code());
+                    public void onError(boolean isFromCache, Call call, @Nullable final Response response, @Nullable Exception e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(response != null)
+                                    L.d("@@@@@>>" + response.code() + "msg>>" + response.message());
+                                dismissLoadingDialog();
+                                ToastUtil.shortToast(R.string.fail);
+                            }
+                        });
                     }
                 });
     }
@@ -301,6 +338,7 @@ public class RegisterFragment extends BaseFragment {
 
 
     private String sendSmsCountDown(long ms) {
-        return String.format("%s" + "再次发送", ms);
+        StringBuilder tip = Util.getThreadSafeStringBuilder();
+        return tip.append("再次发送").append("(").append(ms).append(")").toString();
     }
 }

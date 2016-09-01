@@ -49,7 +49,7 @@ public class CommunityFragment extends BaseFragment{
     ImageView mAddFeed;
     @Bind(R.id.tv_title)
     TextView mTitleTV;
-    private static final int SIZE = 2;
+    private static final int SIZE = 20;
 
     @OnClick(R.id.add_feed_btn)
     void addFeed() {

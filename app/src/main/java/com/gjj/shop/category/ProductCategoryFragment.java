@@ -1,4 +1,4 @@
-package com.gjj.shop.index;
+package com.gjj.shop.category;
 
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;

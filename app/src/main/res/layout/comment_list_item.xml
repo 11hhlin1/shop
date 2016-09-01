@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/my_comment"
+        android:layout_below="@+id/contact_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="20dp">
+
+    <ImageView
+        android:id="@+id/user_avatar"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/margin_30p"
+        />
+        <TextView
+            android:id="@+id/comment_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/user_avatar"
+            android:textSize="@dimen/textsize_14sp"
+            android:textColor="@color/color_1a1a1a"
+            android:layout_marginTop="17.5dp"
+            android:layout_marginLeft="@dimen/margin_10p"
+            android:text="我的评论" />
+
+        <LinearLayout
+            android:id="@+id/star_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/user_avatar"
+            android:layout_below="@+id/comment_title"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/sel_box_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null" />
+            <CheckBox
+                android:id="@+id/sel_box_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null"
+                android:layout_marginLeft="3dp"/>
+            <CheckBox
+                android:id="@+id/sel_box_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null"
+                android:layout_marginLeft="3dp"/>
+
+            <CheckBox
+                android:id="@+id/sel_box_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null"
+                android:layout_marginLeft="3dp"/>
+
+            <CheckBox
+                android:id="@+id/sel_box_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null"
+                android:layout_marginLeft="3dp"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/color_737373"
+            android:layout_marginTop="12.5dp"
+            android:layout_alignParentRight="true"
+            android:text="2016-03-05" />
+
+        <TextView
+            android:id="@+id/comment_desc"
+            android:layout_toRightOf="@+id/user_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_15sp"
+            android:textColor="@color/color_737373"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/star_item"
+            android:text="商品很好和哈哈哈和" />
+    </RelativeLayout>

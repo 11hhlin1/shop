@@ -1,10 +1,13 @@
 package com.gjj.applibrary.http.callback;
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.util.ToastUtil;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.AbsCallback;
 
@@ -14,6 +17,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 
+import okhttp3.Call;
 import okhttp3.Response;
 
 /**
@@ -44,7 +48,7 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
          */
         JSONObject jsonObject = new JSONObject(responseData);
         final String msg = jsonObject.optString("msg", "");
-        final int code = jsonObject.optInt("code", 0);
+        final int code = jsonObject.optInt("code", -1);
         String data = jsonObject.optString("data", "");
         switch (code) {
             case 0:
@@ -93,4 +97,6 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
         });
         return null;
     }
+
+
 }

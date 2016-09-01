@@ -26,5 +26,6 @@ dependencies {
     compile 'com.lzy.net:okhttpserver:0.1.7'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.alibaba:fastjson:1.2.8'
+//    compile 'com.google.code.gson:gson:2.6.2'
 
 }

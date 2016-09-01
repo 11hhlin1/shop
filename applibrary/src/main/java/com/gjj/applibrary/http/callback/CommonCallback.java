@@ -20,4 +20,6 @@ public abstract class CommonCallback<T> extends AbsCallback<T> {
             request.params(BundleKey.TOKEN, token);
         }
     }
+
+
 }
