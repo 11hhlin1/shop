@@ -39,6 +39,7 @@ import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.community.AddFeedFragment;
 import com.gjj.shop.event.UpdateUserInfo;
+import com.gjj.shop.login.LoginActivity;
 import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.net.UrlUtil;
@@ -111,7 +112,7 @@ public class PersonalInfoFragment extends BaseFragment {
      EventBus.getDefault().register(this);
     }
 
-    @OnClick({R.id.avatar_item, R.id.name_item, R.id.address_item, R.id.change_psw_item})
+    @OnClick({R.id.avatar_item, R.id.name_item, R.id.address_item, R.id.change_psw_item,R.id.logout_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.avatar_item:
@@ -125,6 +126,38 @@ public class PersonalInfoFragment extends BaseFragment {
                 break;
             case R.id.change_psw_item:
                 PageSwitcher.switchToTopNavPage(getActivity(),ChangePswFragment.class,null,getString(R.string.change_psw),null);
+                break;
+            case R.id.logout_btn:
+                OkHttpUtils.post(ApiConstants.LOGOUT)
+                        .tag(this)//
+                        .cacheMode(CacheMode.NO_CACHE)
+                        .execute(new JsonCallback<String>(String.class) {
+                            @Override
+                            public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        L.d("@@@@@" + "logout success");
+                                        Intent intent = new Intent();
+                                        intent.setClass(getActivity(), LoginActivity.class);
+                                        startActivity(intent);
+                                        BaseApplication.getUserMgr().logOut();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                                super.onError(isFromCache, call, response, e);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        L.d("@@@@@" + "logout fail");
+                                        ToastUtil.shortToast(R.string.fail);
+                                    }
+                                });
+                            }
+                        });
                 break;
         }
     }

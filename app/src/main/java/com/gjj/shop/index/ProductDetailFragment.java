@@ -89,6 +89,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     private int mSecondaryGrayColor;
     private int mNavItemWidth;
     private PopupWindow mPickUpPopWindow;
+    private ProductInfo mProductInfo;
 
     @Override
     public int getContentViewLayout() {
@@ -114,30 +115,31 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
         oldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
         Bundle bundle = getArguments();
-        String mGoodsId = bundle.getString("goodsId");
-        showLoadingDialog(R.string.loading_view_loading,true);
-        HashMap<String, String> params = new HashMap<>();
-        params.put("goodsId", mGoodsId);
-        OkHttpUtils.get(ApiConstants.PRODUCT_INFO)
-                .tag(this)
-                .cacheMode(CacheMode.NO_CACHE)
-                .params(params)
-                .execute(new JsonCallback<ProductInfo>(ProductInfo.class) {
-                    @Override
-                    public void onResponse(boolean isFromCache, ProductInfo productInfo, Request request, @Nullable Response response) {
-
-                        dismissLoadingDialog();
-                        ToastUtil.shortToast(R.string.success);
-
-                    }
-
-                    @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        super.onError(isFromCache, call, response, e);
-                        dismissLoadingDialog();
-                        ToastUtil.shortToast(R.string.fail);
-                    }
-                });
+        mProductInfo = (ProductInfo) bundle.getSerializable("product");
+//        String mGoodsId = bundle.getString("goodsId");
+//        showLoadingDialog(R.string.loading_view_loading,true);
+//        HashMap<String, String> params = new HashMap<>();
+//        params.put("goodsId", mGoodsId);
+//        OkHttpUtils.get(ApiConstants.PRODUCT_INFO)
+//                .tag(this)
+//                .cacheMode(CacheMode.NO_CACHE)
+//                .params(params)
+//                .execute(new JsonCallback<ProductInfo>(ProductInfo.class) {
+//                    @Override
+//                    public void onResponse(boolean isFromCache, ProductInfo productInfo, Request request, @Nullable Response response) {
+//
+//                        dismissLoadingDialog();
+//                        ToastUtil.shortToast(R.string.success);
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+//                        super.onError(isFromCache, call, response, e);
+//                        dismissLoadingDialog();
+//                        ToastUtil.shortToast(R.string.fail);
+//                    }
+//                });
 
     }
 

@@ -6,7 +6,10 @@ import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.http.model.BundleKey;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.applibrary.util.Util;
+import com.gjj.shop.event.EventOfLogout;
 import com.gjj.shop.model.UserInfo;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -51,6 +54,7 @@ public class UserMgr {
     public void logOut() {
         mUserInfo = null;
         PreferencesManager.getInstance().put(BundleKey.TOKEN, "");
+        EventBus.getDefault().post(new EventOfLogout());
 //        BaseApplication.getDaoSession(AppLib.getContext()).getUserInfoDao().deleteAll();
         PreferencesManager.getInstance().put(mUserInfo);
     }

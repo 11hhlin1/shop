@@ -33,8 +33,8 @@ public class ProductInfo implements Serializable{
      * shopThumb : /upload/thumb/20160827/8a0e81850500c2c9.jpg
      */
 
-    public long goodsId;
-    public int prePrice;
+    public String goodsId;
+    public double prePrice;
     public List<String> thumbList;
     public String marks;
     public String title;
@@ -44,9 +44,9 @@ public class ProductInfo implements Serializable{
     public String name;
     public String logo;
     public String details;
-    public int curPrice;
+    public double curPrice;
     public int id;
-    public long shopId;
+    public String shopId;
     public List<String> imageList;
     public String status;
     public String shopName;

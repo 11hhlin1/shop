@@ -11,6 +11,7 @@ import com.gjj.shop.R;
 import com.gjj.shop.app.BaseApplication;
 import com.gjj.shop.base.BaseMainActivity;
 import com.gjj.shop.community.CommunityFragment;
+import com.gjj.shop.event.EventOfLogout;
 import com.gjj.shop.index.IndexFragment;
 import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.ApiConstants;
@@ -19,6 +20,10 @@ import com.gjj.shop.shopping.ShoppingFragment;
 import com.gjj.shop.widget.NestRadioGroup;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -110,7 +110,8 @@ public class GridAdapter extends BaseAdapter {
                     int pos = (int) mProductName.getTag();
                     ProductInfo productInfo = getItem(pos);
                     Bundle bundle = new Bundle();
-                    bundle.putString("goodsId",String.valueOf(productInfo.goodsId));
+                    bundle.putSerializable("product",productInfo);
+//                    bundle.putString("goodsId",productInfo.goodsId);
                     PageSwitcher.switchToTopNavPageNoTitle((Activity) mContext,ProductDetailFragment.class,bundle,"","");
 
                 }

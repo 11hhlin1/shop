@@ -96,7 +96,7 @@ public class LoginActivity extends Activity {
     void onForgetPsw() {
         Bundle bundle = new Bundle();
         bundle.putBoolean(RegisterFragment.FLAG, false);
-        PageSwitcher.switchToTopNavPage(this, RegisterFragment.class,bundle,getString(R.string.register),"");
+        PageSwitcher.switchToTopNavPage(this, RegisterFragment.class,bundle,getString(R.string.find_psw),"");
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -233,14 +233,18 @@ public class RegisterFragment extends BaseFragment {
                             });
                     }
                     @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable final Response response, @Nullable Exception e) {
+                    public void onError(boolean isFromCache, Call call, @Nullable final Response response, @Nullable final Exception e) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 if(response != null)
                                     L.d("@@@@@>>" + response.code() + "msg>>" + response.message());
                                 dismissLoadingDialog();
-                                ToastUtil.shortToast(R.string.fail);
+                                if (response.code() == 200)  {
+                                    ToastUtil.shortToast(getActivity(),response.message());
+                                } else {
+                                    ToastUtil.shortToast(R.string.fail);
+                                }
                             }
                         });
                     }

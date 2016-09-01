@@ -11,6 +11,7 @@ public class ApiConstants {
     public static final String CHANGE_PSW = host+ "user/updatePassword";
     public static final String GET_USER_INFO = host+ "user/info";
     public static final String FIND_PSW = host+ "user/findPassword";
+    public static final String LOGOUT = host+ "user/logout";
     public static final String COMMUNITY_PUBLISH = host+ "community/publish";
     public static final String COMMUNITY_LIST = host+ "community/infoList";
     public static final String UPLOAD_IMAGE = host+ "service/upload/image";
