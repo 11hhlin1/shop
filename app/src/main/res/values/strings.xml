@@ -120,4 +120,5 @@
     <string name="save_address">保存地址</string>
     <string name="comment">星级评分</string>
     <string name="category">分类</string>
+    <string name="money_has_mark">￥%1$s</string>
 </resources>

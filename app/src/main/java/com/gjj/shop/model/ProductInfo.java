@@ -8,9 +8,8 @@ import java.util.List;
  * Created by Chuck on 2016/7/25.
  */
 public class ProductInfo implements Serializable{
-//    private static final long serialVersionUID = 10L;
 
-
+    private static final long serialVersionUID = -6208697943437028908L;
     /**
      * goodsId : 769802415720366080
      * prePrice : 34
@@ -39,6 +38,7 @@ public class ProductInfo implements Serializable{
     public String marks;
     public String title;
     public String type;
+    public String contactPhone;
     public long createTime;
     public String logoThumb;
     public String name;

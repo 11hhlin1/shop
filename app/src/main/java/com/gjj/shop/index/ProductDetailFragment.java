@@ -1,12 +1,12 @@
 package com.gjj.shop.index;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -22,29 +22,22 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.gjj.applibrary.http.callback.JsonCallback;
-import com.gjj.applibrary.util.ToastUtil;
+import com.bumptech.glide.Glide;
+import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.model.ProductInfo;
-import com.gjj.shop.net.ApiConstants;
+import com.gjj.shop.net.UrlUtil;
 import com.gjj.shop.order.EditOrderFragment;
 import com.gjj.shop.util.CallUtil;
 import com.gjj.shop.widget.NavLineView;
 import com.gjj.shop.widget.UnScrollableGridView;
-import com.lzy.okhttputils.OkHttpUtils;
-import com.lzy.okhttputils.cache.CacheMode;
-
-import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by user on 16/8/27.
@@ -54,6 +47,10 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     Button buyNowBtn;
     @Bind(R.id.bottom_layout)
     RelativeLayout bottomLayout;
+    @Bind(R.id.logo)
+    ImageView logo;
+    @Bind(R.id.shop_name)
+    TextView shopName;
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.new_price)
@@ -68,6 +65,8 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     RelativeLayout detailItem;
     @Bind(R.id.phone_item)
     RelativeLayout phoneItem;
+    @Bind(R.id.contact_tv)
+    TextView contactTv;
     @Bind(R.id.pic_detail_tv)
     TextView picDetailTv;
     @Bind(R.id.user_advice_tv)
@@ -110,12 +109,31 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
         //mDoneRadioBtn.setTextColor(mSecondaryGrayColor);
         viewPager.setOffscreenPageLimit(mFragmentCache.length);
         viewPager.setOnPageChangeListener(this);
-        mFragmentAdapter = new ProductDetailFragmentAdapter(getChildFragmentManager(), mFragmentCache);
+        Bundle bundle = getArguments();
+        mProductInfo = (ProductInfo) bundle.getSerializable("product");
+        mFragmentAdapter = new ProductDetailFragmentAdapter(getChildFragmentManager(), mFragmentCache, bundle);
         mPageVp.setAdapter(mFragmentAdapter);
         oldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
-        Bundle bundle = getArguments();
-        mProductInfo = (ProductInfo) bundle.getSerializable("product");
+        title.setText(mProductInfo.name);
+        newPrice.setText(getString(R.string.money_has_mark, Util.getFormatData(mProductInfo.curPrice)));
+        oldPrice.setText(getString(R.string.money_has_mark, Util.getFormatData(mProductInfo.prePrice)));
+        contactTv.setText(mProductInfo.contactPhone);
+        Activity activity = getActivity();
+        Glide.with(activity)
+                .load(UrlUtil.getHttpUrl(mProductInfo.logo))
+                .centerCrop()
+                .placeholder(R.mipmap.cp)
+                .error(R.mipmap.cp)
+                .into(logo);
+        shopName.setText(mProductInfo.shopName);
+        Glide.with(activity)
+                .load(UrlUtil.getHttpUrl(mProductInfo.shopThumb))
+                .centerCrop()
+                .bitmapTransform(new GlideCircleTransform(activity))
+                .placeholder(R.mipmap.sjlogo)
+                .error(R.mipmap.sjlogo)
+                .into(productAvatarIv);
 //        String mGoodsId = bundle.getString("goodsId");
 //        showLoadingDialog(R.string.loading_view_loading,true);
 //        HashMap<String, String> params = new HashMap<>();
@@ -148,7 +166,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buy_now_btn:
-                PageSwitcher.switchToTopNavPage(getActivity(),EditOrderFragment.class, null, getString(R.string.check_order), "");
+                PageSwitcher.switchToTopNavPage(getActivity(), EditOrderFragment.class, null, getString(R.string.check_order), "");
                 break;
             case R.id.choose_detail_item:
                 showPickupWindow();
@@ -217,6 +235,15 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
             contentView = LayoutInflater.from(getActivity()).inflate(
                     R.layout.choose_detail_pop, null);
             ViewHolder viewHolder = new ViewHolder(contentView);
+            viewHolder.popTitle.setText(mProductInfo.name);
+            viewHolder.popNewPrice.setText(getString(R.string.money_has_mark, Util.getFormatData(mProductInfo.curPrice)));
+            viewHolder.popOldPrice.setText(getString(R.string.money_has_mark, Util.getFormatData(mProductInfo.prePrice)));
+            Glide.with(getActivity())
+                    .load(UrlUtil.getHttpUrl(mProductInfo.logo))
+                    .centerCrop()
+                    .placeholder(R.mipmap.cp_gg)
+                    .error(R.mipmap.cp_gg)
+                    .into(viewHolder.popLogoIv);
             contentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -266,6 +293,14 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     }
 
     class ViewHolder {
+        @Bind(R.id.pop_title)
+        TextView popTitle;
+        @Bind(R.id.pop_new_price)
+        TextView popNewPrice;
+        @Bind(R.id.pop_old_price)
+        TextView popOldPrice;
+        @Bind(R.id.pop_logo_iv)
+        ImageView popLogoIv;
         @Bind(R.id.close_pop)
         ImageView closePop;
         @Bind(R.id.plus_btn)
@@ -281,6 +316,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
+            popOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             closePop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -289,4 +325,6 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
             });
         }
     }
+
+
 }

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.model.ProductInfo;
@@ -84,6 +85,8 @@ public class GridAdapter extends BaseAdapter {
                 .into(viewTag.mProductIv);
         viewTag.mProductName.setText(productInfo.name);
         viewTag.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        viewTag.mOldPrice.setText(mContext.getString(R.string.money_has_mark,  Util.getFormatData(productInfo.prePrice)));
+        viewTag.mNewPrice.setText(mContext.getString(R.string.money_has_mark,  Util.getFormatData(productInfo.curPrice)));
         viewTag.mProductName.setTag(position);
 
         return convertView;

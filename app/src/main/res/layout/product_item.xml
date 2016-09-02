@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_ed394a"
                 android:textSize="@dimen/textsize_15sp"
-                android:text="￥20.00"/>
+                android:text="@string/money_has_mark"/>
 
                 <TextView
                     android:id="@+id/old_price"

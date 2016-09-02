@@ -22,9 +22,9 @@ public class BaseActivity extends FragmentActivity {
     }
 
 
-    private Object mEventReciever = new Object() {
+    Object mEventReciever = new Object() {
         @Subscribe(threadMode = ThreadMode.MAIN)
-        void logout(EventOfLogout event) {
+        public void logout(EventOfLogout event) {
            if (!isFinishing()) {
                 finish();
            }

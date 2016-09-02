@@ -29,7 +29,7 @@
                     android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/pop_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_333333"
@@ -44,7 +44,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/new_price"
+                        android:id="@+id/pop_new_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/color_ed394a"
@@ -54,7 +54,7 @@
 
                     <TextView
                         android:layout_marginLeft="10dp"
-                        android:id="@+id/old_price"
+                        android:id="@+id/pop_old_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/color_a6a6a6"
@@ -67,6 +67,7 @@
                     style="@style/bottom_horizontal_line"/>
             </RelativeLayout>
             <ImageView
+                android:id="@+id/pop_logo_iv"
                 android:layout_width="91dp"
                 android:layout_height="91dp"
                 android:layout_marginLeft="10dp"

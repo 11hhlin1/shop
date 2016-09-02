@@ -1,5 +1,6 @@
 package com.gjj.shop.index;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,10 +11,12 @@ import android.view.ViewGroup;
  */
 public class ProductDetailFragmentAdapter extends FragmentPagerAdapter {
     private Fragment[] mCache;
+    private Bundle mBundle;
 
-    public ProductDetailFragmentAdapter(FragmentManager fm, Fragment[] cache) {
+    public ProductDetailFragmentAdapter(FragmentManager fm, Fragment[] cache, Bundle bundle) {
         super(fm);
         mCache = cache;
+        mBundle = bundle;
     }
 
     @Override
@@ -24,6 +27,7 @@ public class ProductDetailFragmentAdapter extends FragmentPagerAdapter {
         }
         if (position == 0) {
             fragment = new ProductPicFragment();
+            fragment.setArguments(mBundle);
         } else if (position == 1) {
             fragment = new UserAdviceFragment();
         }
