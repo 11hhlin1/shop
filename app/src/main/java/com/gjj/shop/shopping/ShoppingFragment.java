@@ -1,27 +1,55 @@
 package com.gjj.shop.shopping;
 
+import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gjj.applibrary.http.callback.ListCallback;
+import com.gjj.applibrary.http.model.BaseList;
+import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
+import com.gjj.shop.base.SpaceItemDecoration;
+import com.gjj.shop.event.EventOfAddCartSuccess;
+import com.gjj.shop.event.EventOfUpdateTags;
+import com.gjj.shop.index.TagInfo;
+import com.gjj.shop.model.ProductInfo;
+import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.widget.ConfirmDialog;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.cache.CacheMode;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Chuck on 2016/7/21.
  */
-public class ShoppingFragment extends BaseFragment implements ShoppingAdapter.SelectListener{
+public class ShoppingFragment extends BaseFragment {
     @Bind(R.id.tv_title)
     TextView mTitleTV;
     @Bind(R.id.recyclerView)
@@ -34,11 +62,11 @@ public class ShoppingFragment extends BaseFragment implements ShoppingAdapter.Se
     TextView mStateTv;
 
     private ConfirmDialog mConfirmDialog;
-    private List<String> mShopIDList;
+//    private HashMap<Boolean, List<Boolean>> mSelList;
 
     @OnClick(R.id.edit_shop)
     void editShop() {
-        if(isEdit) {
+        if (isEdit) {
             mEditTv.setText(getString(R.string.edit));
             mStateTv.setText(getString(R.string.balance));
             isEdit = false;
@@ -47,13 +75,14 @@ public class ShoppingFragment extends BaseFragment implements ShoppingAdapter.Se
             mEditTv.setText(getString(R.string.done));
             mStateTv.setText(getString(R.string.delete));
         }
+        mAdapter.setmIsEdit(isEdit);
     }
 
     @OnClick(R.id.state_btn)
     void handleState() {
-        if(isEdit) {
+        if (isEdit) {
             dismissConfirmDialog();
-            ConfirmDialog confirmDialog = new ConfirmDialog(getActivity(),R.style.white_bg_dialog);
+            ConfirmDialog confirmDialog = new ConfirmDialog(getActivity(), R.style.white_bg_dialog);
             mConfirmDialog = confirmDialog;
             confirmDialog.setConfirmClickListener(new View.OnClickListener() {
                 @Override
@@ -74,6 +103,7 @@ public class ShoppingFragment extends BaseFragment implements ShoppingAdapter.Se
 
     private ShoppingAdapter mAdapter;
     private boolean isEdit = false;
+//    private Map<String, Boolean> mSel;
 
     @Override
     public int getContentViewLayout() {
@@ -84,31 +114,89 @@ public class ShoppingFragment extends BaseFragment implements ShoppingAdapter.Se
     public void initView() {
         mTitleTV.setText(R.string.shopping);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        mShopIDList = new ArrayList<>();
+//        mShopIDList = new ArrayList<>();
+//        mSelList = new HashMap<>();
         // 设置布局管理器
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new ShoppingAdapter(getActivity(), new ArrayList<ShopAdapterInfo>());
-        mAdapter.setmSelectListener(this);
+        mAdapter = new ShoppingAdapter(getActivity(), new ArrayList<ShopAdapterInfo>(),isEdit);
         mRecyclerView.setAdapter(mAdapter);
-
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_20p);
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+        EventBus.getDefault().register(this);
 
         mAllSel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
                     List<ShopAdapterInfo> list = mAdapter.getDataList();
-                    if(!Util.isListEmpty(list)) {
+                    if (!Util.isListEmpty(list)) {
                         for (ShopAdapterInfo info : list) {
-                            info.isSel = true;
-                            mShopIDList.add(info.id);
+                              info.isSel = isChecked;
+                              for (GoodsAdapterInfo goodsAdapterInfo : info.goodsList) {
+                                  goodsAdapterInfo.isSel = isChecked;
+                              }
                         }
                     }
                     mAdapter.notifyDataSetChanged();
-                } else {
-                    mShopIDList.clear();
-                }
+
             }
         });
+        doRequest();
+
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refresh(EventOfAddCartSuccess event) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                doRequest();
+            }
+        });
+    }
+    private void doRequest() {
+        OkHttpUtils.get(ApiConstants.CART_LIST)
+                .tag(this)
+                .cacheMode(CacheMode.NO_CACHE)
+                .execute(new ListCallback<ShopInfo>(ShopInfo.class) {
+                    @Override
+                    public void onResponse(boolean isFromCache, BaseList baseList, Request request, @Nullable Response response) {
+
+                        List<ShopInfo> infoList = new ArrayList<ShopInfo>();
+                        if (baseList != null) {
+                            infoList = baseList.list;
+                        }
+                        List<ShopAdapterInfo> adapterInfos = new ArrayList<ShopAdapterInfo>();
+                        for (ShopInfo shopInfo : infoList) {
+                            ShopAdapterInfo shopAdapterInfo = new ShopAdapterInfo();
+                            shopAdapterInfo.shopId = shopInfo.shopId;
+                            shopAdapterInfo.shopImage = shopInfo.shopImage;
+                            shopAdapterInfo.shopName = shopInfo.shopName;
+                            shopAdapterInfo.shopThumb =shopInfo.shopThumb;
+                            List<GoodsAdapterInfo> goodsAdapterInfos = new ArrayList<GoodsAdapterInfo>();
+                            for (GoodsInfo goodsInfo : shopInfo.goodsList) {
+                                GoodsAdapterInfo goodsAdapterInfo = new GoodsAdapterInfo();
+                                goodsAdapterInfo.goodsInfo = goodsInfo;
+                                goodsAdapterInfos.add(goodsAdapterInfo);
+                            }
+                            shopAdapterInfo.goodsList = goodsAdapterInfos;
+                            adapterInfos.add(shopAdapterInfo);
+//                            List<Boolean> booleanList = new ArrayList<Boolean>(shopInfo.goodsList.size());
+//                            mSelList.put(false,booleanList);
+                        }
+//                        mAdapter.setmSelList(mSelList);
+                        mAdapter.setData(adapterInfos);
+
+                    }
+
+                    @Override
+                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                        super.onError(isFromCache, call, response, e);
+
+                        if (!isFromCache)
+                            ToastUtil.shortToast(R.string.fail);
+                    }
+                });
     }
 
     /**
@@ -122,13 +210,6 @@ public class ShoppingFragment extends BaseFragment implements ShoppingAdapter.Se
         }
     }
 
-    @Override
-    public void select(String id) {
-        mShopIDList.add(id);
-    }
 
-    @Override
-    public void unSel(String id) {
-        mShopIDList.remove(id);
-    }
+
 }

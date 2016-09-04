@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="101dp"
+        android:background="@color/white"
+        android:paddingLeft="13dp"
+        android:paddingTop="10dp">
+        <CheckBox
+            android:id="@+id/goods_sel_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/selector_check_box"
+            android:button="@null" />
+        <ImageView
+            android:id="@+id/product_avatar"
+            android:layout_width="72.5dp"
+            android:layout_height="72.5dp"
+            android:layout_toRightOf="@+id/goods_sel_box"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" />
+        <LinearLayout
+            android:id="@+id/amount_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:paddingBottom="18dp">
+
+            <ImageView
+                android:id="@+id/plus_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/add_btn" />
+
+            <TextView
+                android:id="@+id/product_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/color_404040"
+                android:textSize="@dimen/textsize_15sp" />
+
+            <ImageView
+                android:id="@+id/sub_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:src="@mipmap/cut_btn" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/amount_ll"
+            android:layout_toRightOf="@+id/product_avatar"
+            android:orientation="vertical"
+            android:paddingLeft="15dp">
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_404040"
+                android:textSize="@dimen/textsize_15sp" />
+
+            <TextView
+                android:id="@+id/product_args"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/textsize_14sp" />
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/color_ed394a"
+                android:textSize="@dimen/textsize_16sp" />
+        </LinearLayout>
+
+    <View style="@style/bottom_horizontal_line" />
+
+    </RelativeLayout>

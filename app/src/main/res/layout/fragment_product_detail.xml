@@ -27,6 +27,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/buy_now"/>
             <Button
+                android:id="@+id/add_cart_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/add_gwcbg"
@@ -58,8 +59,7 @@
                 <ImageView
                     android:id="@+id/logo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/cp"/>
+                    android:layout_height="257dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -111,6 +111,7 @@
                     <View
                         style="@style/top_horizontal_line" />
                     <TextView
+                        android:id="@+id/tags_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/textsize_15sp"

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.model.ProductInfo;
@@ -52,6 +53,8 @@ public class ProductPicFragment extends BaseFragment {
         productDesc.setText(mProductInfo.details);
         Activity activity = getActivity();
         List<String> imageList = mProductInfo.imageList;
+        if(Util.isListEmpty(imageList) || imageList.size() < 4)
+            return;
         Glide.with(activity)
                 .load(UrlUtil.getHttpUrl(imageList.get(0)))
                 .centerCrop()
@@ -71,7 +74,7 @@ public class ProductPicFragment extends BaseFragment {
                 .error(R.mipmap.cpxq_01)
                 .into(image03);
         Glide.with(activity)
-                .load(UrlUtil.getHttpUrl(imageList.get(2)))
+                .load(UrlUtil.getHttpUrl(imageList.get(3)))
                 .centerCrop()
                 .placeholder(R.mipmap.cpxq_04)
                 .error(R.mipmap.cpxq_04)

@@ -131,39 +131,84 @@
               style="@style/bottom_horizontal_line"/>
         </RelativeLayout>
 
-        <LinearLayout
+        <com.gjj.shop.widget.UnScrollableListView
+            android:id="@+id/pop_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white">
+            android:cacheColorHint="@android:color/transparent"
+            android:listSelector="@android:color/transparent"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="颜色"
-                android:layout_marginLeft="12.5dp"
-                android:layout_marginTop="20dp"
-                android:textSize="@dimen/textsize_15sp"
-                android:textColor="@color/color_666666"/>
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:background="@color/white">-->
 
-            <com.gjj.shop.widget.UnScrollableGridView
-                android:id="@+id/product_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cacheColorHint="@android:color/transparent"
-                android:horizontalSpacing="5dp"
-                android:listSelector="@android:color/transparent"
-                android:numColumns="7"
-                android:padding="@dimen/margin_36px"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="6dp"
-                android:gravity="center"/>
-        </LinearLayout>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="颜色"-->
+                <!--android:layout_marginLeft="12.5dp"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:textSize="@dimen/textsize_15sp"-->
+                <!--android:textColor="@color/color_666666"/>-->
+
+            <!--<com.gjj.shop.widget.UnScrollableGridView-->
+                <!--android:id="@+id/product_grid"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:cacheColorHint="@android:color/transparent"-->
+                <!--android:horizontalSpacing="5dp"-->
+                <!--android:listSelector="@android:color/transparent"-->
+                <!--android:numColumns="7"-->
+                <!--android:padding="@dimen/margin_36px"-->
+                <!--android:stretchMode="columnWidth"-->
+                <!--android:verticalSpacing="6dp"-->
+                <!--android:gravity="center"/>-->
+        <!--</LinearLayout>-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="92.5dp"
+            android:layout_height="60dp"
             android:background="@color/white">
 
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_alignParentBottom="true"
+                >
+                <Button
+                    android:id="@+id/pop_buy_now_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/gm_bg"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_15sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:text="@string/buy_now"/>
+                <Button
+                    android:id="@+id/pop_add_cart_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/add_gwcbg"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_15sp"
+                    android:layout_toLeftOf="@+id/pop_buy_now_btn"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:text="@string/add_shop"/>
+            </RelativeLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:src="@mipmap/gwc"/>
+        </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -6,9 +6,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,23 +24,50 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.glide.GlideCircleTransform;
+import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.http.callback.ListCallback;
+import com.gjj.applibrary.http.model.BaseList;
+import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.event.EventOfAddCartSuccess;
+import com.gjj.shop.event.EventOfLogout;
+import com.gjj.shop.event.EventOfUpdateTags;
 import com.gjj.shop.model.ProductInfo;
+import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.net.UrlUtil;
 import com.gjj.shop.order.EditOrderFragment;
 import com.gjj.shop.util.CallUtil;
 import com.gjj.shop.widget.NavLineView;
 import com.gjj.shop.widget.UnScrollableGridView;
+import com.gjj.shop.widget.UnScrollableListView;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.cache.CacheMode;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by user on 16/8/27.
@@ -69,6 +99,9 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     TextView contactTv;
     @Bind(R.id.pic_detail_tv)
     TextView picDetailTv;
+
+    @Bind(R.id.tags_tv)
+    TextView tagsTv;
     @Bind(R.id.user_advice_tv)
     TextView userAdviceTv;
     @Bind(R.id.project_radio_group)
@@ -89,6 +122,9 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     private int mNavItemWidth;
     private PopupWindow mPickUpPopWindow;
     private ProductInfo mProductInfo;
+    private int amount = 1;
+//    private Map<String,List<String>> mTags;
+    private List<TagInfo> mTagsList;
 
     @Override
     public int getContentViewLayout() {
@@ -97,6 +133,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
 
     @Override
     public void initView() {
+
         Resources res = getResources();
         mRedColor = res.getColor(R.color.color_EE394A);
         mSecondaryGrayColor = res.getColor(R.color.secondary_gray);
@@ -116,15 +153,26 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
         oldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
         title.setText(mProductInfo.name);
+        mTagsList = new ArrayList<>();
+        Map<String,List<String>> mTags = JSON.parseObject(mProductInfo.tags, new TypeReference<Map<String, List<String>>>() {});
+        if(mTags != null) {
+            for (Map.Entry<String, List<String>> entry : mTags.entrySet()) {
+                TagInfo tagInfo =new TagInfo();
+                tagInfo.mTitle = entry.getKey();
+                tagInfo.mList = entry.getValue();
+                mTagsList.add(tagInfo);
+            }
+        }
         newPrice.setText(getString(R.string.money_has_mark, Util.getFormatData(mProductInfo.curPrice)));
         oldPrice.setText(getString(R.string.money_has_mark, Util.getFormatData(mProductInfo.prePrice)));
         contactTv.setText(mProductInfo.contactPhone);
         Activity activity = getActivity();
+        Drawable drawable = new ColorDrawable(getResources().getColor(R.color.activity_bg_gray));
         Glide.with(activity)
                 .load(UrlUtil.getHttpUrl(mProductInfo.logo))
                 .centerCrop()
-                .placeholder(R.mipmap.cp)
-                .error(R.mipmap.cp)
+                .placeholder(drawable)
+                .error(drawable)
                 .into(logo);
         shopName.setText(mProductInfo.shopName);
         Glide.with(activity)
@@ -134,35 +182,13 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                 .placeholder(R.mipmap.sjlogo)
                 .error(R.mipmap.sjlogo)
                 .into(productAvatarIv);
-//        String mGoodsId = bundle.getString("goodsId");
-//        showLoadingDialog(R.string.loading_view_loading,true);
-//        HashMap<String, String> params = new HashMap<>();
-//        params.put("goodsId", mGoodsId);
-//        OkHttpUtils.get(ApiConstants.PRODUCT_INFO)
-//                .tag(this)
-//                .cacheMode(CacheMode.NO_CACHE)
-//                .params(params)
-//                .execute(new JsonCallback<ProductInfo>(ProductInfo.class) {
-//                    @Override
-//                    public void onResponse(boolean isFromCache, ProductInfo productInfo, Request request, @Nullable Response response) {
-//
-//                        dismissLoadingDialog();
-//                        ToastUtil.shortToast(R.string.success);
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-//                        super.onError(isFromCache, call, response, e);
-//                        dismissLoadingDialog();
-//                        ToastUtil.shortToast(R.string.fail);
-//                    }
-//                });
+        EventBus.getDefault().register(this);
+
 
     }
 
 
-    @OnClick({R.id.buy_now_btn, R.id.choose_detail_item, R.id.phone_item, R.id.user_advice_tv, R.id.pic_detail_tv, R.id.icon_back_btn})
+    @OnClick({R.id.buy_now_btn, R.id.add_cart_btn,R.id.choose_detail_item, R.id.phone_item, R.id.user_advice_tv, R.id.pic_detail_tv, R.id.icon_back_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buy_now_btn:
@@ -182,6 +208,9 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                 break;
             case R.id.icon_back_btn:
                 onBackPressed();
+                break;
+            case R.id.add_cart_btn:
+                addCart();
                 break;
         }
     }
@@ -223,6 +252,54 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
         mNavItemWidth = dm.widthPixels / mFragmentCache.length;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateText(EventOfUpdateTags event) {
+        StringBuilder stringBuilder = Util.getThreadSafeStringBuilder();
+        stringBuilder.append("已选:");
+        for (TagInfo tagInfo : mTagsList) {
+            stringBuilder.append(tagInfo.mSelTag).append(" ");
+        }
+        tagsTv.setText(stringBuilder.toString());
+    }
+    private void addCart() {
+        if(amount < 1 ) {
+            ToastUtil.shortToast(getActivity(),"请选择数量");
+            return;
+        }
+        HashMap<String, String> params = new HashMap<>();
+        params.put("goodsId", mProductInfo.goodsId);
+        params.put("amount", String.valueOf(amount));
+        HashMap<String, String> tags = new HashMap<>();
+        for (TagInfo tagInfo : mTagsList) {
+            if(TextUtils.isEmpty(tagInfo.mSelTag)) {
+                ToastUtil.shortToast(getActivity(),"请选择规格");
+                return;
+            }
+            tags.put(tagInfo.mTitle, tagInfo.mSelTag);
+        }
+        String tagJsons = JSON.toJSONString(tags);
+        L.d("@@@@@" + tagJsons);
+        params.put("tags", tagJsons);
+        OkHttpUtils.post(ApiConstants.ADD_CART)
+                .tag(this)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+                .execute(new JsonCallback<String>(String.class) {
+                    @Override
+                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+                        ToastUtil.shortToast(R.string.add_cart_success);
+                        EventBus.getDefault().post(new EventOfAddCartSuccess());
+                    }
+
+                    @Override
+                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                        super.onError(isFromCache, call, response, e);
+                        ToastUtil.shortToast(R.string.fail);
+                    }
+                });
+    }
+
+
     /**
      * 显示选择框
      */
@@ -244,6 +321,14 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                     .placeholder(R.mipmap.cp_gg)
                     .error(R.mipmap.cp_gg)
                     .into(viewHolder.popLogoIv);
+            viewHolder.addCartBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addCart();
+                    dismissConstructNoticeWindow();
+                }
+            });
+            viewHolder.tagList.setAdapter(new UnScrollListAdapter(getActivity(),mTagsList));
             contentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -254,13 +339,13 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
             mRootView.getWindowVisibleDisplayFrame(r);
             final int[] location = new int[2];
             mRootView.getLocationOnScreen(location);
-            int height = Util.dip2px(60);
+//            int height = Util.dip2px(60);
             popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, r.bottom
-                    - location[1] - height, false);
+                    - location[1], false);
             mPickUpPopWindow = popupWindow;
             popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             popupWindow.setAnimationStyle(R.style.popwin_anim_style);
-            // mPickUpPopWindow.setOutsideTouchable(true);
+//            mPickUpPopWindow.setOutsideTouchable(false);
             popupWindow.setFocusable(true);
             popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -309,10 +394,14 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
         TextView productAmount;
         @Bind(R.id.sub_btn)
         ImageView subBtn;
+        @Bind(R.id.pop_add_cart_btn)
+        Button addCartBtn;
+        @Bind(R.id.pop_buy_now_btn)
+        Button buyNowBtn;
         @Bind(R.id.amount_ll)
         LinearLayout amountLl;
-        @Bind(R.id.product_grid)
-        UnScrollableGridView productGrid;
+        @Bind(R.id.pop_list)
+        UnScrollableListView tagList;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -321,6 +410,23 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                 @Override
                 public void onClick(View v) {
                     dismissConstructNoticeWindow();
+                }
+            });
+            plusBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    amount++;
+                    productAmount.setText(String.valueOf(amount));
+                }
+            });
+            subBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(amount > 1) {
+                        amount--;
+                        productAmount.setText(String.valueOf(amount));
+                    }
+
                 }
             });
         }

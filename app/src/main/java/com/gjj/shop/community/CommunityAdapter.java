@@ -192,6 +192,8 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
 
         @Override
         public int getCount() {
+            if (mImageList == null)
+                return 0;
             return mImageList.size();
         }
 

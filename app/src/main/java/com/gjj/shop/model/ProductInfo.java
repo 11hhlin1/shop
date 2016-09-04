@@ -35,7 +35,7 @@ public class ProductInfo implements Serializable{
     public String goodsId;
     public double prePrice;
     public List<String> thumbList;
-    public String marks;
+    public String tags;
     public String title;
     public String type;
     public String contactPhone;
