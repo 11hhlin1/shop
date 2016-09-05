@@ -22,6 +22,8 @@ import com.gjj.shop.R;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.category.ProductCategoryFragment;
 import com.gjj.shop.index.cheap.CheapShopListFragment;
+import com.gjj.shop.index.foreign.CategoryData;
+import com.gjj.shop.index.foreign.ViewPagerGoodListFragment;
 import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.search.SearchFragment;
 import com.gjj.shop.widget.HorizontalListView;
@@ -89,7 +91,24 @@ public class IndexFragment extends BaseFragment {
     private String[] mNames ;
 //    @OnClick(R.id.cheap_shop)
     void goCheapShop() {
-        PageSwitcher.switchToTopNavPage(getActivity(),CheapShopListFragment.class,null,getString(R.string.cheap_shop),"");
+          Bundle bundle = new Bundle();
+        ArrayList<CategoryData> dataList = new ArrayList<>();
+          CategoryData categoryData = new CategoryData();
+          categoryData.mCateId = 0;
+          categoryData.mCateName = getString(R.string.one_yuan_buy);
+          dataList.add(categoryData);
+        CategoryData categoryData1 = new CategoryData();
+        categoryData1.mCateId = 1;
+        categoryData1.mCateName = getString(R.string.nine_yuan_buy);
+        dataList.add(categoryData1);
+        CategoryData categoryData2 = new CategoryData();
+        categoryData2.mCateId = 2;
+        categoryData2.mCateName = getString(R.string.start_up_buy);
+        dataList.add(categoryData2);
+        bundle.putParcelableArrayList("data", dataList);
+        bundle.putInt("firstCate", 0);
+        PageSwitcher.switchToTopNavPage(getActivity(),ViewPagerGoodListFragment.class,bundle,getString(R.string.cheap_shop),"");
+//        PageSwitcher.switchToTopNavPage(getActivity(),CheapShopListFragment.class,null,getString(R.string.cheap_shop),"");
     }
 
 //    @OnClick(R.id.foreign_shop)
