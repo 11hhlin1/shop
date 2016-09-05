@@ -148,22 +148,25 @@ public class LoginActivity extends Activity {
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
                     public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
-
-                        dismissProgressDialog();
+                        if(!isFinishing()) {
+                            dismissProgressDialog();
                             if(rspInfo != null) {
-                                L.d("@@@@@>>", rspInfo.token);
+                                L.d("@@@@@>>" + rspInfo.token);
+                                ToastUtil.shortToast(R.string.login_success);
                                 BaseApplication.getUserMgr().saveUserInfo(rspInfo);
                                 Intent intent = new Intent();
                                 intent.setClass(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
+                        }
+
                     }
                     @Override
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        dismissProgressDialog();
-                        if(response != null)
-                            L.d("@@@@@>>", response.code());
+                        if(!isFinishing()) {
+                            dismissProgressDialog();
+                        }
                     }
                 });
 

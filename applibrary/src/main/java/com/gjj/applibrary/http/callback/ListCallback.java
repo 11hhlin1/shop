@@ -5,6 +5,8 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.gjj.applibrary.http.model.BaseList;
+import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.util.ToastUtil;
 import com.lzy.okhttputils.OkHttpUtils;
 
 import org.json.JSONObject;
@@ -20,7 +22,7 @@ public abstract class ListCallback<T> extends CommonCallback<BaseList<T>>{
         this.clazz = clazz;
     }
     @Override
-    public BaseList<T> parseNetworkResponse(Response response) throws Exception {
+    public BaseList<T> parseNetworkResponse(final Response response) throws Exception {
         String responseData = response.body().string();
         if (TextUtils.isEmpty(responseData)) return null;
         JSONObject jsonObject = new JSONObject(responseData);
@@ -45,6 +47,17 @@ public abstract class ListCallback<T> extends CommonCallback<BaseList<T>>{
                 //比如：用户账户被禁用，在此实现相应的逻辑，弹出对话或者跳转到其他页面等,该抛出错误，会在onError中回调。
                 throw new IllegalStateException("用户账户被禁用");
             default:
+                L.d("@@@@@>>" + response.code() + "msg>>" + response.message());
+                OkHttpUtils.getInstance().getDelivery().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (response.code() == 200)  {
+                            ToastUtil.shortToast(OkHttpUtils.getContext(), msg);
+                        } else {
+                            ToastUtil.shortToast(OkHttpUtils.getContext(), "网络错误");
+                        }
+                    }
+                });
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + msg);
         }
         //如果要更新UI，需要使用handler，可以如下方式实现，也可以自己写handler

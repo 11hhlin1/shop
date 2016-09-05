@@ -60,6 +60,8 @@
     <string name="commit">提交</string>
     <string name="commit_success">提交成功</string>
     <string name="success">成功</string>
+    <string name="login_success">登录成功</string>
+    <string name="register_success">注册成功</string>
     <string name="fail">获取失败</string>
     <string name="all_select">全选</string>
     <string name="amount_money">合计:</string>

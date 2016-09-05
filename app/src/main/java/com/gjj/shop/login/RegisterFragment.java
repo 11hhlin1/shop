@@ -197,10 +197,7 @@ public class RegisterFragment extends BaseFragment {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if(response != null)
-                                    L.d("@@@@@>>" + response.code() + "msg>>" + response.message());
                                 dismissLoadingDialog();
-                                ToastUtil.shortToast(R.string.fail);
                             }
                         });
                     }
@@ -223,6 +220,7 @@ public class RegisterFragment extends BaseFragment {
                                     if(rspInfo != null) {
                                         Activity activity = getActivity();
                                         L.d("@@@@@>>" + rspInfo.token);
+                                        ToastUtil.shortToast(R.string.register_success);
                                         PreferencesManager.getInstance().put(BundleKey.TOKEN, rspInfo.token);
                                         Intent intent = new Intent();
                                         intent.setClass(activity, MainActivity.class);
@@ -237,14 +235,7 @@ public class RegisterFragment extends BaseFragment {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if(response != null)
-                                    L.d("@@@@@>>" + response.code() + "msg>>" + response.message());
                                 dismissLoadingDialog();
-                                if (response.code() == 200)  {
-                                    ToastUtil.shortToast(getActivity(),response.message());
-                                } else {
-                                    ToastUtil.shortToast(R.string.fail);
-                                }
                             }
                         });
                     }
