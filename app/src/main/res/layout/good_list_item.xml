@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="101dp"
+        android:minHeight="101dp"
         android:background="@color/white"
-        android:paddingLeft="13dp"
-        android:paddingTop="10dp">
+        android:layout_marginLeft="13dp">
         <CheckBox
             android:id="@+id/goods_sel_box"
             android:layout_width="wrap_content"
@@ -69,6 +67,7 @@
                 android:id="@+id/product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/color_404040"
                 android:textSize="@dimen/textsize_15sp" />
 
@@ -76,7 +75,7 @@
                 android:id="@+id/product_args"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="1dp"
                 android:textColor="@color/color_999999"
                 android:textSize="@dimen/textsize_14sp" />
 
@@ -91,4 +90,4 @@
 
     <View style="@style/bottom_horizontal_line" />
 
-    </RelativeLayout>
+</RelativeLayout>

@@ -109,56 +109,19 @@ public class AddFeedFragment extends BaseFragment implements AddPhotoAdapter.Sel
                         .cacheMode(CacheMode.NO_CACHE)
                         .params(params)
                         .addFileParams("imageList", fileList)
-                        .execute(new CommonCallback<String>() {
+                        .execute(new JsonCallback<String>(String.class) {
                             @Override
-                            public String parseNetworkResponse(Response response) throws Exception {
-                                return response.body().string();
-                            }
-
-                            @Override
-                            public void onAfter(boolean isFromCache, @Nullable String s, Call call, @Nullable Response response, @Nullable Exception e) {
-                                super.onAfter(isFromCache, s, call, response, e);
-                                dismissLoadingDialog();
-                            }
-                            @Override
-                            public void onResponse(boolean isFromCache, String s, Request request, @Nullable final Response response) {
-                                JSONObject jsonObject = null;
-                                try {
-                                    jsonObject = new JSONObject(s);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                if (jsonObject != null) {
-                                    final int code = jsonObject.optInt("code", 1);
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (code == 0) {
-                                                ToastUtil.shortToast(R.string.commit_success);
-                                                onBackPressed();
-                                            } else {
-                                                assert response != null;
-                                                ToastUtil.shortToast(getActivity(), response.message());
-                                            }
-                                        }
-                                    });
-
-                                }
-                            }
-
-                            @Override
-                            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                                if (response != null)
-                                    L.d("@@@@@>>", response.code());
+                            public void onSuccess(String s, Call call, Response response) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        ToastUtil.shortToast(R.string.fail);
+                                        dismissLoadingDialog();
+                                        ToastUtil.shortToast(R.string.commit_success);
+                                        onBackPressed();
+
                                     }
                                 });
-
                             }
-
                         });
 
 

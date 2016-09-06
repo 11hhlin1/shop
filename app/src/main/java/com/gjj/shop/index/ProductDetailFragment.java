@@ -286,15 +286,25 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                 .params(params)
                 .execute(new JsonCallback<String>(String.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-                        ToastUtil.shortToast(R.string.add_cart_success);
-                        EventBus.getDefault().post(new EventOfAddCartSuccess());
+                    public void onSuccess(String s, Call call, Response response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.shortToast(R.string.add_cart_success);
+                                EventBus.getDefault().post(new EventOfAddCartSuccess());
+                            }
+                        });
                     }
 
                     @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        super.onError(isFromCache, call, response, e);
-                        ToastUtil.shortToast(R.string.fail);
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.shortToast(R.string.fail);
+                            }
+                        });
                     }
                 });
     }

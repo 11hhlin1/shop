@@ -133,7 +133,19 @@ public class PersonalInfoFragment extends BaseFragment {
                         .cacheMode(CacheMode.NO_CACHE)
                         .execute(new JsonCallback<String>(String.class) {
                             @Override
-                            public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+                            public void onError(Call call, Response response, Exception e) {
+                                super.onError(call, response, e);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        L.d("@@@@@" + "logout fail");
+                                        ToastUtil.shortToast(R.string.fail);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onSuccess(String s, Call call, Response response) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -142,18 +154,6 @@ public class PersonalInfoFragment extends BaseFragment {
                                         intent.setClass(getActivity(), LoginActivity.class);
                                         startActivity(intent);
                                         BaseApplication.getUserMgr().logOut();
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                                super.onError(isFromCache, call, response, e);
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        L.d("@@@@@" + "logout fail");
-                                        ToastUtil.shortToast(R.string.fail);
                                     }
                                 });
                             }
@@ -354,19 +354,8 @@ public class PersonalInfoFragment extends BaseFragment {
                         .addFileParams("avatar", fileList)
                         .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                             @Override
-                            public void onResponse(boolean isFromCache, final UserInfo user, Request request, @Nullable Response response) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        dismissLoadingDialog();
-                                        ToastUtil.shortToast(R.string.commit_success);
-                                        BaseApplication.getUserMgr().saveUserInfo(user);
-                                        EventBus.getDefault().post(new UpdateUserInfo());
-                                    }
-                                });
-                            }
-                            @Override
-                            public void onError(boolean isFromCache, Call call, @Nullable final Response response, @Nullable Exception e) {
+                            public void onError(Call call, final Response response, Exception e) {
+                                super.onError(call, response, e);
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -374,6 +363,19 @@ public class PersonalInfoFragment extends BaseFragment {
                                         if(response != null)
                                             L.d("@@@@@>>" + response.code());
                                         ToastUtil.shortToast(R.string.fail);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onSuccess(final UserInfo userInfo, Call call, Response response) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dismissLoadingDialog();
+                                        ToastUtil.shortToast(R.string.commit_success);
+                                        BaseApplication.getUserMgr().saveUserInfo(userInfo);
+                                        EventBus.getDefault().post(new UpdateUserInfo());
                                     }
                                 });
                             }

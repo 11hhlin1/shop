@@ -59,20 +59,21 @@ public class ChangeNameFragment extends BaseFragment {
                 .addFileParams("avatar", null)
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, UserInfo userInfo, Request request, @Nullable Response response) {
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        dismissLoadingDialog();
+                        if(response != null)
+                            L.d("@@@@@>>", response.code());
+                        ToastUtil.shortToast(R.string.fail);
+                    }
+
+                    @Override
+                    public void onSuccess(UserInfo userInfo, Call call, Response response) {
                         dismissLoadingDialog();
                         ToastUtil.shortToast(R.string.commit_success);
                         onBackPressed();
                         BaseApplication.getUserMgr().saveUserInfo(userInfo);
                         EventBus.getDefault().post(new UpdateUserInfo());
-                    }
-                    @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        dismissLoadingDialog();
-                        if(response != null)
-                            L.d("@@@@@>>", response.code());
-                        ToastUtil.shortToast(R.string.fail);
-
                     }
 
                 });

@@ -47,8 +47,8 @@ public abstract class StringDialogCallback extends CommonCallback<String> {
     }
 
     @Override
-    public void onAfter(boolean isFromCache, @Nullable String s, Call call, Response response, @Nullable Exception e) {
-        super.onAfter(isFromCache, s, call, response, e);
+    public void onAfter(@Nullable String s, @Nullable Exception e) {
+        super.onAfter(s, e);
         //网络请求结束后关闭对话框
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();

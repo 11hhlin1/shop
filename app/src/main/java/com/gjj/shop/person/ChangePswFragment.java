@@ -94,14 +94,15 @@ public class ChangePswFragment extends BaseFragment {
 //                .postJson(jsonObject.toString())
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
+                    public void onSuccess(UserInfo userInfo, Call call, Response response) {
                         dismissLoadingDialog();
                         ToastUtil.shortToast(R.string.commit_success);
                         onBackPressed();
                     }
 
                     @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
                         dismissLoadingDialog();
                         if (response != null)
                             L.d("@@@@@>>", response.code());

@@ -114,40 +114,61 @@ public class CommunityFragment extends BaseFragment{
                 .params(params)
                 .execute(new ListCallback<CommunityInfo>(CommunityInfo.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, BaseList baseList, Request request, @Nullable Response response) {
-                        if (start == 0) {
-                            mPtrLayout.refreshComplete();
-                        } else {
-                            mRecyclerView.onLoadMoreComplete();
-                        }
-                        List<CommunityInfo> infoList = new ArrayList<CommunityInfo>();
-                        if(baseList != null) {
-                            infoList = baseList.list;
-                        }
-                        if(start == 0) {
-                            mAdapter.setData(infoList);
-                        } else {
-                            mAdapter.addData(infoList);
-                        }
-                        if(infoList.size() < SIZE) {
-                            mRecyclerView.setHasLoadMore(false);
-                        } else {
-                            mRecyclerView.setHasLoadMore(true);
-                        }
+                    public void onSuccess(BaseList<CommunityInfo> communityInfoBaseList, Call call, Response response) {
+                        handleData(start,communityInfoBaseList);
                     }
 
                     @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        super.onError(isFromCache, call, response, e);
-                        if (start == 0) {
-                            mPtrLayout.refreshComplete();
-                        } else {
-                            mRecyclerView.onLoadMoreComplete();
-                        }
-                        if(!isFromCache)
-                        ToastUtil.shortToast(R.string.fail);
+                    public void onCacheSuccess(BaseList<CommunityInfo> communityInfoBaseList, Call call) {
+                        super.onCacheSuccess(communityInfoBaseList, call);
+                        handleData(start,communityInfoBaseList);
                     }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (start == 0) {
+                                    mPtrLayout.refreshComplete();
+                                } else {
+                                    mRecyclerView.onLoadMoreComplete();
+                                }
+                                ToastUtil.shortToast(R.string.fail);
+                            }
+                        });
+
+                    }
+
                 });
     }
 
+
+    void handleData(final int start, final BaseList<CommunityInfo> baseList) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (start == 0) {
+                    mPtrLayout.refreshComplete();
+                } else {
+                    mRecyclerView.onLoadMoreComplete();
+                }
+                List<CommunityInfo> infoList = new ArrayList<CommunityInfo>();
+                if(baseList != null) {
+                    infoList = baseList.list;
+                }
+                if(start == 0) {
+                    mAdapter.setData(infoList);
+                } else {
+                    mAdapter.addData(infoList);
+                }
+                if(infoList.size() < SIZE) {
+                    mRecyclerView.setHasLoadMore(false);
+                } else {
+                    mRecyclerView.setHasLoadMore(true);
+                }
+            }
+        });
+    }
 }

@@ -14,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.ListCallback;
 import com.gjj.applibrary.http.model.BaseList;
+import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
@@ -87,7 +90,30 @@ public class ShoppingFragment extends BaseFragment {
             confirmDialog.setConfirmClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    List<ShopAdapterInfo> shopAdapterInfos = mAdapter.getDataList();
+                    List<CartDeleteReq> deleteReqs = new ArrayList<CartDeleteReq>();
+                    for (ShopAdapterInfo info : shopAdapterInfos) {
+                        for (GoodsAdapterInfo goodsAdapterInfo:info.goodsList) {
+                            if (goodsAdapterInfo.isSel) {
+                                CartDeleteReq req = new CartDeleteReq();
+                                req.goodsId = goodsAdapterInfo.goodsInfo.goodsId;
+                                req.tags = goodsAdapterInfo.goodsInfo.tags;
+                                deleteReqs.add(req);
+                            }
+                        }
 
+                    }
+                    L.d("@@@@@>" + JSON.toJSONString(deleteReqs));
+                    OkHttpUtils.post(ApiConstants.DELETE_CART)
+                            .tag(this)
+                            .params("goodsList", JSON.toJSONString(deleteReqs))
+                            .cacheMode(CacheMode.NO_CACHE)
+                            .execute(new JsonCallback<String>(String.class) {
+                                @Override
+                                public void onSuccess(String s, Call call, Response response) {
+                                }
+
+                            });
                 }
             });
             confirmDialog.setCanceledOnTouchOutside(true);
@@ -160,11 +186,16 @@ public class ShoppingFragment extends BaseFragment {
                 .cacheMode(CacheMode.NO_CACHE)
                 .execute(new ListCallback<ShopInfo>(ShopInfo.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, BaseList baseList, Request request, @Nullable Response response) {
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        ToastUtil.shortToast(R.string.fail);
+                    }
 
+                    @Override
+                    public void onSuccess(BaseList<ShopInfo> shopInfoBaseList, Call call, Response response) {
                         List<ShopInfo> infoList = new ArrayList<ShopInfo>();
-                        if (baseList != null) {
-                            infoList = baseList.list;
+                        if (shopInfoBaseList != null) {
+                            infoList = shopInfoBaseList.list;
                         }
                         List<ShopAdapterInfo> adapterInfos = new ArrayList<ShopAdapterInfo>();
                         for (ShopInfo shopInfo : infoList) {
@@ -186,16 +217,8 @@ public class ShoppingFragment extends BaseFragment {
                         }
 //                        mAdapter.setmSelList(mSelList);
                         mAdapter.setData(adapterInfos);
-
                     }
 
-                    @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        super.onError(isFromCache, call, response, e);
-
-                        if (!isFromCache)
-                            ToastUtil.shortToast(R.string.fail);
-                    }
                 });
     }
 

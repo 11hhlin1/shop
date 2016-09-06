@@ -112,7 +112,7 @@ public class RegisterFragment extends BaseFragment {
 //                .postJson(jsonObject.toString())//
                 .execute(new JsonCallback<String>(String.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+                    public void onSuccess(String s, Call call, Response response) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -122,7 +122,8 @@ public class RegisterFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable final Response response, @Nullable Exception e) {
+                    public void onError(Call call, final Response response, Exception e) {
+                        super.onError(call, response, e);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -175,25 +176,8 @@ public class RegisterFragment extends BaseFragment {
 //                .postJson(jsonObject.toString())//
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, final UserInfo rspInfo, Request request, @Nullable Response response) {
-                           runOnUiThread(new Runnable() {
-                               @Override
-                               public void run() {
-                                   dismissLoadingDialog();
-                                   if(rspInfo != null) {
-                                       Activity activity = getActivity();
-                                       L.d("@@@@@>>" + rspInfo.token);
-                                       BaseApplication.getUserMgr().saveUserInfo(rspInfo);
-                                       Intent intent = new Intent();
-                                       intent.setClass(activity, MainActivity.class);
-                                       startActivity(intent);
-                                       activity.finish();
-                                   }
-                               }
-                           });
-                    }
-                    @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable final Response response, @Nullable Exception e) {
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -201,6 +185,26 @@ public class RegisterFragment extends BaseFragment {
                             }
                         });
                     }
+
+                    @Override
+                    public void onSuccess(final UserInfo userInfo, Call call, Response response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dismissLoadingDialog();
+                                if(userInfo != null) {
+                                    Activity activity = getActivity();
+                                    L.d("@@@@@>>" + userInfo.token);
+                                    BaseApplication.getUserMgr().saveUserInfo(userInfo);
+                                    Intent intent = new Intent();
+                                    intent.setClass(activity, MainActivity.class);
+                                    startActivity(intent);
+                                    activity.finish();
+                                }
+                            }
+                        });
+                    }
+
                 });
     }
     private void register(HashMap<String, String> params) {
@@ -212,30 +216,32 @@ public class RegisterFragment extends BaseFragment {
 //                .postJson(jsonObject.toString())//
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, final UserInfo rspInfo, Request request, @Nullable Response response) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    dismissLoadingDialog();
-                                    if(rspInfo != null) {
-                                        Activity activity = getActivity();
-                                        L.d("@@@@@>>" + rspInfo.token);
-                                        ToastUtil.shortToast(R.string.register_success);
-                                        PreferencesManager.getInstance().put(BundleKey.TOKEN, rspInfo.token);
-                                        Intent intent = new Intent();
-                                        intent.setClass(activity, MainActivity.class);
-                                        startActivity(intent);
-                                        activity.finish();
-                                    }
-                                }
-                            });
-                    }
-                    @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable final Response response, @Nullable final Exception e) {
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 dismissLoadingDialog();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onSuccess(final UserInfo userInfo, Call call, Response response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dismissLoadingDialog();
+                                if(userInfo != null) {
+                                    Activity activity = getActivity();
+                                    L.d("@@@@@>>" + userInfo.token);
+                                    ToastUtil.shortToast(R.string.register_success);
+                                    PreferencesManager.getInstance().put(BundleKey.TOKEN, userInfo.token);
+                                    Intent intent = new Intent();
+                                    intent.setClass(activity, MainActivity.class);
+                                    startActivity(intent);
+                                    activity.finish();
+                                }
                             }
                         });
                     }

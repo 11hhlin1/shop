@@ -100,39 +100,48 @@ public class ProductListFragment extends BaseFragment {
                 .params(params)
                 .execute(new ListCallback<ProductInfo>(ProductInfo.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, BaseList baseList, Request request, @Nullable Response response) {
-                        if (start == 0) {
-                            mPtrLayout.refreshComplete();
-                        } else {
-                            mProductGrid.onLoadMoreComplete();
-                        }
-                        List<ProductInfo> infoList = new ArrayList<ProductInfo>();
-                        if (baseList != null) {
-                            infoList = baseList.list;
-                        }
-                        if (start == 0) {
-                            mAdapter.setData(infoList);
-                        } else {
-                            mAdapter.addData(infoList);
-                        }
-                        if (infoList.size() < SIZE) {
-                            mProductGrid.setHasLoadMore(false);
-                        } else {
-                            mProductGrid.setHasLoadMore(true);
-                        }
+                    public void onSuccess(BaseList<ProductInfo> productInfoBaseList, Call call, Response response) {
+                        handleData(start,productInfoBaseList);
                     }
 
                     @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                        super.onError(isFromCache, call, response, e);
-                        if (start == 0) {
-                            mPtrLayout.refreshComplete();
-                        } else {
-                            mProductGrid.onLoadMoreComplete();
-                        }
-                        if (!isFromCache)
-                            ToastUtil.shortToast(R.string.fail);
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (start == 0) {
+                                    mPtrLayout.refreshComplete();
+                                } else {
+                                    mProductGrid.onLoadMoreComplete();
+                                }
+                                ToastUtil.shortToast(R.string.fail);
+                            }
+                        });
                     }
                 });
     }
+
+    private void handleData(int start, BaseList<ProductInfo> baseList) {
+        if (start == 0) {
+            mPtrLayout.refreshComplete();
+        } else {
+            mProductGrid.onLoadMoreComplete();
+        }
+        List<ProductInfo> infoList = new ArrayList<ProductInfo>();
+        if (baseList != null) {
+            infoList = baseList.list;
+        }
+        if (start == 0) {
+            mAdapter.setData(infoList);
+        } else {
+            mAdapter.addData(infoList);
+        }
+        if (infoList.size() < SIZE) {
+            mProductGrid.setHasLoadMore(false);
+        } else {
+            mProductGrid.setHasLoadMore(true);
+        }
+    }
+
 }

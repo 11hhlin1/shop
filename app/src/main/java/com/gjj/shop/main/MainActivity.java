@@ -146,16 +146,18 @@ public class MainActivity extends BaseMainActivity {
                 .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                 .execute(new JsonCallback<UserInfo>(UserInfo.class) {
                     @Override
-                    public void onResponse(boolean isFromCache, UserInfo rspInfo, Request request, @Nullable Response response) {
-                        if(rspInfo != null) {
-                            L.d("@@@@@>>" + rspInfo.phone);
-                            BaseApplication.getUserMgr().saveUserInfo(rspInfo);
-                        }
-                    }
-                    @Override
-                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
                         if(response != null)
                             L.d("@@@@@>>" + response.code());
+                    }
+
+                    @Override
+                    public void onSuccess(UserInfo userInfo, Call call, Response response) {
+                        if(userInfo != null) {
+                            L.d("@@@@@>>" + userInfo.phone);
+                            BaseApplication.getUserMgr().saveUserInfo(userInfo);
+                        }
                     }
                 });
     }
