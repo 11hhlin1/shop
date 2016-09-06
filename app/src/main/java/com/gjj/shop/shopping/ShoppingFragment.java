@@ -111,6 +111,7 @@ public class ShoppingFragment extends BaseFragment {
                             .execute(new JsonCallback<String>(String.class) {
                                 @Override
                                 public void onSuccess(String s, Call call, Response response) {
+                                    doRequest();
                                 }
 
                             });
