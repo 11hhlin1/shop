@@ -143,7 +143,7 @@
         android:layout_marginTop="32dp"
         style="@style/horizontal_line"/>
     <Button
-        android:id="@+id/delete_address"
+        android:id="@+id/save_address"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:textSize="@dimen/textsize_16sp"
