@@ -192,7 +192,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buy_now_btn:
-                PageSwitcher.switchToTopNavPage(getActivity(), EditOrderFragment.class, null, getString(R.string.check_order), "");
+                buyNow();
                 break;
             case R.id.choose_detail_item:
                 showPickupWindow();
@@ -215,6 +215,24 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
         }
     }
 
+    private void buyNow() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("amount",amount);
+        ArrayList<SelTagInfo> selTagInfoList = new ArrayList<>();
+        for (TagInfo tagInfo : mTagsList) {
+            if(TextUtils.isEmpty(tagInfo.mSelTag)) {
+                ToastUtil.shortToast(getActivity(),"请选择规格");
+                return;
+            }
+            SelTagInfo selTagInfo = new SelTagInfo();
+            selTagInfo.mSelTag = tagInfo.mSelTag;
+            selTagInfo.mTitle = tagInfo.mTitle;
+            selTagInfoList.add(selTagInfo);
+        }
+        bundle.putSerializable("product",mProductInfo);
+        bundle.putParcelableArrayList("tagList", selTagInfoList);
+        PageSwitcher.switchToTopNavPage(getActivity(), EditOrderFragment.class, bundle, getString(R.string.check_order), "");
+    }
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         float left = mNavItemWidth * (position + positionOffset);
@@ -339,12 +357,12 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                 }
             });
             viewHolder.tagList.setAdapter(new UnScrollListAdapter(getActivity(),mTagsList));
-            contentView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dismissConstructNoticeWindow();
-                }
-            });
+//            contentView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    dismissConstructNoticeWindow();
+//                }
+//            });
             Rect r = new Rect();
             mRootView.getWindowVisibleDisplayFrame(r);
             final int[] location = new int[2];
@@ -437,6 +455,13 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                         productAmount.setText(String.valueOf(amount));
                     }
 
+                }
+            });
+            buyNowBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    buyNow();
+                    dismissConstructNoticeWindow();
                 }
             });
         }

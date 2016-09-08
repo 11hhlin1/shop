@@ -12,13 +12,16 @@ import android.widget.Button;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.ListCallback;
 import com.gjj.applibrary.http.model.BaseList;
+import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.app.BaseApplication;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.base.RecyclerItemOnclickListener;
 import com.gjj.shop.community.CommunityAdapter;
 import com.gjj.shop.event.EventOfAddress;
+import com.gjj.shop.event.EventOfDefaultAddress;
 import com.gjj.shop.event.UpdateUserInfo;
 import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.ApiConstants;
@@ -42,7 +45,7 @@ import okhttp3.Response;
 /**
  * Created by user on 16/8/27.
  */
-public class AddressFragment extends BaseFragment {
+public class AddressFragment extends BaseFragment implements RecyclerItemOnclickListener{
     @Bind(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @Bind(R.id.add_address_btn)
@@ -69,28 +72,39 @@ public class AddressFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(linearLayoutManager);
 //        mRecyclerView.setEmptyView(mFlEmptyView);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setRecyclerItemOnclickListener(this);
         doRequest();
         EventBus.getDefault().register(this);
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateAddress(EventOfAddress event) {
+        if (getActivity() == null)
+            return;
         doRequest();
     }
+
     private void doRequest() {
         showLoadingDialog(R.string.request,false);
         OkHttpUtils.post(ApiConstants.GET_ADDRESS_LIST)
                 .tag(this)
                 .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
-                .execute(new ListCallback<AddressInfo>(AddressInfo.class) {
+                .execute(new JsonCallback<AddressListInfo>(AddressListInfo.class) {
 
                     @Override
-                    public void onSuccess(final BaseList<AddressInfo> addressInfoBaseList, Call call, Response response) {
+                    public void onSuccess(final AddressListInfo addressListInfo, Call call, Response response) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 dismissLoadingDialog();
-                                mAdapter.setData(addressInfoBaseList.list);
+                                mAdapter.setData(addressListInfo.addressList);
+                                PreferencesManager.getInstance().put("defaultAddressId",addressListInfo.defaultAddressId);
+                                for(AddressInfo addressInfo : addressListInfo.addressList) {
+                                    if(addressInfo.addressId == addressListInfo.defaultAddressId) {
+                                        PreferencesManager.getInstance().put(addressInfo);
+                                    }
+                                }
                             }
                         });
                     }
@@ -109,4 +123,11 @@ public class AddressFragment extends BaseFragment {
                 });
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        EventOfDefaultAddress eventOfDefaultAddress = new EventOfDefaultAddress();
+        eventOfDefaultAddress.mAddressInfo = mAdapter.getData(position);
+        EventBus.getDefault().post(eventOfDefaultAddress);
+        onBackPressed();
+    }
 }

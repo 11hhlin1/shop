@@ -38,10 +38,24 @@
                 android:textColor="@color/color_999999"
                 android:layout_marginTop="7dp"
                 android:textSize="@dimen/textsize_14sp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:text="我家马路"/>
 
         </LinearLayout>
+    <Button
+        android:id="@+id/change_address_btn"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="11dp"
+        android:layout_toLeftOf="@+id/raw_btn"
+        android:background="@mipmap/js_btn_bg"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize_15sp"
+        android:text="修改"/>
         <ImageView
+            android:id="@+id/raw_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

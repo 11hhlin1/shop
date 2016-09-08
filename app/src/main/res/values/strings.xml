@@ -53,6 +53,7 @@
     <string name="delete">删除</string>
     <string name="balance">结算</string>
     <string name="delete_shop_tip">删除商品后将不能回复,你确定要删除商品吗?</string>
+    <string name="delete_address_tip">删除地址后将不能回复,你确定要删除地址吗?</string>
 
     <string name="des_start_up">请添加描述</string>
 

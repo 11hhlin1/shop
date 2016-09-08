@@ -11,6 +11,6 @@ public class AddressInfo implements Serializable{
     public String area;
     public String address;
     public long addressId;
-    public boolean isDefault;
+//    public boolean isDefault;
 
 }
