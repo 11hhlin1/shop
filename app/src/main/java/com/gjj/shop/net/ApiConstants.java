@@ -23,5 +23,8 @@ public class ApiConstants {
     public static final String PRODUCT_INFO = host+ "/goods/info";
     public static final String SHOP_INFO = host+ "/shop/info";
     public static final String ADD_ADDRESS = host+ "/user/address/add";
+    public static final String GET_ADDRESS_LIST = host+ "/user/address/infoList";
+    public static final String DELETE_ADDRESS = host+ "/user/address/delete";
+    public static final String UPDATE_ADDRESS = host+ "/user/address/update";
 
 }

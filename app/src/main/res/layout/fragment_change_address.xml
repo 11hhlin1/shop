@@ -17,7 +17,7 @@
             android:layout_marginLeft="17dp"
             android:layout_gravity="center_vertical"
             android:text="@string/contact"/>
-        <TextView
+        <EditText
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:textSize="@dimen/textsize_15sp"
             android:layout_marginLeft="100dp"
             android:layout_gravity="center_vertical"
-            android:text="小米"
+            android:background="@null"
             />
     </FrameLayout>
     <View
@@ -45,7 +45,7 @@
             android:layout_marginLeft="17dp"
             android:layout_gravity="center_vertical"
             android:text="手机号"/>
-        <TextView
+        <EditText
             android:id="@+id/phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:textSize="@dimen/textsize_15sp"
             android:layout_marginLeft="100dp"
             android:layout_gravity="center_vertical"
-            android:text="12888383888"
+            android:background="@null"
             />
     </FrameLayout>
     <View
@@ -71,7 +71,7 @@
             android:layout_marginLeft="17dp"
             android:layout_gravity="center_vertical"
             android:text="所在地区"/>
-        <TextView
+        <EditText
             android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             android:textSize="@dimen/textsize_15sp"
             android:layout_marginLeft="100dp"
             android:layout_gravity="center_vertical"
-            android:text="广东省广州市电白区"
+            android:background="@null"
             />
     </FrameLayout>
     <View
@@ -98,7 +98,7 @@
             android:layout_marginLeft="17dp"
             android:layout_gravity="center_vertical"
             android:text="详细地址"/>
-        <TextView
+        <EditText
             android:id="@+id/address_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
             android:textSize="@dimen/textsize_15sp"
             android:layout_marginLeft="100dp"
             android:layout_gravity="center_vertical"
-            android:text="我家大顶顶顶顶"
+            android:background="@null"
             />
     </FrameLayout>
     <View
@@ -133,7 +133,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/selector_check_box"
             android:button="@null"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginRight="10dp"/>
     </RelativeLayout>
     <View
         android:layout_marginTop="32dp"

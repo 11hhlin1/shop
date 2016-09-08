@@ -1,6 +1,7 @@
 package com.gjj.shop.address;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,13 @@ import com.gjj.applibrary.http.model.BaseList;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
+import com.gjj.shop.event.EventOfAddress;
 import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.ApiConstants;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
@@ -48,6 +52,12 @@ public class AddAddressFragment extends BaseFragment {
     boolean isDefault;
 
     @Override
+    public void onRightBtnClick() {
+        super.onRightBtnClick();
+        commit();
+    }
+
+    @Override
     public int getContentViewLayout() {
         return R.layout.fragment_add_address;
     }
@@ -66,13 +76,21 @@ public class AddAddressFragment extends BaseFragment {
 
     @OnClick(R.id.save_address)
     void commit() {
+        String name = nameEt.getText().toString();
+        String phone = phoneEt.getText().toString();
+        String area = address.getText().toString();
+        String detail = addressDetail.getText().toString();
+        if(TextUtils.isEmpty(name) || TextUtils.isEmpty(phone)||TextUtils.isEmpty(area)||TextUtils.isEmpty(detail)) {
+            ToastUtil.shortToast(R.string.input_address);
+            return;
+        }
         showLoadingDialog(R.string.committing,false);
         HashMap<String, String> params = new HashMap<>();
-        params.put("contact", nameEt.getText().toString());
-        params.put("phone", phoneEt.getText().toString());
-        params.put("area", address.getText().toString());
-        params.put("address", addressDetail.getText().toString());
-        params.put("isDefault", String.valueOf(false));
+        params.put("contact", name);
+        params.put("phone", phone);
+        params.put("area", area);
+        params.put("address", detail);
+        params.put("isDefault", String.valueOf(isDefault));
         OkHttpUtils.post(ApiConstants.ADD_ADDRESS)
                 .tag(this)
                 .cacheMode(CacheMode.NO_CACHE)
@@ -87,6 +105,8 @@ public class AddAddressFragment extends BaseFragment {
                             public void run() {
                                 dismissLoadingDialog();
                                 ToastUtil.shortToast(R.string.success);
+                                onBackPressed();
+                                EventBus.getDefault().post(new EventOfAddress());
                             }
                         });
                     }
