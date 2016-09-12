@@ -3,9 +3,12 @@ package com.gjj.shop.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.GridView;
 
-public class UnScrollableGridView extends GridView{
+import cn.finalteam.loadingviewfinal.GridViewFinal;
+
+public class UnScrollableGridView extends GridView {
 
     public UnScrollableGridView(Context context) {
         super(context);
@@ -19,7 +22,7 @@ public class UnScrollableGridView extends GridView{
         super(context, attrs, defStyleAttr);
     }
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+        int expandSpec = View.MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, View.MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
 
     }

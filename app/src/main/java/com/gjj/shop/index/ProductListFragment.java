@@ -43,7 +43,7 @@ import okhttp3.Response;
 public class ProductListFragment extends BaseFragment {
 
 
-    private static final int SIZE = 20;
+    public static final int SIZE = 20;
     @Bind(R.id.product_grid)
     GridViewFinal mProductGrid;
     @Bind(R.id.store_house_ptr_frame)
