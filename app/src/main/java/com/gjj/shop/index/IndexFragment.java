@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.gjj.applibrary.http.callback.ListCallback;
+import com.gjj.applibrary.http.model.BaseList;
 import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.base.BaseFragment;
@@ -25,11 +27,15 @@ import com.gjj.shop.index.cheap.CheapShopListFragment;
 import com.gjj.shop.index.foreign.CategoryData;
 import com.gjj.shop.index.foreign.ViewPagerGoodListFragment;
 import com.gjj.shop.model.ProductInfo;
+import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.search.SearchFragment;
 import com.gjj.shop.widget.HorizontalListView;
 import com.gjj.shop.widget.UnScrollableGridView;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.cache.CacheMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -40,6 +46,8 @@ import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
 import cn.finalteam.loadingviewfinal.PtrDefaultHandler;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 import cn.finalteam.loadingviewfinal.RecyclerViewFinal;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Chuck on 2016/7/21.
@@ -93,10 +101,10 @@ public class IndexFragment extends BaseFragment {
     void goCheapShop() {
           Bundle bundle = new Bundle();
         ArrayList<CategoryData> dataList = new ArrayList<>();
-          CategoryData categoryData = new CategoryData();
-          categoryData.mCateId = 0;
-          categoryData.mCateName = getString(R.string.one_yuan_buy);
-          dataList.add(categoryData);
+        CategoryData categoryData = new CategoryData();
+        categoryData.mCateId = 0;
+        categoryData.mCateName = getString(R.string.one_yuan_buy);
+        dataList.add(categoryData);
         CategoryData categoryData1 = new CategoryData();
         categoryData1.mCateId = 1;
         categoryData1.mCateName = getString(R.string.nine_yuan_buy);
@@ -135,7 +143,7 @@ public class IndexFragment extends BaseFragment {
             "http://f.hiphotos.baidu.com/image/pic/item/09fa513d269759ee50f1971ab6fb43166c22dfba.jpg"
     };
 
-    HorizontalListViewAdapter mHorizontalListViewAdapter;
+    private HorizontalListViewAdapter mHorizontalListViewAdapter;
     @Override
     public int getContentViewLayout() {
         return R.layout.fragment_index;
@@ -158,7 +166,8 @@ public class IndexFragment extends BaseFragment {
         mPtrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                mPtrClassicFrameLayout.refreshComplete();
+                  requestData();
+//                mPtrClassicFrameLayout.refreshComplete();
             }
         });
         List<String> stringList = new ArrayList<>();
@@ -256,6 +265,37 @@ public class IndexFragment extends BaseFragment {
     }
 
 
+    private void requestData() {
+        HashMap<String, String> params = new HashMap<>();
+        OkHttpUtils.get(ApiConstants.HOME_PAGE)
+                .tag(this)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+                .execute(new ListCallback<ProductInfo>(ProductInfo.class) {
+                    @Override
+                    public void onSuccess(BaseList<ProductInfo> productInfoBaseList, Call call, Response response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPtrClassicFrameLayout.refreshComplete();
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPtrClassicFrameLayout.refreshComplete();
+                                ToastUtil.shortToast(R.string.fail);
+                            }
+                        });
+                    }
+                });
+    }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
