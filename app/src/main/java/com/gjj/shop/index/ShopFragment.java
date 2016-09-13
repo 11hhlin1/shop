@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.ListCallback;
 import com.gjj.applibrary.http.model.BaseList;
@@ -19,6 +21,8 @@ import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.ApiConstants;
+import com.gjj.shop.net.UrlUtil;
+import com.gjj.shop.util.CallUtil;
 import com.gjj.shop.widget.UnScrollableGridView;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
@@ -54,10 +58,17 @@ public class ShopFragment extends BaseFragment {
     @Bind(R.id.scrollView)
     ScrollView mScrollView;
     private GridAdapter mAdapter;
+    private ShopInfo mShopInfo;
+
 
     @OnClick(R.id.icon_back_btn)
     void back(){
         onBackPressed();
+    }
+
+    @OnClick(R.id.contact_service)
+    void setContactService(){
+        CallUtil.askForMakeCall(getActivity(), "", mShopInfo.contactPhone);
     }
     @Override
     public int getContentViewLayout() {
@@ -67,12 +78,12 @@ public class ShopFragment extends BaseFragment {
     @Override
     public void initView() {
         ArrayList<ProductInfo> list = new ArrayList<ProductInfo>();
-        for (int i = 0; i< 10; i++) {
-            ProductInfo productInfo = new ProductInfo();
-            productInfo.name = "的撒旦";
-            productInfo.logo = "";
-            list.add(productInfo);
-        }
+//        for (int i = 0; i< 10; i++) {
+//            ProductInfo productInfo = new ProductInfo();
+//            productInfo.name = "的撒旦";
+//            productInfo.logo = "";
+//            list.add(productInfo);
+//        }
         mAdapter = new GridAdapter(getActivity(), list);
         gridView.setAdapter(mAdapter);
         mScrollView.fullScroll(ScrollView.FOCUS_UP);
@@ -83,6 +94,17 @@ public class ShopFragment extends BaseFragment {
                 ToastUtil.shortToast(view.getContext(), "product:"+position);
             }
         });
+        mShopInfo = (ShopInfo) getArguments().getSerializable("mShopInfo");
+        assert mShopInfo != null;
+        shopName.setText(mShopInfo.name);
+        Glide.with(this)
+                .load(UrlUtil.getHttpUrl(mShopInfo.image))
+                .centerCrop()
+                .placeholder(R.mipmap.scyh3)
+                .error(R.mipmap.scyh3)
+                .bitmapTransform(new GlideCircleTransform(getContext()))
+                .into(shopIcon);
+        shopMsg.setText(mShopInfo.details);
         requestData(0);
 //        gridView.setOnLoadMoreListener(new OnLoadMoreListener() {
 //            @Override
@@ -90,7 +112,7 @@ public class ShopFragment extends BaseFragment {
 //                requestData(mAdapter.getCount() - 1);
 //            }
 //        });
-        getShopInfo();
+//        getShopInfo();
     }
 
     private void getShopInfo() {
@@ -115,9 +137,9 @@ public class ShopFragment extends BaseFragment {
     private void requestData(final int start) {
         showLoadingDialog(R.string.committing,false);
         HashMap<String, String> params = new HashMap<>();
-        params.put("shopId", "771231952710664192");
+        params.put("shopId", String.valueOf(mShopInfo.shopId));
         params.put("index", String.valueOf(start));
-        params.put("size", String.valueOf(ProductListFragment.SIZE));
+        params.put("size", String.valueOf(1000));
         OkHttpUtils.get(ApiConstants.PRODUCT_LIST)
                 .tag(this)
                 .cacheMode(CacheMode.NO_CACHE)

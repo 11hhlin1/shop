@@ -49,6 +49,7 @@ public class ProductPicFragment extends BaseFragment {
     public void initView() {
         Bundle bundle = getArguments();
         mProductInfo = (ProductInfo) bundle.getSerializable("product");
+        assert mProductInfo != null;
         productTitle.setText(mProductInfo.title);
         productDesc.setText(mProductInfo.details);
         Activity activity = getActivity();

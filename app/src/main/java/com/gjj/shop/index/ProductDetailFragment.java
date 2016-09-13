@@ -198,7 +198,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                 showPickupWindow();
                 break;
             case R.id.phone_item:
-                CallUtil.askForMakeCall(getActivity(), "", "400-82838838888");
+                CallUtil.askForMakeCall(getActivity(), "", mProductInfo.contactPhone);
                 break;
             case R.id.user_advice_tv:
                 mPageVp.setCurrentItem(1);

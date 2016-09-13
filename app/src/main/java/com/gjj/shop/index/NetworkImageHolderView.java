@@ -7,12 +7,13 @@ import android.widget.ImageView;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bumptech.glide.Glide;
 import com.gjj.shop.R;
+import com.gjj.shop.net.UrlUtil;
 
 /**
  * Created by Sai on 15/8/4.
  * 网络图片加载例子
  */
-public class NetworkImageHolderView implements Holder<String> {
+public class NetworkImageHolderView implements Holder<IndexData.BannerBean> {
     private ImageView imageView;
     @Override
     public View createView(Context context) {
@@ -23,9 +24,10 @@ public class NetworkImageHolderView implements Holder<String> {
     }
 
     @Override
-    public void UpdateUI(Context context, int position, String data) {
+    public void UpdateUI(Context context, int position, IndexData.BannerBean data) {
         imageView.setImageResource(R.mipmap.ic_test_0);
-                Glide.with(context).load(data)
+        Glide.with(context).load(UrlUtil.getHttpUrl(data.getLogo()))
                 .into(imageView);
     }
+
 }

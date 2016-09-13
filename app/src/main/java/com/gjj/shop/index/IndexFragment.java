@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.ListCallback;
 import com.gjj.applibrary.http.model.BaseList;
 import com.gjj.applibrary.task.MainTaskExecutor;
@@ -144,6 +145,8 @@ public class IndexFragment extends BaseFragment {
     };
 
     private HorizontalListViewAdapter mHorizontalListViewAdapter;
+    private GridAdapter gridAdapter;
+    private List<IndexData.BannerBean> mBannerData;
     @Override
     public int getContentViewLayout() {
         return R.layout.fragment_index;
@@ -170,9 +173,11 @@ public class IndexFragment extends BaseFragment {
 //                mPtrClassicFrameLayout.refreshComplete();
             }
         });
-        List<String> stringList = new ArrayList<>();
+        List<IndexData.BannerBean> stringList = new ArrayList<>();
         for (String image: images) {
-            stringList.add(image);
+            IndexData.BannerBean bannerBean = new IndexData.BannerBean();
+            bannerBean.setLogo(image);
+            stringList.add(bannerBean);
         }
         mBanner.setPages(
                 new CBViewHolderCreator<NetworkImageHolderView>() {
@@ -190,14 +195,16 @@ public class IndexFragment extends BaseFragment {
 
             }
         });
-        String[] titles = {"怀师", "南怀瑾军校", "闭关", "南怀瑾", "南公庄严照", "怀师法相"};
-        String[] imgs = {"", "", "", "", "", ""};
-        mHorizontalListViewAdapter = new HorizontalListViewAdapter(getActivity(),titles,imgs);
+//        String[] titles = {"怀师", "南怀瑾军校", "闭关", "南怀瑾", "南公庄严照", "怀师法相"};
+//        String[] imgs = {"", "", "", "", "", ""};
+        mHorizontalListViewAdapter = new HorizontalListViewAdapter(getActivity(),new ArrayList<ShopInfo>());
         mHorizontalListView.setAdapter(mHorizontalListViewAdapter);
         mHorizontalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PageSwitcher.switchToTopNavPageNoTitle(getActivity(),ShopFragment.class, null,"","");
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("mShopInfo",mHorizontalListViewAdapter.getItem(position));
+                PageSwitcher.switchToTopNavPageNoTitle(getActivity(),ShopFragment.class, bundle,"","");
             }
         });
 //        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
@@ -205,12 +212,12 @@ public class IndexFragment extends BaseFragment {
 //        // 设置布局管理器
 //        mAdviceList.setLayoutManager(staggeredGridLayoutManager);
         ArrayList<ProductInfo> list = new ArrayList<ProductInfo>();
-        for (int i = 0; i< 10; i++) {
-            ProductInfo productInfo = new ProductInfo();
-            productInfo.name = "的撒旦";
-            productInfo.logo = images[0];
-            list.add(productInfo);
-        }
+//        for (int i = 0; i< 10; i++) {
+//            ProductInfo productInfo = new ProductInfo();
+//            productInfo.name = "的撒旦";
+//            productInfo.logo = images[0];
+//            list.add(productInfo);
+//        }
         mNames = new String[5];
         mNames[0]  = getString(R.string.cheap_shop);
         mNames[1]  = getString(R.string.foreign_shop);
@@ -245,7 +252,7 @@ public class IndexFragment extends BaseFragment {
 //        mProductAdapter = productAdapter;
 //        mAdviceList.setItemAnimator(null);
 //        mAdviceList.setAdapter(productAdapter);
-        GridAdapter gridAdapter = new GridAdapter(getActivity(), list);
+        gridAdapter = new GridAdapter(getActivity(), list);
         mUnScrollableGridView.setAdapter(gridAdapter);
         mScrollView.fullScroll(ScrollView.FOCUS_UP);
         mUnScrollableGridView.setFocusable(false);
@@ -262,6 +269,7 @@ public class IndexFragment extends BaseFragment {
                 mScrollView.smoothScrollTo(0, 0);
             }
         });
+        mPtrClassicFrameLayout.autoRefresh();
     }
 
 
@@ -271,14 +279,24 @@ public class IndexFragment extends BaseFragment {
                 .tag(this)
                 .cacheMode(CacheMode.NO_CACHE)
                 .params(params)
-                .execute(new ListCallback<ProductInfo>(ProductInfo.class) {
+                .execute(new JsonCallback<IndexData>(IndexData.class) {
+
                     @Override
-                    public void onSuccess(BaseList<ProductInfo> productInfoBaseList, Call call, Response response) {
+                    public void onSuccess(final IndexData indexData, Call call, Response response) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 mPtrClassicFrameLayout.refreshComplete();
-
+                                mHorizontalListViewAdapter.setData(indexData.shop);
+                                gridAdapter.setData(indexData.promotion);
+                                mBanner.setPages(
+                                        new CBViewHolderCreator<NetworkImageHolderView>() {
+                                            @Override
+                                            public NetworkImageHolderView createHolder() {
+                                                return new NetworkImageHolderView();
+                                            }
+                                        }, indexData.banner);
+                                mBannerData = indexData.banner;
                             }
                         });
                     }

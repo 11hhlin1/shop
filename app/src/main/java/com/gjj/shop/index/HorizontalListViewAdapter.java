@@ -13,29 +13,44 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.shop.R;
+import com.gjj.shop.net.UrlUtil;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class HorizontalListViewAdapter extends BaseAdapter{  
-    private String[] mImages;
-    private String[] mTitles;  
+//    private String[] mImages;
+//    private String[] mTitles;
     private Context mContext;  
-    private LayoutInflater mInflater;  
+    private LayoutInflater mInflater;
+    private List<ShopInfo> mShopInfos;
 
-    public HorizontalListViewAdapter(Context context, String[] titles, String[] imgUrl){
+    public HorizontalListViewAdapter(Context context, List<ShopInfo> shopInfos){
         this.mContext = context;  
-        this.mImages = imgUrl;
-        this.mTitles = titles;  
+//        this.mImages = imgUrl;
+//        this.mTitles = titles;
+        mShopInfos = shopInfos;
         mInflater=(LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);//LayoutInflater.from(mContext);  
-    }  
+    }
+    public void setData(List<ShopInfo> msg) {
+        if (msg != mShopInfos) {
+            if (mShopInfos != null) {
+                mShopInfos.clear();
+            }
+            this.mShopInfos = msg;
+        }
+        notifyDataSetChanged();
+    }
+
     @Override  
     public int getCount() {  
-        return mImages.length;
+        return mShopInfos.size();
     }  
     @Override  
-    public Object getItem(int position) {  
-        return position;  
+    public ShopInfo getItem(int position) {
+        return mShopInfos.get(position);
     }  
   
     @Override  
@@ -54,10 +69,10 @@ public class HorizontalListViewAdapter extends BaseAdapter{
         }else{  
             holder=(ViewHolder)convertView.getTag();  
         }
-          
-        holder.mTitle.setText(mTitles[position]);
+        ShopInfo shopInfo = getItem(position);
+        holder.mTitle.setText(shopInfo.name);
         Glide.with(mContext)
-                .load(mImages[position])
+                .load(UrlUtil.getHttpUrl(shopInfo.image))
                 .centerCrop()
                 .placeholder(R.mipmap.scyh3)
                 .error(R.mipmap.scyh3)
