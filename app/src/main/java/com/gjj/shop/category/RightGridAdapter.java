@@ -21,7 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class RightGridAdapter extends BaseAdapter {
-    private List<NextCategoryInfo> mProductList = new ArrayList<NextCategoryInfo>();
+    private List<NextCategoryInfo> mProductList;
     private LayoutInflater mInflater;
     private Context mContext;
 
@@ -75,13 +75,14 @@ public class RightGridAdapter extends BaseAdapter {
             viewTag = (ViewHolder) convertView.getTag();
         }
         NextCategoryInfo productInfo = mProductList.get(position);
+
 //        Glide.with(mContext)
-//                .load(UrlUtil.getHttpUrl(productInfo.logo))
+//                .load(UrlUtil.getHttpUrl(productInfo.url))
 //                .centerCrop()
 //                .placeholder(R.mipmap.cj_sp_01)
 //                .error(R.mipmap.cj_sp_01)
-//                .into(viewTag.mProductIv);
-//        viewTag.mProductName.setText(productInfo.name);
+//                .into(viewTag.image);
+        viewTag.text.setText(productInfo.name);
 //        viewTag.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 //        viewTag.mProductName.setTag(position);
 
