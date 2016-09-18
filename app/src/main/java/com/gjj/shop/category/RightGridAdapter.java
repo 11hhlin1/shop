@@ -83,8 +83,6 @@ public class RightGridAdapter extends BaseAdapter {
 //                .error(R.mipmap.cj_sp_01)
 //                .into(viewTag.image);
         viewTag.text.setText(productInfo.name);
-//        viewTag.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-//        viewTag.mProductName.setTag(position);
 
         return convertView;
     }

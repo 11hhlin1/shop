@@ -37,6 +37,7 @@ public class LeftAdapter extends BaseRecyclerViewAdapter<CategoryInfo> {
 //    private List<CommunityInfo> mInfoList;
 
     private RecyclerItemOnclickListener recyclerItemOnclickListener;
+    private int mSelPos = 0;
 
 
     public LeftAdapter(Context context, List<CategoryInfo> infoList) {
@@ -54,21 +55,27 @@ public class LeftAdapter extends BaseRecyclerViewAdapter<CategoryInfo> {
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         RvViewHolder viewHolder = (RvViewHolder) holder;
         final CategoryInfo info = items.get(position);
         viewHolder.cateName.setText(info.name);
         viewHolder.cateName.setTag(position);
-        if(position == 0) {
+        viewHolder.cateName.setOnCheckedChangeListener(null);
+        if(position == mSelPos) {
             viewHolder.cateName.setChecked(true);
+        } else {
+            viewHolder.cateName.setChecked(false);
         }
-//        Glide.with(mContext)
-//                .load(UrlUtil.getHttpUrl(info.thumbAvatar))
-//                .centerCrop()
-//                .placeholder(R.mipmap.s_user)
-//                .error(R.mipmap.s_user)
-//                .bitmapTransform(new GlideCircleTransform(mContext))
-//                .into(viewHolder.userAvatar);
+        viewHolder.cateName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    mSelPos = position;
+                    recyclerItemOnclickListener.onItemClick(buttonView,position);
+                    notifyDataSetChanged();
+                }
+            }
+        });
 
     }
 
@@ -83,16 +90,7 @@ public class LeftAdapter extends BaseRecyclerViewAdapter<CategoryInfo> {
          RvViewHolder(final View view) {
             super(view);
             ButterKnife.bind(this, view);
-             cateName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                 @Override
-                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                     if(isChecked) {
-                         int pos = (int) cateName.getTag();
-                         recyclerItemOnclickListener.onItemClick(view,pos);
 
-                     }
-                 }
-             });
 //             view.setOnClickListener(new View.OnClickListener() {
 //                 @Override
 //                 public void onClick(View v) {

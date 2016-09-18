@@ -30,8 +30,8 @@ public class ProductCategoryFragment extends BaseFragment implements RecyclerIte
     RecyclerView mRecyclerView;
     @Bind(R.id.grid)
     GridView mGridView;
-    LeftAdapter mAdapter;
-    RightGridAdapter mGridViewAdapter;
+    private LeftAdapter mAdapter;
+    private RightGridAdapter mGridViewAdapter;
 
     @Override
     public int getContentViewLayout() {
@@ -44,13 +44,14 @@ public class ProductCategoryFragment extends BaseFragment implements RecyclerIte
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-//        mRecyclerView.setEmptyView(mFlEmptyView);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setRecyclerItemOnclickListener(this);
 
 
         mGridViewAdapter = new RightGridAdapter(getActivity(),new ArrayList<NextCategoryInfo>());
         mGridView.setAdapter(mGridViewAdapter);
+
+
         showLoadingDialog(R.string.request,false);
         HashMap<String, String> params = new HashMap<>();
         params.put("pid", String.valueOf(0));
@@ -71,10 +72,15 @@ public class ProductCategoryFragment extends BaseFragment implements RecyclerIte
                     }
 
                     @Override
-                    public void onCacheSuccess(BaseList<CategoryInfo> categoryInfoBaseList, Call call) {
+                    public void onCacheSuccess(final BaseList<CategoryInfo> categoryInfoBaseList, Call call) {
                         super.onCacheSuccess(categoryInfoBaseList, call);
-//                        handleData(start,communityInfoBaseList);
-                    }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dismissLoadingDialog();
+                                mAdapter.setData(categoryInfoBaseList.list);
+                            }
+                        });                    }
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
@@ -106,7 +112,6 @@ public class ProductCategoryFragment extends BaseFragment implements RecyclerIte
                 .execute(new ListCallback<NextCategoryInfo>(NextCategoryInfo.class) {
                     @Override
                     public void onSuccess(final BaseList<NextCategoryInfo> categoryInfoBaseList, Call call, Response response) {
-//                        handleData(start,communityInfoBaseList);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -117,9 +122,16 @@ public class ProductCategoryFragment extends BaseFragment implements RecyclerIte
                     }
 
                     @Override
-                    public void onCacheSuccess(BaseList<NextCategoryInfo> nextCategoryInfoBaseList, Call call) {
+                    public void onCacheSuccess(final BaseList<NextCategoryInfo> nextCategoryInfoBaseList, Call call) {
                         super.onCacheSuccess(nextCategoryInfoBaseList, call);
-//                        handleData(start,communityInfoBaseList);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dismissLoadingDialog();
+                                mGridViewAdapter.setData(nextCategoryInfoBaseList.list);
+                            }
+                        });
+
                     }
 
                     @Override
@@ -137,4 +149,6 @@ public class ProductCategoryFragment extends BaseFragment implements RecyclerIte
 
                 });
     }
+
+
 }
