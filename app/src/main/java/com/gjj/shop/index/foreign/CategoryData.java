@@ -3,14 +3,13 @@ package com.gjj.shop.index.foreign;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * Created by Chuck on 2016/9/5.
  */
 public class CategoryData  implements Parcelable {
-    public int mCateId;
-    public String mCateName;
+    public int id;
+    public int pid;
+    public String name;
 
 
     @Override
@@ -20,16 +19,18 @@ public class CategoryData  implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.mCateId);
-        dest.writeString(this.mCateName);
+        dest.writeInt(this.id);
+        dest.writeInt(this.pid);
+        dest.writeString(this.name);
     }
 
     public CategoryData() {
     }
 
     private CategoryData(Parcel in) {
-        this.mCateId = in.readInt();
-        this.mCateName = in.readString();
+        this.id = in.readInt();
+        this.pid = in.readInt();
+        this.name = in.readString();
     }
 
     public static final Parcelable.Creator<CategoryData> CREATOR = new Parcelable.Creator<CategoryData>() {

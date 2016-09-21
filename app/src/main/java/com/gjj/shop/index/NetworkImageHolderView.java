@@ -26,7 +26,7 @@ public class NetworkImageHolderView implements Holder<IndexData.BannerBean> {
     @Override
     public void UpdateUI(Context context, int position, IndexData.BannerBean data) {
         imageView.setImageResource(R.mipmap.ic_test_0);
-        Glide.with(context).load(UrlUtil.getHttpUrl(data.getLogo()))
+        Glide.with(context).load(UrlUtil.getHttpUrl(data.logo))
                 .into(imageView);
     }
 

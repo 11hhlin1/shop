@@ -8,27 +8,31 @@ import java.io.Serializable;
 public class ShopInfo implements Serializable{
     private static final long serialVersionUID = -3211981110072530493L;
 
+
     /**
-     * id : 5
-     * shopId : 771231952710664200
-     * name : 海绵包包
-     * title : 打算打算打算
-     * details : 大师的撒的
-     * thumbnail : /upload/thumb/20160901/39a83a40f01c9f98.png
-     * image : /upload/image/20160901/39a83a40f01c9f98.png
-     * contactPhone : 4005882935
+     * id : 6
+     * shopId : 771347008790200300
+     * name :  手机店
+     * title : 卖手机的
+     * details : 就是个卖手机的，咋的
+     * logo : /upload/image/20160901/94c41da8b21c6875.jpg
+     * logoThumb : /upload/thumb/20160901/94c41da8b21c6875.jpg
+     * image : /upload/image/20160901/94c41da8b21c6875.jpg
+     * thumbnail : /upload/thumb/20160901/94c41da8b21c6875.jpg
+     * contactPhone : 110
      * type : null
-     * createTime : 1472711000980
+     * createTime : 1472738432487
      */
 
     public long shopId;
     public String name;
     public String title;
     public String details;
-    public String thumbnail;
+    public String logo;
+    public String logoThumb;
     public String image;
+    public String thumbnail;
     public String contactPhone;
     public long createTime;
-
 
 }

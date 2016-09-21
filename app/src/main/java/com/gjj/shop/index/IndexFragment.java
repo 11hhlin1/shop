@@ -2,11 +2,7 @@ package com.gjj.shop.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -16,15 +12,12 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.gjj.applibrary.http.callback.JsonCallback;
-import com.gjj.applibrary.http.callback.ListCallback;
-import com.gjj.applibrary.http.model.BaseList;
 import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.R;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.category.ProductCategoryFragment;
-import com.gjj.shop.index.cheap.CheapShopListFragment;
 import com.gjj.shop.index.foreign.CategoryData;
 import com.gjj.shop.index.foreign.ViewPagerGoodListFragment;
 import com.gjj.shop.model.ProductInfo;
@@ -40,13 +33,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
 import cn.finalteam.loadingviewfinal.PtrDefaultHandler;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
-import cn.finalteam.loadingviewfinal.RecyclerViewFinal;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -98,43 +88,55 @@ public class IndexFragment extends BaseFragment {
         PageSwitcher.switchToTopNavPage(getActivity(),ProductCategoryFragment.class,null,getString(R.string.category),"");
     }
     private String[] mNames ;
+    private List<ActivityInfo> mActivityInfo;
 //    @OnClick(R.id.cheap_shop)
     void goCheapShop() {
           Bundle bundle = new Bundle();
         ArrayList<CategoryData> dataList = new ArrayList<>();
-        CategoryData categoryData = new CategoryData();
-        categoryData.mCateId = 0;
-        categoryData.mCateName = getString(R.string.one_yuan_buy);
-        dataList.add(categoryData);
-        CategoryData categoryData1 = new CategoryData();
-        categoryData1.mCateId = 1;
-        categoryData1.mCateName = getString(R.string.nine_yuan_buy);
-        dataList.add(categoryData1);
-        CategoryData categoryData2 = new CategoryData();
-        categoryData2.mCateId = 2;
-        categoryData2.mCateName = getString(R.string.start_up_buy);
-        dataList.add(categoryData2);
+        dataList.addAll(mActivityInfo.get(0).data);
         bundle.putParcelableArrayList("data", dataList);
-        bundle.putInt("firstCate", 0);
+        bundle.putInt("firstCate", mActivityInfo.get(0).sortId);
         PageSwitcher.switchToTopNavPage(getActivity(),ViewPagerGoodListFragment.class,bundle,getString(R.string.cheap_shop),"");
 //        PageSwitcher.switchToTopNavPage(getActivity(),CheapShopListFragment.class,null,getString(R.string.cheap_shop),"");
     }
 
 //    @OnClick(R.id.foreign_shop)
     void goForeignShop() {
-        PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
+        Bundle bundle = new Bundle();
+        ArrayList<CategoryData> dataList = new ArrayList<>();
+        dataList.addAll(mActivityInfo.get(1).data);
+        bundle.putParcelableArrayList("data", dataList);
+        bundle.putInt("firstCate", mActivityInfo.get(1).sortId);
+        PageSwitcher.switchToTopNavPage(getActivity(),ViewPagerGoodListFragment.class,bundle,getString(R.string.foreign_shop),"");
     }
 
 //    @OnClick(R.id.factory_shop)
     void goFactoryShop() {
-        PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
+        Bundle bundle = new Bundle();
+        ArrayList<CategoryData> dataList = new ArrayList<>();
+        dataList.addAll(mActivityInfo.get(3).data);
+        bundle.putParcelableArrayList("data", dataList);
+        bundle.putInt("firstCate", mActivityInfo.get(3).sortId);
+        PageSwitcher.switchToTopNavPage(getActivity(),ViewPagerGoodListFragment.class,bundle,getString(R.string.factory_shop),"");
     }
 
 //    @OnClick(R.id.supermarket_shop)
     void goSuperMaketShop() {
-        PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,null,getString(R.string.cheap_shop),"");
+        Bundle bundle = new Bundle();
+        ArrayList<CategoryData> dataList = new ArrayList<>();
+        dataList.addAll(mActivityInfo.get(2).data);
+        bundle.putParcelableArrayList("data", dataList);
+        bundle.putInt("firstCate", mActivityInfo.get(2).sortId);
+        PageSwitcher.switchToTopNavPage(getActivity(),ViewPagerGoodListFragment.class,bundle,getString(R.string.supermarket_shop),"");
     }
-
+    void goFoodShop() {
+        Bundle bundle = new Bundle();
+        ArrayList<CategoryData> dataList = new ArrayList<>();
+        dataList.addAll(mActivityInfo.get(4).data);
+        bundle.putParcelableArrayList("data", dataList);
+        bundle.putInt("firstCate", mActivityInfo.get(4).sortId);
+        PageSwitcher.switchToTopNavPage(getActivity(),ViewPagerGoodListFragment.class,bundle,getString(R.string.food_shop),"");
+    }
     private AdviceProductAdapter mProductAdapter;
     private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
             "http://img2.3lian.com/2014/f2/37/d/40.jpg",
@@ -176,7 +178,7 @@ public class IndexFragment extends BaseFragment {
         List<IndexData.BannerBean> stringList = new ArrayList<>();
         for (String image: images) {
             IndexData.BannerBean bannerBean = new IndexData.BannerBean();
-            bannerBean.setLogo(image);
+            bannerBean.logo = image;
             stringList.add(bannerBean);
         }
         mBanner.setPages(
@@ -237,13 +239,13 @@ public class IndexFragment extends BaseFragment {
                         goForeignShop();
                         break;
                     case 2:
-                        goFactoryShop();
+                        goSuperMaketShop();
                         break;
                     case 3:
-                        goSuperMaketShop();
+                        goFactoryShop();
                         break;
                     case 4:
-                        goSuperMaketShop();
+                        goFoodShop();
                         break;
                 }
             }
@@ -297,6 +299,7 @@ public class IndexFragment extends BaseFragment {
                                             }
                                         }, indexData.banner);
                                 mBannerData = indexData.banner;
+                                mActivityInfo = indexData.tags;
                             }
                         });
                     }

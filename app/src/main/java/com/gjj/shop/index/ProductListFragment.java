@@ -16,6 +16,7 @@ import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.SpaceItemDecoration;
 import com.gjj.shop.community.CommunityAdapter;
 import com.gjj.shop.community.CommunityInfo;
+import com.gjj.shop.index.foreign.CategoryData;
 import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.ApiConstants;
 import com.lzy.okhttputils.OkHttpUtils;
@@ -42,14 +43,15 @@ import okhttp3.Response;
  */
 public class ProductListFragment extends BaseFragment {
 
-
     public static final int SIZE = 20;
     @Bind(R.id.product_grid)
     GridViewFinal mProductGrid;
     @Bind(R.id.store_house_ptr_frame)
     PtrClassicFrameLayout mPtrLayout;
     private GridAdapter mAdapter;
-
+//    CategoryData mCategoryData;
+    private int mSortId;
+    private int mType;
     @Override
     public int getContentViewLayout() {
         return R.layout.fragment_product_list;
@@ -61,7 +63,9 @@ public class ProductListFragment extends BaseFragment {
         mAdapter = new GridAdapter(getActivity(), new ArrayList<ProductInfo>());
 //        mRecyclerView.setEmptyView(mFlEmptyView);
         mProductGrid.setAdapter(mAdapter);
-
+        Bundle bundle = getArguments();
+        mSortId = bundle.getInt("sortId");
+        mType = bundle.getInt("type");
         setSwipeRefreshInfo();
     }
 
@@ -94,6 +98,8 @@ public class ProductListFragment extends BaseFragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("index", String.valueOf(start));
         params.put("size", String.valueOf(SIZE));
+        params.put("sortId", String.valueOf(mSortId));
+        params.put("type", String.valueOf(mType));
         OkHttpUtils.get(ApiConstants.PRODUCT_LIST)
                 .tag(this)
                 .cacheMode(CacheMode.NO_CACHE)

@@ -56,6 +56,6 @@ public class UserMgr {
         PreferencesManager.getInstance().put(BundleKey.TOKEN, "");
         EventBus.getDefault().post(new EventOfLogout());
 //        BaseApplication.getDaoSession(AppLib.getContext()).getUserInfoDao().deleteAll();
-        PreferencesManager.getInstance().put(mUserInfo);
+        PreferencesManager.getInstance().clearAll();
     }
 }

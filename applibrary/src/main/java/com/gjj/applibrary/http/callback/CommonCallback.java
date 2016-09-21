@@ -3,6 +3,7 @@ package com.gjj.applibrary.http.callback;
 import android.text.TextUtils;
 
 import com.gjj.applibrary.http.model.BundleKey;
+import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.lzy.okhttputils.callback.AbsCallback;
 import com.lzy.okhttputils.request.BaseRequest;
@@ -16,6 +17,7 @@ public abstract class CommonCallback<T> extends AbsCallback<T> {
         super.onBefore(request);
         //如果账户已经登录，就添加 token 等等
         String token = PreferencesManager.getInstance().get(BundleKey.TOKEN);
+        L.d("@@@@@token"+ token);
         if(!TextUtils.isEmpty(token)) {
             request.params(BundleKey.TOKEN, token);
         }

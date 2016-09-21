@@ -33,8 +33,9 @@ public class ViewPagerFragmentAdapter extends FragmentPagerAdapter {
         }
         fragment = new ProductListFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("data", dataArrayList.get(position));
+        bundle.putInt("sortId", dataArrayList.get(position).id);
         bundle.putInt("cate", firstCate);
+        bundle.putInt("type", 2);
         fragment.setArguments(bundle);
         mCache[position] = fragment;
         return fragment;

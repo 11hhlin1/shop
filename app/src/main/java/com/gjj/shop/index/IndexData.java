@@ -1,5 +1,6 @@
 package com.gjj.shop.index;
 
+import com.gjj.shop.index.foreign.CategoryData;
 import com.gjj.shop.model.ProductInfo;
 
 import java.io.Serializable;
@@ -52,37 +53,15 @@ public class IndexData implements Serializable{
      * type : null
      * createTime : 1472738432487
      */
-
+    public List<ActivityInfo> tags;
     public List<ShopInfo> shop;
 
     public static class BannerBean {
-        private long goodsId;
-        private String logo;
-        private String logoThumb;
+        public long goodsId;
+        public String logo;
+        public String logoThumb;
+        public int sortId;
 
-        public long getGoodsId() {
-            return goodsId;
-        }
-
-        public void setGoodsId(long goodsId) {
-            this.goodsId = goodsId;
-        }
-
-        public String getLogo() {
-            return logo;
-        }
-
-        public void setLogo(String logo) {
-            this.logo = logo;
-        }
-
-        public String getLogoThumb() {
-            return logoThumb;
-        }
-
-        public void setLogoThumb(String logoThumb) {
-            this.logoThumb = logoThumb;
-        }
     }
 
 
