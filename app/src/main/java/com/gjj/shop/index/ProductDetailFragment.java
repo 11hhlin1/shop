@@ -77,6 +77,8 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     Button buyNowBtn;
     @Bind(R.id.bottom_layout)
     RelativeLayout bottomLayout;
+    @Bind(R.id.right_btn)
+    ImageView mCollectBtn;
     @Bind(R.id.logo)
     ImageView logo;
     @Bind(R.id.shop_name)
@@ -188,7 +190,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     }
 
 
-    @OnClick({R.id.buy_now_btn, R.id.add_cart_btn,R.id.choose_detail_item, R.id.phone_item, R.id.user_advice_tv, R.id.pic_detail_tv, R.id.icon_back_btn})
+    @OnClick({R.id.buy_now_btn, R.id.add_cart_btn,R.id.choose_detail_item, R.id.phone_item, R.id.user_advice_tv, R.id.pic_detail_tv, R.id.icon_back_btn,R.id.right_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buy_now_btn:
@@ -212,9 +214,43 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
             case R.id.add_cart_btn:
                 addCart();
                 break;
+            case R.id.right_btn:
+                collectGood();
+                break;
         }
     }
 
+    private void collectGood() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("goodsId", mProductInfo.goodsId);
+        OkHttpUtils.post(ApiConstants.COLLECT_GOOD)
+                .tag(this)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+                .execute(new JsonCallback<String>(String.class) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.shortToast(R.string.collect_good_success);
+                                EventBus.getDefault().post(new EventOfAddCartSuccess());
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.shortToast(R.string.collect_good_fail);
+                            }
+                        });
+                    }
+                });
+    }
     private void buyNow() {
         Bundle bundle = new Bundle();
         bundle.putInt("amount",amount);

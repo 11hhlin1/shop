@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gjj.shop.R;
+import com.gjj.shop.community.CommunityInfo;
 
 import java.util.List;
 
@@ -30,14 +31,40 @@ public class CollectListAdapter extends BaseAdapter {
         mItems = items;
         mFragment = fragment;
     }
+    public CollectInfo getData(int position) {
+        if (null == mItems) {
+            return null;
+        }
+        return mItems.get(position);
+    }
 
+    public List<CollectInfo> getDataList() {
+        return mItems;
+    }
+    public void addData(List<CollectInfo> albums) {
+        if (albums != mItems) {
+            int position = mItems.size() -1;
+            mItems.addAll(albums);
+            notifyDataSetChanged();
+//            notifyItemInserted(position >= 0 ? position : 0);
+        }
+    }
+    public void setData(List<CollectInfo> msg) {
+        if (msg != mItems) {
+            if (mItems != null) {
+                mItems.clear();
+            }
+            this.mItems = msg;
+        }
+        notifyDataSetChanged();
+    }
     @Override
     public int getCount() {
         return mItems.size();
     }
 
     @Override
-    public Object getItem(int position) {
+    public CollectInfo getItem(int position) {
         return mItems.get(position);
     }
 

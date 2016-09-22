@@ -9,8 +9,10 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import cn.finalteam.loadingviewfinal.ListViewFinal;
 
-public class ListViewCompat extends ListView {
+
+public class ListViewCompat extends ListViewFinal {
 
     private static final String TAG = "ListViewCompat";
     private int mTouchSlop;

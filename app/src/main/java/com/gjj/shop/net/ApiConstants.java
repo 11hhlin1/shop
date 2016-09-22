@@ -28,5 +28,7 @@ public class ApiConstants {
     public static final String DELETE_ADDRESS = host+ "/user/address/delete";
     public static final String UPDATE_ADDRESS = host+ "/user/address/update";
     public static final String HOME_PAGE = host+ "/page/home";
+    public static final String COLLECT_LIST = host+ "/collect/infoList";
+    public static final String COLLECT_GOOD = host+ "/collect/edit";
 
 }
