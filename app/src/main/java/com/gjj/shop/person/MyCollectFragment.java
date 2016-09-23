@@ -47,7 +47,7 @@ import okhttp3.Response;
 /**
  * Created by user on 16/8/27.
  */
-public class MyCollectFragment extends BaseFragment implements View.OnClickListener,
+public class MyCollectFragment extends BaseFragment implements CollectListAdapter.ClickCallBack,
         SlideView.OnSlideListener {
 
     @Bind(R.id.list)
@@ -66,6 +66,16 @@ public class MyCollectFragment extends BaseFragment implements View.OnClickListe
         List<CollectInfo> list = new ArrayList<>();
         mAdapter = new CollectListAdapter(getActivity(), list, this);
         mListView.setAdapter(mAdapter);
+        mAdapter.setmClickCallBack(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            CollectInfo collectInfo = mAdapter.getItem(position);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("product",collectInfo.product);
+            PageSwitcher.switchToTopNavPageNoTitle(getActivity(),ProductDetailFragment.class,bundle,"","");
+            }
+        });
         setSwipeRefreshInfo();
     }
     private void setSwipeRefreshInfo() {
@@ -157,20 +167,6 @@ public class MyCollectFragment extends BaseFragment implements View.OnClickListe
             }
         });
     }
-    @Override
-    public void onClick(View v) {
-        int position = (int) v.getTag();
-        if (v.getId() == R.id.delete) {
-            CollectInfo collectInfo = mAdapter.getItem(position);
-            unCollectGood(collectInfo.product.goodsId);
-        }
-//        else if(v.getId() == R.id.collect_rl) {
-//            CollectInfo collectInfo = mAdapter.getItem(position);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("product",collectInfo.product);
-//            PageSwitcher.switchToTopNavPageNoTitle(getActivity(),ProductDetailFragment.class,bundle,"","");
-//        }
-    }
 
     private void unCollectGood(String goodsId) {
         HashMap<String, String> params = new HashMap<>();
@@ -213,5 +209,11 @@ public class MyCollectFragment extends BaseFragment implements View.OnClickListe
         if (status == SLIDE_STATUS_ON) {
             mLastSlideViewWithStatusOn = (SlideView) view;
         }
+    }
+
+    @Override
+    public void delete(int pos) {
+        CollectInfo collectInfo = mAdapter.getItem(pos);
+        unCollectGood(collectInfo.product.goodsId);
     }
 }

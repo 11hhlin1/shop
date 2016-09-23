@@ -47,6 +47,12 @@ public class CollectListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<CollectInfo> mItems;
     private MyCollectFragment mFragment;
+
+    public void setmClickCallBack(ClickCallBack mClickCallBack) {
+        this.mClickCallBack = mClickCallBack;
+    }
+
+    private ClickCallBack mClickCallBack;
     public CollectListAdapter(Context context, List<CollectInfo> items, MyCollectFragment fragment) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -124,7 +130,7 @@ public class CollectListAdapter extends BaseAdapter {
         holder.oldPrice.setText(mContext.getString(R.string.money_has_mark, Util.getFormatData(productInfo.prePrice)));
         holder.deleteBtn.setTag(position);
         holder.text.setText(productInfo.name);
-        holder.deleteBtn.setOnClickListener(mFragment);
+//        holder.deleteBtn.setOnClickListener(mFragment);
 //        holder.root.setOnClickListener(mFragment);
         return slideView;
     }
@@ -141,17 +147,15 @@ public class CollectListAdapter extends BaseAdapter {
         @Bind(R.id.old_price)
         TextView oldPrice;
         @Bind(R.id.delete)
-        Button deleteBtn;
+        TextView deleteBtn;
         @Bind(R.id.collect_rl)
         RelativeLayout root;
-//
-//        @OnClick(R.id.delete)
-//        void setDeleteBtn() {
-//            int position = (int) deleteBtn.getTag();
-//            ToastUtil.shortToast(R.string.delete);
-//            CollectInfo collectInfo = getItem(position);
-//            unCollectGood(collectInfo.product.goodsId);
-//        }
+
+        @OnClick(R.id.delete)
+        void setDeleteBtn() {
+            int position = (int) deleteBtn.getTag();
+            mClickCallBack.delete(position);
+        }
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -168,5 +172,9 @@ public class CollectListAdapter extends BaseAdapter {
         }
 
 
+    }
+
+    public interface ClickCallBack {
+       void delete(int pos);
     }
 }
