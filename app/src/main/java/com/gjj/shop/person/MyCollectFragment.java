@@ -1,5 +1,6 @@
 package com.gjj.shop.person;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -9,18 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.ListCallback;
 import com.gjj.applibrary.http.model.BaseList;
 import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
+import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.base.SpaceItemDecoration;
 import com.gjj.shop.community.CommunityFragment;
 import com.gjj.shop.community.CommunityInfo;
+import com.gjj.shop.event.EventOfAddCartSuccess;
+import com.gjj.shop.index.ProductDetailFragment;
+import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.ApiConstants;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +47,7 @@ import okhttp3.Response;
 /**
  * Created by user on 16/8/27.
  */
-public class MyCollectFragment extends BaseFragment implements AdapterView.OnItemClickListener, View.OnClickListener,
+public class MyCollectFragment extends BaseFragment implements View.OnClickListener,
         SlideView.OnSlideListener {
 
     @Bind(R.id.list)
@@ -47,7 +55,7 @@ public class MyCollectFragment extends BaseFragment implements AdapterView.OnIte
     @Bind(R.id.collect_layout)
     PtrClassicFrameLayout mCollectLayout;
     private SlideView mLastSlideViewWithStatusOn;
-    CollectListAdapter mAdapter;
+    private CollectListAdapter mAdapter;
     @Override
     public int getContentViewLayout() {
         return R.layout.fragment_my_collect;
@@ -56,11 +64,9 @@ public class MyCollectFragment extends BaseFragment implements AdapterView.OnIte
     @Override
     public void initView() {
         List<CollectInfo> list = new ArrayList<>();
-        for (int i=0;i<10;i++) {
-            list.add(new CollectInfo());
-        }
         mAdapter = new CollectListAdapter(getActivity(), list, this);
         mListView.setAdapter(mAdapter);
+        setSwipeRefreshInfo();
     }
     private void setSwipeRefreshInfo() {
         mListView.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -87,14 +93,14 @@ public class MyCollectFragment extends BaseFragment implements AdapterView.OnIte
                 .tag(this)
                 .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
                 .params(params)
-                .execute(new ListCallback<CollectInfo>(CollectInfo.class) {
+                .execute(new ListCallback<ProductInfo>(ProductInfo.class) {
                     @Override
-                    public void onSuccess(BaseList<CollectInfo> communityInfoBaseList, Call call, Response response) {
+                    public void onSuccess(BaseList<ProductInfo> communityInfoBaseList, Call call, Response response) {
                         handleData(start,communityInfoBaseList);
                     }
 
                     @Override
-                    public void onCacheSuccess(BaseList<CollectInfo> communityInfoBaseList, Call call) {
+                    public void onCacheSuccess(BaseList<ProductInfo> communityInfoBaseList, Call call) {
                         super.onCacheSuccess(communityInfoBaseList, call);
                         handleData(start,communityInfoBaseList);
                     }
@@ -120,7 +126,7 @@ public class MyCollectFragment extends BaseFragment implements AdapterView.OnIte
     }
 
 
-    void handleData(final int start, final BaseList<CollectInfo> baseList) {
+    void handleData(final int start, final BaseList<ProductInfo> baseList) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -131,8 +137,13 @@ public class MyCollectFragment extends BaseFragment implements AdapterView.OnIte
                 }
                 List<CollectInfo> infoList = new ArrayList<>();
                 if(baseList != null) {
-                    infoList = baseList.list;
+                    for (ProductInfo productInfo : baseList.list) {
+                        CollectInfo collectInfo = new CollectInfo();
+                        collectInfo.product = productInfo;
+                        infoList.add(collectInfo);
+                    }
                 }
+
                 if(start == 0) {
                     mAdapter.setData(infoList);
                 } else {
@@ -148,15 +159,49 @@ public class MyCollectFragment extends BaseFragment implements AdapterView.OnIte
     }
     @Override
     public void onClick(View v) {
+        int position = (int) v.getTag();
         if (v.getId() == R.id.delete) {
-            L.e("onClick v= " + v);
-            ToastUtil.shortToast(R.string.delete);
+            CollectInfo collectInfo = mAdapter.getItem(position);
+            unCollectGood(collectInfo.product.goodsId);
         }
+//        else if(v.getId() == R.id.collect_rl) {
+//            CollectInfo collectInfo = mAdapter.getItem(position);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("product",collectInfo.product);
+//            PageSwitcher.switchToTopNavPageNoTitle(getActivity(),ProductDetailFragment.class,bundle,"","");
+//        }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    private void unCollectGood(String goodsId) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("goodsId", goodsId);
+        OkHttpUtils.post(ApiConstants.COLLECT_GOOD)
+                .tag(this)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+                .execute(new JsonCallback<String>(String.class) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.shortToast(R.string.delete_success);
+                                requestData(0);
+                            }
+                        });
+                    }
 
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.shortToast(R.string.fail);
+                            }
+                        });
+                    }
+                });
     }
 
     @Override

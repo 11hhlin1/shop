@@ -70,8 +70,7 @@
                 android:id="@+id/pop_logo_iv"
                 android:layout_width="91dp"
                 android:layout_height="91dp"
-                android:layout_marginLeft="10dp"
-                android:src="@mipmap/cp_gg"/>
+                android:layout_marginLeft="10dp" />
 
             <ImageView
                 android:id="@+id/close_pop"
@@ -105,10 +104,12 @@
                 android:layout_marginRight="9dp">
 
                 <ImageView
-                    android:id="@+id/plus_btn"
+                    android:id="@+id/sub_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/add_btn" />
+                    android:layout_marginRight="3dp"
+                    android:src="@mipmap/cut_btn" />
+
 
                 <TextView
                     android:id="@+id/product_amount"
@@ -117,15 +118,16 @@
                     android:layout_marginLeft="3dp"
                     android:gravity="center"
                     android:text="1"
+                    android:layout_marginRight="3dp"
                     android:textColor="@color/color_404040"
                     android:textSize="@dimen/textsize_15sp" />
 
                 <ImageView
-                    android:id="@+id/sub_btn"
+                    android:id="@+id/plus_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:src="@mipmap/cut_btn" />
+                    android:src="@mipmap/add_btn" />
+
             </LinearLayout>
           <View
               style="@style/bottom_horizontal_line"/>

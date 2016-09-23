@@ -69,7 +69,6 @@ public class LoginActivity extends Activity {
      */
     @OnClick(R.id.login_btn)
     void onClickLogin() {
-        showDialog();
         doLogin();
     }
 
@@ -136,6 +135,7 @@ public class LoginActivity extends Activity {
             ToastUtil.shortToast(R.string.hint_login_pwd);
             return;
         }
+        showDialog();
         HashMap<String, String> params = new HashMap<>();
         params.put("username", phone);
         params.put("password", MD5Util.md5Hex(psw));

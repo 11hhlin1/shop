@@ -25,6 +25,8 @@
             android:background="@mipmap/del_btn_bg"
             android:textColor="@color/white"
             android:text="删除" />
+        <View
+            style="@style/bottom_horizontal_line"/>
     </RelativeLayout>
 
 </merge>

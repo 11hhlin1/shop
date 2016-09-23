@@ -1,21 +1,43 @@
 package com.gjj.shop.person;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
+import com.gjj.applibrary.glide.GlideCircleTransform;
+import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.util.ToastUtil;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
+import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.community.CommunityInfo;
+import com.gjj.shop.index.ProductDetailFragment;
+import com.gjj.shop.model.ProductInfo;
+import com.gjj.shop.net.ApiConstants;
+import com.gjj.shop.net.UrlUtil;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.cache.CacheMode;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Chuck on 2016/8/31.
@@ -90,33 +112,61 @@ public class CollectListAdapter extends BaseAdapter {
             holder = (ViewHolder) slideView.getTag();
         }
         CollectInfo item = mItems.get(position);
+        ProductInfo productInfo = item.product;
         item.slideView = slideView;
         item.slideView.shrink();
-
-//        holder.icon.setImageResource(item.iconRes);
-//        holder.title.setText(item.title);
-//        holder.msg.setText(item.msg);
-//        holder.time.setText(item.time);
+        Glide.with(mContext)
+                .load(UrlUtil.getHttpUrl(productInfo.logo))
+                .centerCrop()
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
+                .into(holder.productCover);
+        holder.newPrice.setText(mContext.getString(R.string.money_has_mark, Util.getFormatData(productInfo.curPrice)));
+        holder.oldPrice.setText(mContext.getString(R.string.money_has_mark, Util.getFormatData(productInfo.prePrice)));
         holder.deleteBtn.setTag(position);
+        holder.text.setText(productInfo.name);
         holder.deleteBtn.setOnClickListener(mFragment);
-
+//        holder.root.setOnClickListener(mFragment);
         return slideView;
     }
 
-    static class ViewHolder {
+    class ViewHolder {
         @Bind(R.id.product_cover)
         ImageView productCover;
         @Bind(R.id.text)
         TextView text;
+        @Bind(R.id.tags)
+        TextView tags;
         @Bind(R.id.new_price)
         TextView newPrice;
         @Bind(R.id.old_price)
         TextView oldPrice;
         @Bind(R.id.delete)
         Button deleteBtn;
+        @Bind(R.id.collect_rl)
+        RelativeLayout root;
+//
+//        @OnClick(R.id.delete)
+//        void setDeleteBtn() {
+//            int position = (int) deleteBtn.getTag();
+//            ToastUtil.shortToast(R.string.delete);
+//            CollectInfo collectInfo = getItem(position);
+//            unCollectGood(collectInfo.product.goodsId);
+//        }
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int position = (int) deleteBtn.getTag();
+//                    CollectInfo collectInfo = getItem(position);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("product",collectInfo.product);
+//                    PageSwitcher.switchToTopNavPageNoTitle((Activity)mContext,ProductDetailFragment.class,bundle,"","");
+//                }
+//            });
         }
+
+
     }
 }

@@ -1,6 +1,7 @@
 package com.gjj.shop.index;
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
@@ -59,26 +61,22 @@ public class ProductPicFragment extends BaseFragment {
         Glide.with(activity)
                 .load(UrlUtil.getHttpUrl(imageList.get(0)))
                 .centerCrop()
-                .placeholder(R.mipmap.cpxq_01)
-                .error(R.mipmap.cpxq_01)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .into(image01);
         Glide.with(activity)
                 .load(UrlUtil.getHttpUrl(imageList.get(1)))
                 .centerCrop()
-                .placeholder(R.mipmap.cpxq_01)
-                .error(R.mipmap.cpxq_01)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .into(image02);
         Glide.with(activity)
                 .load(UrlUtil.getHttpUrl(imageList.get(2)))
                 .centerCrop()
-                .placeholder(R.mipmap.cpxq_01)
-                .error(R.mipmap.cpxq_01)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .into(image03);
         Glide.with(activity)
                 .load(UrlUtil.getHttpUrl(imageList.get(3)))
                 .centerCrop()
-                .placeholder(R.mipmap.cpxq_04)
-                .error(R.mipmap.cpxq_04)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .into(image04);
     }
 

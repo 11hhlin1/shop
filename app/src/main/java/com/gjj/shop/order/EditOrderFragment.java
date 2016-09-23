@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.applibrary.util.Util;
@@ -108,8 +109,7 @@ public class EditOrderFragment extends BaseFragment {
                 .load(UrlUtil.getHttpUrl(mProductInfo.shopThumb))
                 .centerCrop()
                 .bitmapTransform(new GlideCircleTransform(activity))
-                .placeholder(R.mipmap.sjlogo)
-                .error(R.mipmap.sjlogo)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .into(shopAvatar);
         productName.setText(mProductInfo.name);
         productPriceNew.setText(getString(R.string.money_has_mark, Util.getFormatData(mProductInfo.curPrice)));

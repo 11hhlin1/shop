@@ -13,7 +13,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
         android:paddingLeft="5dp"
@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:paddingBottom="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -37,16 +38,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_ed394a"
-                android:textSize="@dimen/textsize_15sp"
+                android:textSize="@dimen/textsize_14sp"
                 android:text="@string/money_has_mark"/>
 
                 <TextView
                     android:id="@+id/old_price"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:textColor="@color/color_a6a6a6"
-                    android:textSize="@dimen/textsize_14sp"
+                    android:textSize="13sp"
                     android:text="￥26.00"/>
 
 

@@ -26,8 +26,7 @@
             android:layout_height="52dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:paddingRight="13dp"
-            android:src="@mipmap/user_tx_img"/>
+            android:paddingRight="13dp" />
         <View
             style="@style/bottom_horizontal_line" />
     </RelativeLayout>

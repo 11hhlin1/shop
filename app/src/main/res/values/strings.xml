@@ -63,7 +63,7 @@
     <string name="success">成功</string>
     <string name="login_success">登录成功</string>
     <string name="register_success">注册成功</string>
-    <string name="fail">获取失败</string>
+    <string name="fail">网络失败</string>
     <string name="all_select">全选</string>
     <string name="amount_money">合计:</string>
     <string name="dialog_default_cancel_title">取消</string>
@@ -121,6 +121,7 @@
     <string name="add_cart_success">加入购物车成功</string>
     <string name="input_address">请输入信息</string>
     <string name="collect_good_success">收藏成功</string>
+    <string name="delete_success">删除成功</string>
     <string name="collect_good_fail">收藏失败</string>
 
 

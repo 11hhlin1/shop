@@ -2,6 +2,7 @@ package com.gjj.shop.index;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.shop.R;
 import com.gjj.shop.model.ProductInfo;
 
@@ -47,8 +49,7 @@ public class AdviceProductAdapter extends RecyclerView.Adapter<AdviceProductAdap
         Glide.with(mContext)
                 .load(productInfo.logo)
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .into(holder.mProductIv);
         holder.mProductName.setText(productInfo.name);
         holder.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);

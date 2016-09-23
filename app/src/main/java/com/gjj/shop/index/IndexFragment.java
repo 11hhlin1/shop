@@ -157,22 +157,10 @@ public class IndexFragment extends BaseFragment {
     @Override
     public void initView() {
         mTitleTV.setText(R.string.app_name);
-//        mPtrClassicFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
-//            @Override
-//            public void onRefreshBegin(PtrFrameLayout frame) {
-//                   runOnUiThread(new Runnable() {
-//                       @Override
-//                       public void run() {
-//                           mPtrClassicFrameLayout.onRefreshComplete();
-//                       }
-//                   }, 200);
-//            }
-//        });
         mPtrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                   requestData();
-//                mPtrClassicFrameLayout.refreshComplete();
             }
         });
         List<IndexData.BannerBean> stringList = new ArrayList<>();
@@ -194,7 +182,11 @@ public class IndexFragment extends BaseFragment {
         mBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
+                Bundle bundle = new Bundle();
+                IndexData.BannerBean bannerBean = mBannerData.get(position);
+                bundle.putInt("sortId", bannerBean.sortId);
+                bundle.putInt("type", 2);
+                PageSwitcher.switchToTopNavPage(getActivity(),ProductListFragment.class,bundle,bannerBean.title,"");
             }
         });
 //        String[] titles = {"怀师", "南怀瑾军校", "闭关", "南怀瑾", "南公庄严照", "怀师法相"};

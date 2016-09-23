@@ -72,13 +72,13 @@ public class ViewPagerGoodListFragment extends BaseFragment implements ViewPager
         mTextViews = new TextView[size];
         for (int i = 0; i < size; i++) {
             TextView textView = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.radio_btn,null);
+//            TextView textView = new TextView(getContext());
             mTextViews[i] = textView;
             CategoryData categoryData = mDataArrayList.get(i);
             textView.setId(categoryData.id);
-            textView.setGravity(Gravity.CENTER);
-            textView.setText(categoryData.name);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
             textView.setLayoutParams(layoutParams);
+            textView.setGravity(Gravity.CENTER);
             final int finalI = i;
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,6 +87,7 @@ public class ViewPagerGoodListFragment extends BaseFragment implements ViewPager
                 }
             });
             mRadioGroup.addView(textView);
+            textView.setText(categoryData.name);
         }
         mTextViews[0].setTextColor(mRedColor);
         //mDoneRadioBtn.setTextColor(mSecondaryGrayColor);

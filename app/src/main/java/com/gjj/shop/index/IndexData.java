@@ -61,6 +61,7 @@ public class IndexData implements Serializable{
         public String logo;
         public String logoThumb;
         public int sortId;
+        public String title;
 
     }
 

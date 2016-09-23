@@ -1,5 +1,6 @@
 package com.gjj.shop.index;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.ListCallback;
@@ -100,8 +102,7 @@ public class ShopFragment extends BaseFragment {
         Glide.with(this)
                 .load(UrlUtil.getHttpUrl(mShopInfo.image))
                 .centerCrop()
-                .placeholder(R.mipmap.scyh3)
-                .error(R.mipmap.scyh3)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .bitmapTransform(new GlideCircleTransform(getContext()))
                 .into(shopIcon);
         shopMsg.setText(mShopInfo.details);

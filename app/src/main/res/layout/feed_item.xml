@@ -15,8 +15,7 @@
         <ImageView
             android:id="@+id/avatar"
             android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/s_user" />
+            android:layout_height="30dp" />
 
         <TextView
             android:id="@+id/nickname"

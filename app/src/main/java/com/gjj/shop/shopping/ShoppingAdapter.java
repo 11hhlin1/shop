@@ -1,6 +1,7 @@
 package com.gjj.shop.shopping;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
@@ -65,8 +67,7 @@ public class ShoppingAdapter extends BaseRecyclerViewAdapter<ShopAdapterInfo>{
         Glide.with(mContext)
                 .load(UrlUtil.getHttpUrl(shopAdapterInfo.shopThumb))
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .into(viewHolder.mShopAvatar);
         viewHolder.mShopName.setText(shopAdapterInfo.shopName);
         viewHolder.mSelBox.setOnCheckedChangeListener(null);
@@ -171,8 +172,7 @@ public class ShoppingAdapter extends BaseRecyclerViewAdapter<ShopAdapterInfo>{
         Glide.with(mContext)
                 .load(UrlUtil.getHttpUrl(goodsInfo.goodsLogoThumb))
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .into(viewHolder.productAvatar);
             viewHolder.mPlus.setTag(goodsInfo);
             viewHolder.mSub.setTag(goodsInfo);

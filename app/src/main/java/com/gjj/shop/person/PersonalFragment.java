@@ -1,5 +1,6 @@
 package com.gjj.shop.person;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.shop.R;
 import com.gjj.shop.app.BaseApplication;
@@ -140,8 +142,7 @@ public class PersonalFragment extends BaseFragment {
         Glide.with(getActivity())
                 .load(UrlUtil.getHttpUrl(userInfo.getAvatar()))
                 .centerCrop()
-                .placeholder(R.mipmap.s_user)
-                .error(R.mipmap.s_user)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .bitmapTransform(new GlideCircleTransform(getActivity()))
                 .into(avatar);
         mNick.setText(userInfo.nickname);

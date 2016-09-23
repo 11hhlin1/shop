@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.ListCallback;
@@ -173,7 +174,6 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
         Glide.with(activity)
                 .load(UrlUtil.getHttpUrl(mProductInfo.logo))
                 .centerCrop()
-                .placeholder(drawable)
                 .error(drawable)
                 .into(logo);
         shopName.setText(mProductInfo.shopName);
@@ -181,8 +181,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                 .load(UrlUtil.getHttpUrl(mProductInfo.shopThumb))
                 .centerCrop()
                 .bitmapTransform(new GlideCircleTransform(activity))
-                .placeholder(R.mipmap.sjlogo)
-                .error(R.mipmap.sjlogo)
+                .error(drawable)
                 .into(productAvatarIv);
         EventBus.getDefault().register(this);
 
@@ -234,7 +233,6 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                             @Override
                             public void run() {
                                 ToastUtil.shortToast(R.string.collect_good_success);
-                                EventBus.getDefault().post(new EventOfAddCartSuccess());
                             }
                         });
                     }
@@ -382,8 +380,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
             Glide.with(getActivity())
                     .load(UrlUtil.getHttpUrl(mProductInfo.logo))
                     .centerCrop()
-                    .placeholder(R.mipmap.cp_gg)
-                    .error(R.mipmap.cp_gg)
+                    .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                     .into(viewHolder.popLogoIv);
             viewHolder.addCartBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

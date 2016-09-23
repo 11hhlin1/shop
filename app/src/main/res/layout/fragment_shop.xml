@@ -23,18 +23,17 @@
 
             <ImageView
                 android:id="@+id/shop_icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginTop="25dp"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/sj_logo"/>
+                android:layout_centerHorizontal="true" />
             <TextView
                 android:id="@+id/shop_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="6dp"
                 android:textSize="@dimen/textsize_18sp"
                 android:layout_below="@+id/shop_icon"
                 android:text="海绵宝宝"/>
@@ -44,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/shop_name"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/call_service"
                 android:textColor="@color/white"
                 android:background="@mipmap/lxkf_btn_bg"/>

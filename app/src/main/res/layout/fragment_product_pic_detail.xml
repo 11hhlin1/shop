@@ -45,31 +45,27 @@
         <ImageView
             android:id="@+id/image_01"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginRight="3dp"
-            android:src="@mipmap/cpxq_01"/>
+            android:layout_marginRight="3dp" />
         <ImageView
             android:id="@+id/image_02"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:src="@mipmap/cpxq_02"/>
+            android:layout_marginRight="3dp" />
         <ImageView
             android:id="@+id/image_03"
             android:layout_width="0dp"
             android:layout_marginLeft="3dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@mipmap/cpxq_02"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
     </LinearLayout>
     <ImageView
         android:id="@+id/image_04"
         android:layout_width="match_parent"
         android:layout_height="196dp"
         android:layout_marginTop="7dp"
-        android:src="@mipmap/cpxq_04"
         />
 </LinearLayout>

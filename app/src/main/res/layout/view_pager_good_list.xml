@@ -13,7 +13,6 @@
             android:id="@+id/project_radio_group"
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_line_height_120px"
-            android:gravity="center"
             android:orientation="horizontal"
             android:layout_alignParentTop="true">
 

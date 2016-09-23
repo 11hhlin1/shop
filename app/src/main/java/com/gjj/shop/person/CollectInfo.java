@@ -1,5 +1,7 @@
 package com.gjj.shop.person;
 
+import com.gjj.shop.model.ProductInfo;
+
 import java.io.Serializable;
 
 /**
@@ -8,10 +10,6 @@ import java.io.Serializable;
 public class CollectInfo implements Serializable{
     private static final long serialVersionUID = 8657677401839659329L;
 
-    public String title;
-    public String msg;
-    public String icon;
-    public double prePrice;
-    public double curPrice;
+    public ProductInfo product;
     public SlideView slideView;
 }

@@ -3,6 +3,7 @@ package com.gjj.shop.community;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.shop.R;
 import com.gjj.shop.widget.SquareCenterImageView;
 
@@ -99,8 +101,7 @@ public class AddPhotoAdapter extends BaseAdapter {
             Glide.with(mContext)
                     .load(path)
                     .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher)
-                    .error(R.mipmap.ic_launcher)
+                    .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                     .into(viewHolder.mImageView);
             convertView.setTag(R.layout.albums_photo_btn, path);
 

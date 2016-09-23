@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,8 +68,7 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
         Glide.with(mContext)
                 .load(UrlUtil.getHttpUrl(info.thumbAvatar))
                 .centerCrop()
-                .placeholder(R.mipmap.s_user)
-                .error(R.mipmap.s_user)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .bitmapTransform(new GlideCircleTransform(mContext))
                 .into(viewHolder.mAvatar);
         viewHolder.mNickName.setText(info.nickname);
@@ -221,8 +221,7 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
             Glide.with(mContext)
                     .load(UrlUtil.getHttpUrl(url))
                     .centerCrop()
-                    .placeholder(R.mipmap.s_sq_03)
-                    .error(R.mipmap.s_sq_03)
+                    .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                     .into(viewTag.imageView);
             viewTag.rootLl.setTag(R.id.list_index, position);
             return convertView;

@@ -3,6 +3,8 @@ package com.gjj.shop.index;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.PageSwitcher;
@@ -80,8 +83,7 @@ public class GridAdapter extends BaseAdapter {
         Glide.with(mContext)
                 .load(UrlUtil.getHttpUrl(productInfo.logo))
                 .centerCrop()
-                .placeholder(R.mipmap.cj_sp_01)
-                .error(R.mipmap.cj_sp_01)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .into(viewTag.mProductIv);
         viewTag.mProductName.setText(productInfo.name);
         viewTag.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);

@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.StringDialogCallback;
@@ -102,8 +103,7 @@ public class PersonalInfoFragment extends BaseFragment {
             Glide.with(getActivity())
                     .load(UrlUtil.getHttpUrl(userInfo.getAvatar()))
                     .centerCrop()
-                    .placeholder(R.mipmap.user_tx_img)
-                    .error(R.mipmap.user_tx_img)
+                    .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                     .bitmapTransform(new GlideCircleTransform(getActivity()))
                     .into(avatarIv);
             nameTV.setText(userInfo.nickname);
@@ -393,8 +393,7 @@ public class PersonalInfoFragment extends BaseFragment {
         Glide.with(getActivity())
                 .load(UrlUtil.getHttpUrl(userInfo.avatar))
                 .centerCrop()
-                .placeholder(R.mipmap.s_user)
-                .error(R.mipmap.s_user)
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .bitmapTransform(new GlideCircleTransform(getActivity()))
                 .into(avatarIv);
         nameTV.setText(userInfo.nickname);
