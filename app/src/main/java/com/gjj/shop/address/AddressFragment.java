@@ -98,12 +98,18 @@ public class AddressFragment extends BaseFragment implements RecyclerItemOnclick
                             @Override
                             public void run() {
                                 dismissLoadingDialog();
+                                if(addressListInfo == null||addressListInfo.addressList == null)
+                                    return;
+
                                 mAdapter.setData(addressListInfo.addressList);
-                                PreferencesManager.getInstance().put("defaultAddressId",addressListInfo.defaultAddressId);
+                                PreferencesManager.getInstance().put("defaultAddressId", addressListInfo.defaultAddressId);
                                 for(AddressInfo addressInfo : addressListInfo.addressList) {
-                                    if(addressInfo.addressId == addressListInfo.defaultAddressId) {
-                                        PreferencesManager.getInstance().put(addressInfo);
+                                    if(addressInfo != null) {
+                                        if(addressInfo.addressId == addressListInfo.defaultAddressId) {
+                                            PreferencesManager.getInstance().put(addressInfo);
+                                        }
                                     }
+
                                 }
                             }
                         });

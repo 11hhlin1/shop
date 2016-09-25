@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/30.
  */
-public class BaseRecyclerViewAdapter <T extends Serializable> extends RecyclerView.Adapter<ViewHolder>{
+public class BaseRecyclerViewAdapter <T> extends RecyclerView.Adapter<ViewHolder>{
     protected Context mContext;
     protected LayoutInflater mInflater;
     protected List<T> items = null;

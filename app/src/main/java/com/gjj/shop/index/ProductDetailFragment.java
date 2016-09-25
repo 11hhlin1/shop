@@ -47,6 +47,8 @@ import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.net.UrlUtil;
 import com.gjj.shop.order.EditOrderFragment;
+import com.gjj.shop.shopping.*;
+import com.gjj.shop.shopping.ShopInfo;
 import com.gjj.shop.util.CallUtil;
 import com.gjj.shop.widget.NavLineView;
 import com.gjj.shop.widget.UnScrollableGridView;
@@ -251,20 +253,43 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     }
     private void buyNow() {
         Bundle bundle = new Bundle();
-        bundle.putInt("amount",amount);
-        ArrayList<SelTagInfo> selTagInfoList = new ArrayList<>();
+//        bundle.putInt("amount",amount);
+//        ArrayList<SelTagInfo> selTagInfoList = new ArrayList<>();
+        Map<String, String> map =new HashMap<>();
+
         for (TagInfo tagInfo : mTagsList) {
             if(TextUtils.isEmpty(tagInfo.mSelTag)) {
                 ToastUtil.shortToast(getActivity(),"请选择规格");
                 return;
             }
-            SelTagInfo selTagInfo = new SelTagInfo();
-            selTagInfo.mSelTag = tagInfo.mSelTag;
-            selTagInfo.mTitle = tagInfo.mTitle;
-            selTagInfoList.add(selTagInfo);
+//            SelTagInfo selTagInfo = new SelTagInfo();
+//            selTagInfo.mSelTag = tagInfo.mSelTag;
+//            selTagInfo.mTitle = tagInfo.mTitle;
+//            selTagInfoList.add(selTagInfo);
+            map.put(tagInfo.mTitle,tagInfo.mSelTag);
         }
-        bundle.putSerializable("product",mProductInfo);
-        bundle.putParcelableArrayList("tagList", selTagInfoList);
+//        bundle.putSerializable("product",mProductInfo);
+//        bundle.putParcelableArrayList("tagList", selTagInfoList);
+        GoodsInfo goodsInfo = new GoodsInfo();
+        List<GoodsInfo> goodsInfoList = new ArrayList<>();
+        goodsInfo.amount = amount;
+        goodsInfo.prePrice = mProductInfo.prePrice;
+        goodsInfo.curPrice = mProductInfo.curPrice;
+        goodsInfo.goodsName =mProductInfo.name;
+        goodsInfo.goodsId = mProductInfo.goodsId;
+        goodsInfo.goodsLogo = mProductInfo.logo;
+        goodsInfo.goodsLogoThumb = mProductInfo.logoThumb;
+        goodsInfo.tags = JSON.toJSONString(map);
+        goodsInfoList.add(goodsInfo);
+        com.gjj.shop.shopping.ShopInfo shopInfo = new ShopInfo();
+        shopInfo.shopId = mProductInfo.shopId;
+        shopInfo.shopThumb = mProductInfo.shopThumb;
+        shopInfo.shopImage = mProductInfo.shopLogo;
+        shopInfo.shopName = mProductInfo.shopName;
+        shopInfo.goodsList = goodsInfoList;
+        ArrayList<ShopInfo> shopInfoArrayList = new ArrayList<>();
+        shopInfoArrayList.add(shopInfo);
+        bundle.putParcelableArrayList("shopInfo", shopInfoArrayList);
         PageSwitcher.switchToTopNavPage(getActivity(), EditOrderFragment.class, bundle, getString(R.string.check_order), "");
     }
     @Override

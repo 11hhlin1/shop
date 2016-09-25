@@ -85,6 +85,7 @@
     <string name="address">收货地址</string>
     <string name="change_address">修改地址</string>
     <string name="add_address">新增地址</string>
+    <string name="please_add_address">你还没有地址</string>
     <string name="change_psw">修改登录密码</string>
     <string name="change_name">修改姓名</string>
     <string name="person_info">个人资料</string>

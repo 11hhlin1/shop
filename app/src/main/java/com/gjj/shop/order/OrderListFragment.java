@@ -2,13 +2,25 @@ package com.gjj.shop.order;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
+import com.gjj.shop.base.SpaceItemDecoration;
+import com.gjj.shop.community.CommunityAdapter;
+import com.gjj.shop.net.ApiConstants;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.cache.CacheMode;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,16 +28,20 @@ import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
 import cn.finalteam.loadingviewfinal.PtrDefaultHandler;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/8/14.
  */
 public class OrderListFragment extends BaseFragment {
     @Bind(R.id.order_list)
-    RecyclerView orderList;
+    RecyclerView mRecyclerView;
     @Bind(R.id.store_house_ptr_frame)
-    PtrClassicFrameLayout mPtrFrame;
+    PtrClassicFrameLayout mPtrLayout;
     private int mIndex;
+    private List<OrderInfo> orderInfoList;
+    private OrderListAdapter mAdapter;
 
     @SuppressLint("ValidFragment")
     public OrderListFragment(int index) {
@@ -40,24 +56,62 @@ public class OrderListFragment extends BaseFragment {
 
     @Override
     public void initView() {
-//        mPtrFrame.setOnRefreshListener(new OnDefaultRefreshListener() {
-//            @Override
-//            public void onRefreshBegin(PtrFrameLayout frame) {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mPtrFrame.onRefreshComplete();
-//                    }
-//                }, 200);
-//            }
-//        });
 
-        mPtrFrame.setPtrHandler(new PtrDefaultHandler() {
+        mAdapter = new OrderListAdapter(getContext(), new ArrayList<OrderInfo>());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+//        mRecyclerView.setEmptyView(mFlEmptyView);
+        mRecyclerView.setAdapter(mAdapter);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_20p);
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+        mRecyclerView.setItemAnimator(null);
+        mPtrLayout.setLastUpdateTimeRelateObject(this);
+
+        mPtrLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                mPtrFrame.refreshComplete();
+                requestData();
             }
+
+
         });
+        mPtrLayout.autoRefresh();
+    }
+
+    private void requestData() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("status", String.valueOf(mIndex));
+        OkHttpUtils.get(ApiConstants.ORDER_LIST)
+                .tag(this)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+                .execute(new JsonCallback<String>(String.class) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPtrLayout.refreshComplete();
+                                ToastUtil.shortToast(R.string.success);
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.shortToast(R.string.fail);
+                                mPtrLayout.refreshComplete();
+                            }
+                        });
+
+                    }
+                });
     }
 
 }

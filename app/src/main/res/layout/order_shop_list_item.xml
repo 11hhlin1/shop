@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/shop_icon_rl"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+        <View
+            style="@style/top_horizontal_line" />
+        <ImageView
+            android:id="@+id/shop_avatar"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginLeft="6dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:id="@+id/shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:textColor="@color/color_737373"
+            android:textSize="@dimen/textsize_12sp"
+            android:layout_toRightOf="@+id/shop_avatar"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+
+    </RelativeLayout>
+    <com.gjj.shop.widget.UnScrollableListView
+        android:id="@+id/shopping_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:cacheColorHint="@android:color/transparent"
+        android:listSelector="@android:color/transparent"/>
+</LinearLayout>

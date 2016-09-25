@@ -1,6 +1,7 @@
 package com.gjj.shop.shopping;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,12 +24,14 @@ import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
+import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.base.SpaceItemDecoration;
 import com.gjj.shop.event.EventOfAddCartSuccess;
 import com.gjj.shop.event.EventOfUpdateTags;
 import com.gjj.shop.index.TagInfo;
 import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.ApiConstants;
+import com.gjj.shop.order.EditOrderFragment;
 import com.gjj.shop.widget.ConfirmDialog;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
@@ -122,6 +125,28 @@ public class ShoppingFragment extends BaseFragment {
             confirmDialog.setContent(R.string.delete_shop_tip);
         } else {
             //TODO 结算
+            Bundle bundle = new Bundle();
+            ArrayList<ShopInfo> shopInfoArrayList = new ArrayList<>();
+            List<ShopAdapterInfo> shopAdapterInfos = mAdapter.getDataList();
+            for (ShopAdapterInfo shopAdapterInfo : shopAdapterInfos) {
+                    ShopInfo shopInfo = new ShopInfo();
+                    shopInfo.shopId = shopAdapterInfo.shopId;
+                    shopInfo.shopName = shopAdapterInfo.shopName;
+                    shopInfo.shopImage = shopAdapterInfo.shopImage;
+                    shopInfo.shopThumb = shopAdapterInfo.shopThumb;
+                    ArrayList<GoodsInfo> goodsList = new ArrayList<>();
+                    for (GoodsAdapterInfo goodsAdapterInfo: shopAdapterInfo.goodsList) {
+                        if(goodsAdapterInfo.isSel)
+                        goodsList.add(goodsAdapterInfo.goodsInfo);
+                    }
+                    shopInfo.goodsList = goodsList;
+                    if(goodsList.size() > 0)
+                    shopInfoArrayList.add(shopInfo);
+
+            }
+            bundle.putParcelableArrayList("shopInfo", shopInfoArrayList);
+            PageSwitcher.switchToTopNavPage(getActivity(), EditOrderFragment.class, bundle, getString(R.string.check_order), "");
+
         }
     }
 

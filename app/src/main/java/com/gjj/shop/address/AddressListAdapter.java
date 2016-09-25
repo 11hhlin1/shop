@@ -62,6 +62,8 @@ public class AddressListAdapter extends BaseRecyclerViewAdapter<AddressInfo> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         RvViewHolder viewHolder = (RvViewHolder) holder;
         AddressInfo info = items.get(position);
+        if(info == null)
+            return;
         viewHolder.addressContact.setText(info.phone);
         viewHolder.receivePerson.setText(info.contact);
         viewHolder.receivePerson.setTag(position);

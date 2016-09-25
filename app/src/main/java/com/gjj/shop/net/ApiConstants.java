@@ -4,7 +4,9 @@ package com.gjj.shop.net;
  * Created by user on 16/7/16.
  */
 public class ApiConstants {
-    public static final String host = "http://120.24.69.203:8080";
+//    public static final String host = "http://120.24.69.203:8080";
+    public static final String host = "http://192.168.1.110:8080";
+
     public static final String LOGIN = host + "/user/login";
     public static final String REGISTER = host+ "/user/register";
     public static final String GET_SMS_CODE = host+ "/common/sendPhoneCode";
@@ -21,6 +23,8 @@ public class ApiConstants {
     public static final String ADD_CART = host+ "/cart/add";
     public static final String DELETE_CART = host+ "/cart/deleteList";
     public static final String CART_LIST = host+ "/cart/infoList";
+    public static final String CREATE_ORDER = host+ "/order/create";
+    public static final String ORDER_LIST = host+ "/order/infoList";
     public static final String PRODUCT_INFO = host+ "/goods/info";
     public static final String SHOP_INFO = host+ "/shop/info";
     public static final String ADD_ADDRESS = host+ "/user/address/add";

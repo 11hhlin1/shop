@@ -121,6 +121,7 @@ public class changeAddressFragment extends BaseFragment {
     public void initView() {
          Bundle bundle = getArguments();
         addressInfo = (AddressInfo) bundle.getSerializable("addressInfo");
+        assert addressInfo != null;
         nameEt.setText(addressInfo.contact);
         phoneEt.setText(addressInfo.phone);
         address.setText(addressInfo.area);
