@@ -71,7 +71,7 @@ public class OrderFragment extends BaseFragment implements ViewPager.OnPageChang
         int index = getArguments().getInt("index");
         payOrderBtn.setTextColor(mRedColor);
         //mDoneRadioBtn.setTextColor(mSecondaryGrayColor);
-        viewPager.setOffscreenPageLimit(mFragmentCache.length);
+        viewPager.setOffscreenPageLimit(1);
         viewPager.setOnPageChangeListener(this);
         mFragmentAdapter = new OrderFragmentAdapter(getChildFragmentManager(), mFragmentCache);
         mPageVp.setAdapter(mFragmentAdapter);

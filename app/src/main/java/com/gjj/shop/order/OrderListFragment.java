@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.http.callback.ListCallback;
+import com.gjj.applibrary.http.model.BaseList;
 import com.gjj.applibrary.util.ToastUtil;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.SpaceItemDecoration;
@@ -34,13 +37,12 @@ import okhttp3.Response;
 /**
  * Created by Administrator on 2016/8/14.
  */
-public class OrderListFragment extends BaseFragment {
+public class OrderListFragment extends BaseFragment implements OrderListAdapter.BtnCallBack {
     @Bind(R.id.order_list)
     RecyclerView mRecyclerView;
     @Bind(R.id.store_house_ptr_frame)
     PtrClassicFrameLayout mPtrLayout;
     private int mIndex;
-    private List<OrderInfo> orderInfoList;
     private OrderListAdapter mAdapter;
 
     @SuppressLint("ValidFragment")
@@ -63,8 +65,9 @@ public class OrderListFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(linearLayoutManager);
 //        mRecyclerView.setEmptyView(mFlEmptyView);
         mRecyclerView.setAdapter(mAdapter);
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_20p);
-        mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+        mAdapter.setmBtnCallBack(this);
+//        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_20p);
+//        mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         mRecyclerView.setItemAnimator(null);
         mPtrLayout.setLastUpdateTimeRelateObject(this);
 
@@ -73,8 +76,6 @@ public class OrderListFragment extends BaseFragment {
             public void onRefreshBegin(PtrFrameLayout frame) {
                 requestData();
             }
-
-
         });
         mPtrLayout.autoRefresh();
     }
@@ -86,17 +87,20 @@ public class OrderListFragment extends BaseFragment {
                 .tag(this)
                 .cacheMode(CacheMode.NO_CACHE)
                 .params(params)
-                .execute(new JsonCallback<String>(String.class) {
+                .execute(new ListCallback<OrderInfo>(OrderInfo.class) {
+
                     @Override
-                    public void onSuccess(String s, Call call, Response response) {
+                    public void onSuccess(final BaseList<OrderInfo> orderInfoBaseList, Call call, Response response) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 mPtrLayout.refreshComplete();
+                                if (orderInfoBaseList != null && !Util.isListEmpty(orderInfoBaseList.list)) {
+                                    mAdapter.setData(orderInfoBaseList.list);
+                                }
                                 ToastUtil.shortToast(R.string.success);
                             }
                         });
-
                     }
 
                     @Override
@@ -114,4 +118,52 @@ public class OrderListFragment extends BaseFragment {
                 });
     }
 
+    @Override
+    public void cancelOrder(int pos) {
+        OrderInfo orderInfo = mAdapter.getData(pos);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("orderId", String.valueOf(orderInfo.orderId));
+        OkHttpUtils.post(ApiConstants.CANCEL_ORDER)
+                .tag(this)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+                .execute(new JsonCallback<String>(String.class) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.shortToast(R.string.success);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.shortToast(R.string.fail);
+                            }
+                        });
+
+                    }
+                });
+    }
+
+    @Override
+    public void payOrder(int pos) {
+
+    }
+
+    @Override
+    public void AdviceOrder(int pos) {
+
+    }
+
+    @Override
+    public void CheckGood(int pos) {
+
+    }
 }

@@ -21,7 +21,7 @@ public class BaseApplication extends Application {
     public static BaseApplication getInstance() {
         return mApp;
     }
-    public static final int DEFAULT_MILLISECONDS = 120000; //默认的超时时间
+    public static final int DEFAULT_MILLISECONDS = 60000; //默认的超时时间
 
     @Override
     public void onCreate() {

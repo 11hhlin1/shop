@@ -62,7 +62,7 @@ public class GoodListAdapter extends BaseRecyclerViewAdapter<ShopInfo> {
                 .into(viewHolder.mShopAvatar);
         viewHolder.mShopName.setText(shopAdapterInfo.shopName);
 //        viewHolder.mSelBox.setTag(shopAdapterInfo.goodsList);
-        final ListAdapter listAdapter = new ListAdapter( mContext, shopAdapterInfo.goodsList, position);
+        final GoodItemListAdapter listAdapter = new GoodItemListAdapter( mContext, shopAdapterInfo.goodsList, position);
         viewHolder.mShopList.setAdapter(listAdapter);
 
 
@@ -88,84 +88,5 @@ public class GoodListAdapter extends BaseRecyclerViewAdapter<ShopInfo> {
     }
 
 
-    class ListAdapter extends BaseAdapter {
-        private List<GoodsInfo> mLists;
-        private Context mContext;
-        private int mPosition;
 
-        public ListAdapter(Context context, List<GoodsInfo> list, int pos) {
-            mContext = context;
-            mLists = list;
-            mPosition = pos;
-        }
-
-        @Override
-        public int getCount() {
-            return mLists.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.order_good_list_item, null);
-                viewHolder = new ViewHolder(convertView);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            GoodsInfo goodsInfo = mLists.get(position);
-            Map<String, String> map = (Map<String, String>) JSON.parse(goodsInfo.tags);
-            StringBuilder stringBuilder = Util.getThreadSafeStringBuilder();
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                stringBuilder.append(entry.getKey()).append(":").append(entry.getValue()).append("    ");
-            }
-            viewHolder.productDesc.setText(stringBuilder.toString());
-            viewHolder.productPriceNew.setText(mContext.getString(R.string.money_has_mark, Util.getFormatData(goodsInfo.curPrice)));
-            viewHolder.productPriceOld.setText(mContext.getString(R.string.money_has_mark, Util.getFormatData(goodsInfo.prePrice)));
-            viewHolder.productAmount.setText("X " + String.valueOf(goodsInfo.amount));
-            viewHolder.productName.setText(goodsInfo.goodsName);
-            viewHolder.productPriceOld.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-
-            Glide.with(mContext)
-                    .load(UrlUtil.getHttpUrl(goodsInfo.goodsLogoThumb))
-                    .centerCrop()
-                    .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
-                    .into(viewHolder.productAvatar);
-
-            return convertView;
-        }
-
-
-        class ViewHolder {
-            @Bind(R.id.product_avatar)
-            ImageView productAvatar;
-            @Bind(R.id.product_name)
-            TextView productName;
-            @Bind(R.id.product_desc)
-            TextView productDesc;
-            @Bind(R.id.product_price_new)
-            TextView productPriceNew;
-            @Bind(R.id.product_price_old)
-            TextView productPriceOld;
-            @Bind(R.id.product_amount)
-            TextView productAmount;
-            @Bind(R.id.shop_detail_rl)
-            RelativeLayout shopDetailRl;
-
-            ViewHolder(View view) {
-                ButterKnife.bind(this, view);
-            }
-        }
-    }
 }

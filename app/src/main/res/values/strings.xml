@@ -74,10 +74,12 @@
     <string name="contact_service">联系客服</string>
     <string name="about_us">关于我们</string>
     <string name="setting">设置</string>
-    <string name="pay_order">代付款</string>
+    <string name="pay_order">待付款</string>
     <string name="accepting_order">待收货</string>
     <string name="accept_order">已收货</string>
     <string name="cancel_order">已取消</string>
+    <string name="cancel_order_btn">取消订单</string>
+    <string name="order_num">订单编号%1$s</string>
     <string name="after_sale_order">售后</string>
     <string name="avatar">头像</string>
     <string name="name">姓名</string>
@@ -132,4 +134,5 @@
     <string name="comment">星级评分</string>
     <string name="category">分类</string>
     <string name="money_has_mark">￥%1$s</string>
+    <string name="loading">加载中</string>
 </resources>
