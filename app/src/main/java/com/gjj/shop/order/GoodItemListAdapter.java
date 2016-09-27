@@ -32,12 +32,10 @@ public class GoodItemListAdapter extends BaseAdapter{
 
         private List<GoodsInfo> mLists;
         private Context mContext;
-        private int mPosition;
 
-        public GoodItemListAdapter(Context context, List<GoodsInfo> list, int pos) {
+        public GoodItemListAdapter(Context context, List<GoodsInfo> list) {
             mContext = context;
             mLists = list;
-            mPosition = pos;
         }
 
         @Override

@@ -78,9 +78,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler, IWe
     private String mBitmapUrl;
     private int mNodeID;
 
-    private String QQAPPID = "1104708829";
-    private String WEXINAPPID = "wx306491ce9688ceca";
-    private String SINAAPPID = "2969236885";
+    private String QQAPPID = "1105643325";
+    private String WEXINAPPID = "wxd842e65051017e61";
+    private String SINAAPPID = "1513426131";
     private static final String mLocalUrl = "http://image.guojj.com/exhibition/20/27/5114a05bd53556007995bb3bd8062093_180x180.jpg";
     private int mIndex;
 

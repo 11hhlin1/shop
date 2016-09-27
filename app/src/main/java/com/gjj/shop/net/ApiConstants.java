@@ -35,5 +35,6 @@ public class ApiConstants {
     public static final String HOME_PAGE = host+ "/page/home";
     public static final String COLLECT_LIST = host+ "/collect/infoList";
     public static final String COLLECT_GOOD = host+ "/collect/edit";
+    public static final String ADD_FEEDBACK = host+ "/feedback/add";
 
 }

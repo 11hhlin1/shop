@@ -97,6 +97,8 @@ public class OrderListFragment extends BaseFragment implements OrderListAdapter.
                                 mPtrLayout.refreshComplete();
                                 if (orderInfoBaseList != null && !Util.isListEmpty(orderInfoBaseList.list)) {
                                     mAdapter.setData(orderInfoBaseList.list);
+                                } else {
+                                    mAdapter.setData(new ArrayList<OrderInfo>());
                                 }
                                 ToastUtil.shortToast(R.string.success);
                             }

@@ -1,10 +1,13 @@
 package com.gjj.shop.order;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,6 +18,9 @@ import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseRecyclerViewAdapter;
+import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.index.ProductDetailFragment;
+import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.UrlUtil;
 import com.gjj.shop.shopping.ShopInfo;
 import com.gjj.shop.widget.UnScrollableListView;
@@ -77,7 +83,7 @@ public class OrderListAdapter extends BaseRecyclerViewAdapter<OrderInfo> {
                 viewHolder.bottomRl.setVisibility(View.GONE);
                 break;
         }
-        final GoodItemListAdapter listAdapter = new GoodItemListAdapter( mContext, orderInfo.goodsList, position);
+        final GoodItemListAdapter listAdapter = new GoodItemListAdapter(mContext, orderInfo.goodsList);
         viewHolder.mGoodList.setAdapter(listAdapter);
         viewHolder.orderId.setTag(position);
     }
@@ -106,9 +112,9 @@ public class OrderListAdapter extends BaseRecyclerViewAdapter<OrderInfo> {
 //        @Bind(R.id.product_amount)
 //        TextView productAmount;
         @Bind(R.id.pay_btn)
-        Button payBtn;
+        TextView payBtn;
         @Bind(R.id.cancel_btn)
-        Button cancelBtn;
+        TextView cancelBtn;
         @Bind(R.id.bottom_rl)
         RelativeLayout bottomRl;
 
@@ -121,13 +127,32 @@ public class OrderListAdapter extends BaseRecyclerViewAdapter<OrderInfo> {
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickItem(orderId);
+                }
+            });
+            mGoodList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                   clickItem(orderId);
+                }
+            });
         }
     }
 
+    private void clickItem(TextView orderId) {
+        int pos = (int) orderId.getTag();
+        OrderInfo orderInfo = getData(pos);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("orderInfo",orderInfo);
+        PageSwitcher.switchToTopNavPage((Activity) mContext,OrderDetailFragment.class,bundle,mContext.getString(R.string.order_detail),"");
+    }
     public interface BtnCallBack {
-        public void cancelOrder(int pos);
-        public void payOrder(int pos);
-        public void AdviceOrder(int pos);
-        public void CheckGood(int pos);
+         void cancelOrder(int pos);
+         void payOrder(int pos);
+         void AdviceOrder(int pos);
+         void CheckGood(int pos);
     }
 }

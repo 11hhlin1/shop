@@ -62,7 +62,7 @@ public class GoodListAdapter extends BaseRecyclerViewAdapter<ShopInfo> {
                 .into(viewHolder.mShopAvatar);
         viewHolder.mShopName.setText(shopAdapterInfo.shopName);
 //        viewHolder.mSelBox.setTag(shopAdapterInfo.goodsList);
-        final GoodItemListAdapter listAdapter = new GoodItemListAdapter( mContext, shopAdapterInfo.goodsList, position);
+        final GoodItemListAdapter listAdapter = new GoodItemListAdapter(mContext, shopAdapterInfo.goodsList);
         viewHolder.mShopList.setAdapter(listAdapter);
 
 

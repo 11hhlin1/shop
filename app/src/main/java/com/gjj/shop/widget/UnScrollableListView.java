@@ -2,6 +2,7 @@ package com.gjj.shop.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.ListView;
 
 /**
@@ -24,4 +25,5 @@ public class UnScrollableListView extends ListView{
         super.onMeasure(widthMeasureSpec, expandSpec);
 
     }
+
 }

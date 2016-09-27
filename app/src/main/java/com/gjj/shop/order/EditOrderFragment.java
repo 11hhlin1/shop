@@ -126,7 +126,6 @@ public class EditOrderFragment extends BaseFragment {
 
 //        mProductInfo = (ProductInfo) bundle.getSerializable("product");
         shopInfoArrayList = bundle.getParcelableArrayList("shopInfo");
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 //        mShopIDList = new ArrayList<>();
 //        mSelList = new HashMap<>();
