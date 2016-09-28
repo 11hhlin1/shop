@@ -89,7 +89,7 @@ public class QQAccess {
             getmTencent();
         }
         QQToken qqAuth = mTencent.getQQToken();
-        UserInfo userInfo = new UserInfo(mContext, mTencent.getQQToken());
+        UserInfo userInfo = new UserInfo(mContext, qqAuth);
         userInfo.getUserInfo(iUiListener);
     }
 
