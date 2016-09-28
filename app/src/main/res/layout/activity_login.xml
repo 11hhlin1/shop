@@ -40,7 +40,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:paddingLeft="@dimen/margin_90px"
         android:paddingRight="@dimen/margin_90px">
         <EditText
