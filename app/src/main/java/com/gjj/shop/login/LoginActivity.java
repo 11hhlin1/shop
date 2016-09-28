@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.model.BundleKey;
 import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.task.BackgroundTaskExecutor;
 import com.gjj.applibrary.util.MD5Util;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.applibrary.util.ToastUtil;
@@ -38,11 +39,15 @@ import com.gjj.thirdaccess.QQAccess;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
 import com.tencent.connect.common.Constants;
+import com.tencent.open.utils.HttpUtils;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 
@@ -93,7 +98,7 @@ public class LoginActivity extends Activity {
     IUiListener loginListener;
     @OnClick(R.id.qq_login)
     void onqqLogin() {
-        QQAccess qqAccess = new QQAccess(this, ShareConstant.QQAPPID);
+        final QQAccess qqAccess = new QQAccess(this, ShareConstant.QQAPPID);
         loginListener = new IUiListener() {
 
             @Override
@@ -104,6 +109,27 @@ public class LoginActivity extends Activity {
                     Toast.makeText(LoginActivity.this,"返回为空, 登录失败",Toast.LENGTH_LONG).show();
                     return;
                 }
+                assert jsonResponse != null;
+                final String openId = jsonResponse.optString("openid");
+                qqAccess.initOpenidAndToken(jsonResponse);
+                qqAccess.getUserInfoQQ(new IUiListener() {
+
+                    @Override
+                    public void onComplete(Object qquser) {
+                        org.json.JSONObject jsonResponse = (org.json.JSONObject) qquser;
+                        doThirdLogin(openId,jsonResponse.optString("nickname"),jsonResponse.optString("figureurl_qq_2"));
+                    }
+
+                    @Override
+                    public void onError(UiError uiError) {
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
             }
 
             @Override
@@ -148,6 +174,45 @@ public class LoginActivity extends Activity {
         finish();
     }
 
+
+    private void doThirdLogin(String uid, String nickname, String avatar) {
+        showDialog();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uid", uid);
+        params.put("nickname", nickname);
+        params.put("avatar", avatar);
+//        final JSONObject jsonObject = new JSONObject(params);
+        OkHttpUtils.post(ApiConstants.THIRD_LOGIN)
+                .tag(this)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+//                .postJson(jsonObject.toString())
+                .execute(new JsonCallback<UserInfo>(UserInfo.class) {
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        if(!isFinishing()) {
+                            dismissProgressDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(UserInfo userInfo, Call call, Response response) {
+                        if(!isFinishing()) {
+                            dismissProgressDialog();
+                            if(userInfo != null) {
+                                L.d("@@@@@>>" + userInfo.token);
+                                ToastUtil.shortToast(R.string.login_success);
+                                BaseApplication.getUserMgr().saveUserInfo(userInfo);
+                                Intent intent = new Intent();
+                                intent.setClass(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    }
+                });
+    }
     /**
      * 登陆
      */
