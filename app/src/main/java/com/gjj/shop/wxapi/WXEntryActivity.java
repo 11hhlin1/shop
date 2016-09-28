@@ -78,9 +78,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler, IWe
     private String mBitmapUrl;
     private int mNodeID;
 
-    private String QQAPPID = "1105643325";
-    private String WEXINAPPID = "wxd842e65051017e61";
-    private String SINAAPPID = "1513426131";
+
     private static final String mLocalUrl = "http://image.guojj.com/exhibition/20/27/5114a05bd53556007995bb3bd8062093_180x180.jpg";
     private int mIndex;
 
@@ -195,7 +193,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler, IWe
 
     private WeiXinAccess getWeiXinAccess() {
         if (mWeiXinAccess == null) {
-            mWeiXinAccess = new WeiXinAccess(AppLib.getContext(), WEXINAPPID);
+            mWeiXinAccess = new WeiXinAccess(AppLib.getContext(), ShareConstant.WEXINAPPID);
         }
         return mWeiXinAccess;
     }
@@ -214,18 +212,18 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler, IWe
 
     private void qqShare() {
         mQQShareListener = new BaseUiListener();
-        QQAccess qqAccess = new QQAccess(this, QQAPPID);
+        QQAccess qqAccess = new QQAccess(this, ShareConstant.QQAPPID);
         qqAccess.ShareToQQ(mQQShareListener, mUrl, mTitle, mDescription, mBitmapUrl);
     }
 
     private void qzoneShare() {
         mQQShareListener = new BaseUiListener();
-        QQAccess qqAccess = new QQAccess(this, QQAPPID);
+        QQAccess qqAccess = new QQAccess(this, ShareConstant.QQAPPID);
         qqAccess.shareToQzone(mQQShareListener, mUrl, mTitle, mDescription, mBitmapUrl);
     }
 
     private void sinaShare() {
-        mSinaAccess = new SinaAccess(this, SINAAPPID);
+        mSinaAccess = new SinaAccess(this, ShareConstant.SINAAPPID);
 //        mSinaAccess.initAPI(new WeiboAuthListener() {
 //            @Override
 //            public void onComplete(Bundle bundle) {

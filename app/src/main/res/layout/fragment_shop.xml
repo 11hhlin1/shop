@@ -16,11 +16,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/shop_cover"
+                android:layout_width="match_parent"
+                android:layout_height="192dp"
+                />
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/sj_bg">
-
+            android:layout_height="192dp"
+            >
             <ImageView
                 android:id="@+id/shop_icon"
                 android:layout_width="64dp"
@@ -48,7 +55,7 @@
                 android:textColor="@color/white"
                 android:background="@mipmap/lxkf_btn_bg"/>
         </RelativeLayout>
-
+        </FrameLayout>
         <TextView
             android:id="@+id/shop_msg"
             android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.gjj.shop.category;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.shop.R;
 import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.UrlUtil;
@@ -76,12 +78,11 @@ public class RightGridAdapter extends BaseAdapter {
         }
         NextCategoryInfo productInfo = mProductList.get(position);
 
-//        Glide.with(mContext)
-//                .load(UrlUtil.getHttpUrl(productInfo.url))
-//                .centerCrop()
-//                .placeholder(R.mipmap.cj_sp_01)
-//                .error(R.mipmap.cj_sp_01)
-//                .into(viewTag.image);
+        Glide.with(mContext)
+                .load(UrlUtil.getHttpUrl(productInfo.logo))
+                .centerCrop()
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
+                .into(viewTag.image);
         viewTag.text.setText(productInfo.name);
 
         return convertView;

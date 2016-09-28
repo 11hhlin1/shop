@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,6 +18,7 @@ import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.model.BundleKey;
 import com.gjj.applibrary.log.L;
@@ -31,8 +33,14 @@ import com.gjj.shop.main.MainActivity;
 import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.widget.CustomProgressDialog;
+import com.gjj.shop.wxapi.ShareConstant;
+import com.gjj.thirdaccess.QQAccess;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
 
 import java.util.HashMap;
@@ -82,9 +90,34 @@ public class LoginActivity extends Activity {
     @OnClick(R.id.sina_login)
     void onSinaLogin() {
     }
-
+    IUiListener loginListener;
     @OnClick(R.id.qq_login)
     void onqqLogin() {
+        QQAccess qqAccess = new QQAccess(this, ShareConstant.QQAPPID);
+        loginListener = new IUiListener() {
+
+            @Override
+            public void onComplete(Object response) {
+                org.json.JSONObject jsonResponse = (org.json.JSONObject) response;
+                if (null != jsonResponse && jsonResponse.length() == 0) {
+                    //Util.showResultDialog(MainActivity.this, "返回为空", "登录失败");
+                    Toast.makeText(LoginActivity.this,"返回为空, 登录失败",Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onError(UiError uiError) {
+                ToastUtil.shortToast(R.string.fail);
+
+            }
+
+            @Override
+            public void onCancel() {
+                ToastUtil.shortToast(R.string.cancel_order);
+            }
+        };
+        qqAccess.loginQQ(loginListener);
     }
 
     @OnClick(R.id.wechat_login)
@@ -205,4 +238,12 @@ public class LoginActivity extends Activity {
         super.onDestroy();
         ButterKnife.unbind(this);
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_LOGIN) {
+            Tencent.onActivityResultData(requestCode,resultCode,data,loginListener);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

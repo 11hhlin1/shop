@@ -74,7 +74,7 @@ public class HorizontalListViewAdapter extends BaseAdapter{
         ShopInfo shopInfo = getItem(position);
         holder.mTitle.setText(shopInfo.name);
         Glide.with(mContext)
-                .load(UrlUtil.getHttpUrl(shopInfo.image))
+                .load(UrlUtil.getHttpUrl(shopInfo.logo))
                 .centerCrop()
                 .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .bitmapTransform(new GlideCircleTransform(mContext))

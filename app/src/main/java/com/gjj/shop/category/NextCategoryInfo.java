@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class NextCategoryInfo implements Serializable{
     private static final long serialVersionUID = 2711215840924994719L;
     public String name;
-//    public String url;
+    public String logo;
     public int id;
 
 }

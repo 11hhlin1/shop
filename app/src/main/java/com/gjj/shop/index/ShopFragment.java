@@ -47,6 +47,8 @@ import okhttp3.Response;
 public class ShopFragment extends BaseFragment {
     @Bind(R.id.shop_icon)
     ImageView shopIcon;
+    @Bind(R.id.shop_cover)
+    ImageView shopCover;
     @Bind(R.id.shop_name)
     TextView shopName;
     @Bind(R.id.contact_service)
@@ -100,11 +102,16 @@ public class ShopFragment extends BaseFragment {
         assert mShopInfo != null;
         shopName.setText(mShopInfo.name);
         Glide.with(this)
-                .load(UrlUtil.getHttpUrl(mShopInfo.image))
+                .load(UrlUtil.getHttpUrl(mShopInfo.logo))
                 .centerCrop()
                 .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .bitmapTransform(new GlideCircleTransform(getContext()))
                 .into(shopIcon);
+        Glide.with(this)
+                .load(UrlUtil.getHttpUrl(mShopInfo.image))
+                .centerCrop()
+                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
+                .into(shopCover);
         shopMsg.setText(mShopInfo.details);
         requestData(0);
 //        gridView.setOnLoadMoreListener(new OnLoadMoreListener() {
