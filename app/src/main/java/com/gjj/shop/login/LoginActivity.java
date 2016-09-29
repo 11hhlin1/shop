@@ -37,9 +37,12 @@ import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.widget.CustomProgressDialog;
 import com.gjj.shop.wxapi.ShareConstant;
 import com.gjj.thirdaccess.QQAccess;
+import com.gjj.thirdaccess.SinaAccess;
 import com.gjj.thirdaccess.WeiXinAccess;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+import com.sina.weibo.sdk.auth.WeiboAuthListener;
+import com.sina.weibo.sdk.exception.WeiboException;
 import com.tencent.connect.common.Constants;
 import com.tencent.open.utils.HttpUtils;
 import com.tencent.tauth.IUiListener;
@@ -93,9 +96,27 @@ public class LoginActivity extends Activity {
         bundle.putBoolean(RegisterFragment.FLAG, true);
         PageSwitcher.switchToTopNavPage(this,RegisterFragment.class,bundle,getString(R.string.register),"");
     }
-
+    SinaAccess sinaAccess;
     @OnClick(R.id.sina_login)
     void onSinaLogin() {
+        sinaAccess = new  SinaAccess(this, ShareConstant.SINAAPPID);
+        sinaAccess.loginSina(new WeiboAuthListener() {
+
+            @Override
+            public void onComplete(Bundle bundle) {
+              ToastUtil.shortToast(R.string.success);
+            }
+
+            @Override
+            public void onWeiboException(WeiboException e) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
     }
     IUiListener loginListener;
     @OnClick(R.id.qq_login)
@@ -166,7 +187,6 @@ public class LoginActivity extends Activity {
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
-
 
     /**
      * 登录成功
@@ -311,6 +331,9 @@ public class LoginActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_LOGIN) {
             Tencent.onActivityResultData(requestCode,resultCode,data,loginListener);
+        }
+        if (sinaAccess.getmSsoHandler() != null) {
+            sinaAccess.getmSsoHandler().authorizeCallBack(requestCode, resultCode, data);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
