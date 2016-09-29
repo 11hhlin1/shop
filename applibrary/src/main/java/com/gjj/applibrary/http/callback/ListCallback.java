@@ -33,7 +33,9 @@ public abstract class ListCallback<T> extends CommonCallback<BaseList<T>>{
             case 0:
                 BaseList baseList = new BaseList();
                 if (clazz != null) {
-                    baseList.list = JSON.parseArray(data, clazz);
+                    if(!TextUtils.isEmpty(data)) {
+                        baseList.list = JSON.parseArray(data, clazz);
+                    }
                     return baseList;
                 }
                 break;
