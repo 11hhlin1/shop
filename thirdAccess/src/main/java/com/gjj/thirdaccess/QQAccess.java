@@ -84,7 +84,7 @@ public class QQAccess {
      * 获取用户信息
      * @param iUiListener
      */
-    public void getUserInfoQQ(IUiListener iUiListener ) {
+    public void getUserInfoQQ(IUiListener iUiListener) {
         if (mTencent == null) {
             getmTencent();
         }

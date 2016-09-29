@@ -30,7 +30,7 @@ public class WeiXinAccess {
     /**
      * 微信授权域
      */
-    public static final String SCOPE_WEIXIN = "";
+    public static final String SCOPE_WEIXIN = "snsapi_userinfo";
     /**
      *
      */
@@ -45,6 +45,7 @@ public class WeiXinAccess {
     public WeiXinAccess(Context context, String appId) {
         this.mContext = context;
         APPID_WEIXIN = appId;
+        getmIWXAPI();
         //initAPPID();
     }
     /**
@@ -56,9 +57,10 @@ public class WeiXinAccess {
     }
 
 
-    public  IWXAPI getmIWXAPI( ) {
+    public  IWXAPI getmIWXAPI() {
         if (mIWXAPI == null) {
             mIWXAPI = WXAPIFactory.createWXAPI(mContext, APPID_WEIXIN, true);
+            mIWXAPI.registerApp(APPID_WEIXIN);
         }
         return mIWXAPI;
     }
