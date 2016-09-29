@@ -139,8 +139,14 @@ public class PersonalFragment extends BaseFragment {
     }
 
     void setUserInfo(UserInfo userInfo){
+        String avatarUrl;
+        if(userInfo.getAvatar().contains("http")) {
+            avatarUrl = userInfo.getAvatar();
+        } else {
+            avatarUrl = UrlUtil.getHttpUrl(userInfo.getAvatar());
+        }
         Glide.with(getActivity())
-                .load(UrlUtil.getHttpUrl(userInfo.getAvatar()))
+                .load(avatarUrl)
                 .centerCrop()
                 .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .bitmapTransform(new GlideCircleTransform(getActivity()))

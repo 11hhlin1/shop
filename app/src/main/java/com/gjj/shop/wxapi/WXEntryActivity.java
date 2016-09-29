@@ -15,11 +15,20 @@ import android.widget.SimpleAdapter;
 
 
 import com.gjj.applibrary.app.AppLib;
+import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.ToastUtil;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
+import com.gjj.shop.app.BaseApplication;
+import com.gjj.shop.main.MainActivity;
+import com.gjj.shop.model.UserInfo;
+import com.gjj.shop.net.ApiConstants;
 import com.gjj.thirdaccess.QQAccess;
 import com.gjj.thirdaccess.SinaAccess;
 import com.gjj.thirdaccess.WeiXinAccess;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.cache.CacheMode;
 import com.sina.weibo.sdk.api.share.BaseResponse;
 import com.sina.weibo.sdk.api.share.IWeiboHandler;
 import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
@@ -27,6 +36,7 @@ import com.sina.weibo.sdk.constant.WBConstants;
 import com.tencent.connect.common.Constants;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.modelmsg.ShowMessageFromWX;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.tauth.IUiListener;
@@ -41,6 +51,8 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler, IWeiboHandler.Response, AdapterView.OnItemClickListener {
 
@@ -103,7 +115,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler, IWe
                 iWeiboShareAPI.handleWeiboResponse(getIntent(), this);
             }
         }
-//		getWeiXinAccess().getmIWXAPI().handleIntent(getIntent(), this);
+		getWeiXinAccess().getmIWXAPI().handleIntent(getIntent(), this);
 
     }
 
@@ -324,7 +336,29 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler, IWe
     public void onResp(BaseResp resp) {
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
-                ToastUtil.shortToast(R.string.share_success);
+                if(resp instanceof SendAuth.Resp) {
+                    String code = ((SendAuth.Resp) resp).code;
+                } else {
+                    ToastUtil.shortToast(R.string.share_success);
+                }
+//                StringBuilder stringBuilder = Util.getThreadSafeStringBuilder();
+//                stringBuilder.append("https://api.weixin.qq.com/sns/oauth2/access_token?appid=").append(ShareConstant.WEXINAPPID).append("&secret=").append("")
+//                        .append("&code=").append(code).append("&grant_type=authorization_code");
+//                String url = stringBuilder.toString();
+//                OkHttpUtils.get(url)
+//                        .tag(this)
+//                        .cacheMode(CacheMode.NO_CACHE)
+//                        .execute(new JsonCallback<String>(String.class) {
+//                            @Override
+//                            public void onError(Call call, Response response, Exception e) {
+//                                super.onError(call, response, e);
+//                            }
+//
+//                            @Override
+//                            public void onSuccess(String userInfo, Call call, Response response) {
+//
+//                            }
+//                        });
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 ToastUtil.shortToast(R.string.share_cancel);

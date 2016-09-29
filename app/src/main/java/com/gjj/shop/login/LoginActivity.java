@@ -19,6 +19,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import com.alibaba.fastjson.JSONObject;
+import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.model.BundleKey;
 import com.gjj.applibrary.log.L;
@@ -36,6 +37,7 @@ import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.widget.CustomProgressDialog;
 import com.gjj.shop.wxapi.ShareConstant;
 import com.gjj.thirdaccess.QQAccess;
+import com.gjj.thirdaccess.WeiXinAccess;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
 import com.tencent.connect.common.Constants;
@@ -105,8 +107,7 @@ public class LoginActivity extends Activity {
             public void onComplete(Object response) {
                 org.json.JSONObject jsonResponse = (org.json.JSONObject) response;
                 if (null != jsonResponse && jsonResponse.length() == 0) {
-                    //Util.showResultDialog(MainActivity.this, "返回为空", "登录失败");
-                    Toast.makeText(LoginActivity.this,"返回为空, 登录失败",Toast.LENGTH_LONG).show();
+                    ToastUtil.shortToast(LoginActivity.this, "返回为空, 登录失败");
                     return;
                 }
                 assert jsonResponse != null;
@@ -117,7 +118,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onComplete(Object qquser) {
                         org.json.JSONObject jsonResponse = (org.json.JSONObject) qquser;
-                        doThirdLogin(openId,jsonResponse.optString("nickname"),jsonResponse.optString("figureurl_qq_2"));
+                        doThirdLogin(openId,jsonResponse.optString("nickname"),jsonResponse.optString("figureurl_qq_2"),3);
                     }
 
                     @Override
@@ -148,6 +149,8 @@ public class LoginActivity extends Activity {
 
     @OnClick(R.id.wechat_login)
     void onWechatLogin() {
+        WeiXinAccess weiXinAccess = new WeiXinAccess(AppLib.getContext(), ShareConstant.WEXINAPPID);
+        weiXinAccess.loginWeiXin();
     }
 
     @OnClick(R.id.forget_psw)
@@ -175,12 +178,13 @@ public class LoginActivity extends Activity {
     }
 
 
-    private void doThirdLogin(String uid, String nickname, String avatar) {
+    private void doThirdLogin(String uid, String nickname, String avatar, int type) {
         showDialog();
         HashMap<String, String> params = new HashMap<>();
         params.put("uid", uid);
         params.put("nickname", nickname);
         params.put("avatar", avatar);
+        params.put("type", String.valueOf(type));
 //        final JSONObject jsonObject = new JSONObject(params);
         OkHttpUtils.post(ApiConstants.THIRD_LOGIN)
                 .tag(this)

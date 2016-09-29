@@ -18,10 +18,10 @@ public class OrderInfo implements Parcelable {
     public long createTime;
     public int status;
     public String shopName;
-    public long shopId;
+    public String shopId;
     public String shopLogoThumb;
     public AddressInfo address;
-    public long orderId;
+    public String orderId;
     public String shopLogo;
     public List<GoodsInfo> goodsList;
 
@@ -32,9 +32,9 @@ public class OrderInfo implements Parcelable {
         createTime = in.readLong();
         status = in.readInt();
         shopName = in.readString();
-        shopId = in.readLong();
+        shopId = in.readString();
         shopLogoThumb = in.readString();
-        orderId = in.readLong();
+        orderId = in.readString();
         shopLogo = in.readString();
         address = (AddressInfo) in.readSerializable();
         goodsList = in.createTypedArrayList(GoodsInfo.CREATOR);
@@ -45,9 +45,9 @@ public class OrderInfo implements Parcelable {
         dest.writeLong(createTime);
         dest.writeInt(status);
         dest.writeString(shopName);
-        dest.writeLong(shopId);
+        dest.writeString(shopId);
         dest.writeString(shopLogoThumb);
-        dest.writeLong(orderId);
+        dest.writeString(orderId);
         dest.writeString(shopLogo);
         dest.writeSerializable(address);
         dest.writeTypedList(goodsList);

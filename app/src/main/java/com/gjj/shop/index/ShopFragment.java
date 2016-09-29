@@ -145,7 +145,7 @@ public class ShopFragment extends BaseFragment {
     private void requestData(final int start) {
         showLoadingDialog(R.string.committing,false);
         HashMap<String, String> params = new HashMap<>();
-        params.put("shopId", String.valueOf(mShopInfo.shopId));
+        params.put("shopId",mShopInfo.shopId);
         params.put("index", String.valueOf(start));
         params.put("size", String.valueOf(1000));
         OkHttpUtils.get(ApiConstants.PRODUCT_LIST)

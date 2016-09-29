@@ -219,12 +219,10 @@ public class ShoppingFragment extends BaseFragment {
 
                     @Override
                     public void onSuccess(BaseList<ShopInfo> shopInfoBaseList, Call call, Response response) {
-                        List<ShopInfo> infoList = new ArrayList<ShopInfo>();
-                        if (shopInfoBaseList != null) {
-                            infoList = shopInfoBaseList.list;
-                        }
+                        if(Util.isListEmpty(shopInfoBaseList.list))
+                            return;
                         List<ShopAdapterInfo> adapterInfos = new ArrayList<ShopAdapterInfo>();
-                        for (ShopInfo shopInfo : infoList) {
+                        for (ShopInfo shopInfo : shopInfoBaseList.list) {
                             ShopAdapterInfo shopAdapterInfo = new ShopAdapterInfo();
                             shopAdapterInfo.shopId = shopInfo.shopId;
                             shopAdapterInfo.shopImage = shopInfo.shopImage;

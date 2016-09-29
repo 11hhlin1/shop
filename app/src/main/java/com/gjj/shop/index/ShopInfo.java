@@ -24,7 +24,7 @@ public class ShopInfo implements Serializable{
      * createTime : 1472738432487
      */
 
-    public long shopId;
+    public String shopId;
     public String name;
     public String title;
     public String details;

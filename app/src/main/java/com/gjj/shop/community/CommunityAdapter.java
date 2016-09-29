@@ -167,8 +167,8 @@ public class CommunityAdapter extends BaseRecyclerViewAdapter<CommunityInfo> {
             CommunityInfo info = (CommunityInfo)mShareBtn.getTag();
             if(info != null) {
                 String url = "http://www.android100.org/html/201504/06/132445.html";
-                Bitmap bitmap = BitmapFactory.decodeResource(AppLib.getResources(), R.mipmap.nav05);
-                PageSwitcher.switchToShareActivity((Activity) mContext,url, info.details, info.details,info.thumbList.get(0),bitmap);
+                Bitmap bitmap = BitmapFactory.decodeResource(AppLib.getResources(), R.mipmap.cp_gg);
+                PageSwitcher.switchToShareActivity((Activity) mContext,url, info.details, info.details,UrlUtil.getHttpUrl(info.thumbList.get(0)),bitmap);
             }
         }
         public RvViewHolder(View itemView) {
