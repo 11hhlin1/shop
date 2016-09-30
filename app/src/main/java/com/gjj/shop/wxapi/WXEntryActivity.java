@@ -21,6 +21,7 @@ import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.app.BaseApplication;
+import com.gjj.shop.event.EventOfLoginWeixin;
 import com.gjj.shop.main.MainActivity;
 import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.ApiConstants;
@@ -42,6 +43,8 @@ import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -338,6 +341,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler, IWe
             case BaseResp.ErrCode.ERR_OK:
                 if(resp instanceof SendAuth.Resp) {
                     String code = ((SendAuth.Resp) resp).code;
+                    EventOfLoginWeixin eventOfLoginWeixin = new EventOfLoginWeixin();
+                    eventOfLoginWeixin.code = code;
+                    EventBus.getDefault().post(eventOfLoginWeixin);
                 } else {
                     ToastUtil.shortToast(R.string.share_success);
                 }

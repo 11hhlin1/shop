@@ -31,6 +31,7 @@ import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.app.BaseApplication;
 import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.event.EventOfLoginWeixin;
 import com.gjj.shop.main.MainActivity;
 import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.ApiConstants;
@@ -50,6 +51,9 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -139,7 +143,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onComplete(Object qquser) {
                         org.json.JSONObject jsonResponse = (org.json.JSONObject) qquser;
-                        doThirdLogin(openId,jsonResponse.optString("nickname"),jsonResponse.optString("figureurl_qq_2"),3);
+                        doThirdLogin(openId,jsonResponse.optString("nickname"),jsonResponse.optString("figureurl_qq_2"),"",3);
                     }
 
                     @Override
@@ -185,9 +189,16 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void loginWeiXin(EventOfLoginWeixin event) {
+        if(isFinishing())
+            return;
+        doThirdLogin("","","",event.code, 2);
+    }
     /**
      * 登录成功
      */
@@ -198,12 +209,13 @@ public class LoginActivity extends Activity {
     }
 
 
-    private void doThirdLogin(String uid, String nickname, String avatar, int type) {
+    private void doThirdLogin(String uid, String nickname, String avatar, String code, int type) {
         showDialog();
         HashMap<String, String> params = new HashMap<>();
         params.put("uid", uid);
         params.put("nickname", nickname);
         params.put("avatar", avatar);
+        params.put("code", code);
         params.put("type", String.valueOf(type));
 //        final JSONObject jsonObject = new JSONObject(params);
         OkHttpUtils.post(ApiConstants.THIRD_LOGIN)
