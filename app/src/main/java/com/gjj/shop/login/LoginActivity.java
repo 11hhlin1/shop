@@ -21,6 +21,7 @@ import okhttp3.Response;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gjj.applibrary.app.AppLib;
+import com.gjj.applibrary.http.callback.CommonCallback;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.model.BundleKey;
 import com.gjj.applibrary.log.L;
@@ -43,6 +44,7 @@ import com.gjj.thirdaccess.SinaAccess;
 import com.gjj.thirdaccess.WeiXinAccess;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+import com.lzy.okhttputils.callback.AbsCallback;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.tencent.connect.common.Constants;
@@ -118,7 +120,7 @@ public class LoginActivity extends Activity {
                         .tag(this)
                         .cacheMode(CacheMode.NO_CACHE)
 //                        .params(params)
-                        .execute(new JsonCallback<String>(String.class) {
+                        .execute(new AbsCallback<String>() {
                             @Override
                             public void onError(Call call, Response response, Exception e) {
                                 super.onError(call, response, e);
@@ -128,11 +130,19 @@ public class LoginActivity extends Activity {
                             }
 
                             @Override
+                            public String parseNetworkResponse(Response response) throws Exception {
+                                String responseData = response.body().string();
+                                if (TextUtils.isEmpty(responseData)) return null;
+                                return responseData;
+                            }
+
+                            @Override
                             public void onSuccess(String userInfo, Call call, Response response) {
                                 if(!isFinishing()) {
                                     dismissProgressDialog();
                                     if(userInfo != null) {
                                         JSONObject jsonObject =  JSONObject.parseObject(userInfo);
+
                                         doThirdLogin(uid,jsonObject.getString("screen_name"),jsonObject.getString("profile_image_url"),"",4);
                                     }
                                 }
