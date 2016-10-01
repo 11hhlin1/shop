@@ -18,6 +18,7 @@ import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.http.callback.JsonCallback;
@@ -108,12 +109,40 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onComplete(Bundle bundle) {
-              ToastUtil.shortToast(R.string.success);
+                showDialog();
+//                HashMap<String, String> params = new HashMap<>();
+                final String uid = bundle.getString("uid");
+//                params.put("uid", uid);
+//                params.put("access_token", bundle.getString("access_token"));
+                OkHttpUtils.get("https://api.weibo.com/2/users/show.json?access_token=" + bundle.getString("access_token") + "&uid="+uid)
+                        .tag(this)
+                        .cacheMode(CacheMode.NO_CACHE)
+//                        .params(params)
+                        .execute(new JsonCallback<String>(String.class) {
+                            @Override
+                            public void onError(Call call, Response response, Exception e) {
+                                super.onError(call, response, e);
+                                if(!isFinishing()) {
+                                    dismissProgressDialog();
+                                }
+                            }
+
+                            @Override
+                            public void onSuccess(String userInfo, Call call, Response response) {
+                                if(!isFinishing()) {
+                                    dismissProgressDialog();
+                                    if(userInfo != null) {
+                                        JSONObject jsonObject =  JSONObject.parseObject(userInfo);
+                                        doThirdLogin(uid,jsonObject.getString("screen_name"),jsonObject.getString("profile_image_url"),"",4);
+                                    }
+                                }
+                            }
+                        });
             }
 
             @Override
             public void onWeiboException(WeiboException e) {
-
+                ToastUtil.shortToast(R.string.fail);
             }
 
             @Override
