@@ -8,6 +8,7 @@ import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -106,5 +107,23 @@ public class WeiXinAccess {
         mIWXAPI.sendReq(req);
     }
 
-
+    public void pay2weixin(String partnerId, String prepayId, String noncestr, String timeStamp, String sign) {
+        if (mIWXAPI == null) {
+            getmIWXAPI();
+        }
+        if (!mIWXAPI.isWXAppInstalled()) {
+            Toast.makeText(mContext, mContext.getString(R.string.weixin_not_install),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        PayReq request = new PayReq();
+        request.appId = APPID_WEIXIN;
+        request.partnerId = partnerId;
+        request.prepayId= prepayId;
+        request.packageValue = "Sign=WXPay";
+        request.nonceStr= noncestr;
+        request.timeStamp= timeStamp;
+        request.sign= sign;
+        mIWXAPI.sendReq(request);
+    }
 }
