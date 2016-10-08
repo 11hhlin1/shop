@@ -41,6 +41,8 @@ import com.gjj.shop.shopping.GoodsInfo;
 import com.gjj.shop.shopping.ShopAdapterInfo;
 import com.gjj.shop.shopping.ShopInfo;
 import com.gjj.shop.shopping.ShoppingAdapter;
+import com.gjj.shop.wxapi.ShareConstant;
+import com.gjj.thirdaccess.WeiXinAccess;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
 
@@ -231,6 +233,8 @@ public class EditOrderFragment extends BaseFragment {
                     @Override
                     public void onSuccess(String payBean, Call call, Response response) {
                         ToastUtil.shortToast(R.string.success);
+                        WeiXinAccess weiXinAccess = new WeiXinAccess(AppLib.getContext(), ShareConstant.WEXINAPPID);
+//                        weiXinAccess.pay2weixin();
                     }
 
                     @Override
