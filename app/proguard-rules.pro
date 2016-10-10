@@ -87,3 +87,7 @@ public static final int *;
 -keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
 -keep class com.alipay.sdk.app.PayTask{ public *;}
 -keep class com.alipay.sdk.app.AuthTask{ public *;}
+
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

@@ -53,4 +53,8 @@ public class AppLib {
     public static void setInitialized(boolean value) {
         mAppLib.mIsInitialized = value;
     }
+    public static String getGjjPackageName() {
+        return getContext().getPackageName();
+    }
+
 }

@@ -5,12 +5,15 @@ import android.app.Application;
 import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.http.model.BundleKey;
 import com.gjj.applibrary.task.ForegroundTaskExecutor;
+import com.gjj.applibrary.util.AndroidUtil;
 import com.gjj.applibrary.util.PreferencesManager;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.user.UserMgr;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cookie.store.MemoryCookieStore;
 import com.lzy.okhttputils.model.HttpHeaders;
 import com.squareup.leakcanary.LeakCanary;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by Administrator on 2016/7/10.
@@ -39,6 +42,10 @@ public class BaseApplication extends Application {
                 .setReadTimeOut(DEFAULT_MILLISECONDS)     //全局的读取超时时间
                 .setWriteTimeOut(DEFAULT_MILLISECONDS)    //全局的写入超时时间
         .setCookieStore(new MemoryCookieStore());
+        CrashReport.initCrashReport(this, "9cce669180", true);
+        StringBuilder sb = Util.getThreadSafeStringBuilder();
+        sb.append(AndroidUtil.getVersionName(this)).append('_').append(AndroidUtil.getVersionCode(this));
+        CrashReport.setAppVersion(this, sb.toString());
         ForegroundTaskExecutor.executeTask(new Runnable() {
             @Override
             public void run() {
