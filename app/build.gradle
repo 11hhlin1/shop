@@ -54,7 +54,11 @@ dependencies {
     compile project(':ultra-pull-to-refresh')
     compile project(':thirdAccess')
     compile project(':funswitch')
+    compile files('libs/alipaySdk-20160825.jar')
     compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.bigkoo:convenientbanner:2.0.5'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }

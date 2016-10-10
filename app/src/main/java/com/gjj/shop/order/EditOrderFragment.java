@@ -18,10 +18,13 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alipay.sdk.app.PayTask;
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.task.ForegroundTaskExecutor;
+import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
@@ -52,6 +55,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -235,6 +239,15 @@ public class EditOrderFragment extends BaseFragment {
                         ToastUtil.shortToast(R.string.success);
                         WeiXinAccess weiXinAccess = new WeiXinAccess(AppLib.getContext(), ShareConstant.WEXINAPPID);
 //                        weiXinAccess.pay2weixin();
+
+                        final String orderInfo = "";   // 订单信息
+                        ForegroundTaskExecutor.executeTask(new Runnable() {
+                            @Override
+                            public void run() {
+                                PayTask alipay = new PayTask(getActivity());
+                                Map<String, String> result = alipay.payV2(orderInfo,true);
+                            }
+                        });
                     }
 
                     @Override
