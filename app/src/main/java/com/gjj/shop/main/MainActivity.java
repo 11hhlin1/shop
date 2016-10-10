@@ -11,6 +11,7 @@ import com.gjj.shop.R;
 import com.gjj.shop.app.BaseApplication;
 import com.gjj.shop.base.BaseMainActivity;
 import com.gjj.shop.community.CommunityFragment;
+import com.gjj.shop.event.EventOfChangeTab;
 import com.gjj.shop.event.EventOfLogout;
 import com.gjj.shop.index.IndexFragment;
 import com.gjj.shop.model.UserInfo;
@@ -88,12 +89,22 @@ public class MainActivity extends BaseMainActivity {
                 mRadioGroup.check(R.id.index_tab);
                 break;
         }
-//        Glide.with(this).load("http://jcodecraeer.com/uploads/20150327/1427445294447874.jpg")
-//                .into(imageView);
-
+        EventBus.getDefault().register(this);
         getUserInfo();
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeTab(EventOfChangeTab event) {
+        if(isFinishing())
+            return;
+        switch (event.mIndex) {
+            case 2:
+                mRadioGroup.check(R.id.shopping_tab);
+                break;
+            case 0:
+                mRadioGroup.check(R.id.index_tab);
+                break;
+        }
+    }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

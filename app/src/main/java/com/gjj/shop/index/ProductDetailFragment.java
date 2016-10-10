@@ -41,6 +41,7 @@ import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.event.EventOfAddCartSuccess;
+import com.gjj.shop.event.EventOfChangeTab;
 import com.gjj.shop.event.EventOfLogout;
 import com.gjj.shop.event.EventOfUpdateTags;
 import com.gjj.shop.model.ProductInfo;
@@ -191,7 +192,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     }
 
 
-    @OnClick({R.id.buy_now_btn, R.id.add_cart_btn,R.id.choose_detail_item, R.id.phone_item, R.id.user_advice_tv, R.id.pic_detail_tv, R.id.icon_back_btn,R.id.right_btn})
+    @OnClick({R.id.buy_now_btn, R.id.add_cart_btn,R.id.choose_detail_item, R.id.phone_item, R.id.user_advice_tv, R.id.pic_detail_tv, R.id.icon_back_btn,R.id.right_btn,R.id.go_shopping})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buy_now_btn:
@@ -217,6 +218,12 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                 break;
             case R.id.right_btn:
                 collectGood();
+                break;
+            case R.id.go_shopping:
+                getActivity().finish();
+                EventOfChangeTab eventOfChangeTab = new EventOfChangeTab();
+                eventOfChangeTab.mIndex = 2;
+                EventBus.getDefault().post(eventOfChangeTab);
                 break;
         }
     }
