@@ -103,7 +103,7 @@ public class LoginActivity extends Activity {
         bundle.putBoolean(RegisterFragment.FLAG, true);
         PageSwitcher.switchToTopNavPage(this,RegisterFragment.class,bundle,getString(R.string.register),"");
     }
-    SinaAccess sinaAccess;
+    private SinaAccess sinaAccess;
     @OnClick(R.id.sina_login)
     void onSinaLogin() {
         sinaAccess = new  SinaAccess(this, ShareConstant.SINAAPPID);
@@ -383,6 +383,8 @@ public class LoginActivity extends Activity {
         if (requestCode == Constants.REQUEST_LOGIN) {
             Tencent.onActivityResultData(requestCode,resultCode,data,loginListener);
         }
+        if(sinaAccess == null)
+            return;
         if (sinaAccess.getmSsoHandler() != null) {
             sinaAccess.getmSsoHandler().authorizeCallBack(requestCode, resultCode, data);
         }
