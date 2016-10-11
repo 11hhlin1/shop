@@ -109,10 +109,15 @@ public class SinaAccess {
      * @param weiboAuthListener
      */
     public void loginSina(WeiboAuthListener weiboAuthListener) {
-        if (mSsoHandler == null) {
-            getmSsoHandler();
+        initAPI();
+        if(mWeiboShareAPI.isWeiboAppInstalled()) {
+            if (mSsoHandler == null) {
+                getmSsoHandler();
+            }
+            mSsoHandler.authorize(weiboAuthListener);
+        } else {
+            Toast.makeText(mContext, mContext.getString(R.string.sina_not_install), Toast.LENGTH_LONG).show();
         }
-        mSsoHandler.authorize(weiboAuthListener);
     }
 
     /**

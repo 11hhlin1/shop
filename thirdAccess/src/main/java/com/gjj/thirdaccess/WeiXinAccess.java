@@ -73,6 +73,11 @@ public class WeiXinAccess {
         if (mIWXAPI == null) {
             getmIWXAPI();
         }
+        if (!mIWXAPI.isWXAppInstalled()) {
+            Toast.makeText(mContext, mContext.getString(R.string.weixin_not_install),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         // send oauth request
         final SendAuth.Req req = new SendAuth.Req();
         /*req.scope = "snsapi_userinfo";
