@@ -145,6 +145,7 @@ public class ShoppingFragment extends BaseFragment {
 
             }
             bundle.putParcelableArrayList("shopInfo", shopInfoArrayList);
+            bundle.putBoolean("isFromShopping", true);
             PageSwitcher.switchToTopNavPage(getActivity(), EditOrderFragment.class, bundle, getString(R.string.check_order), "");
 
         }

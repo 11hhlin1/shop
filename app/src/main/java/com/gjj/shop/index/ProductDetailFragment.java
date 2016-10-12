@@ -297,6 +297,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
         ArrayList<ShopInfo> shopInfoArrayList = new ArrayList<>();
         shopInfoArrayList.add(shopInfo);
         bundle.putParcelableArrayList("shopInfo", shopInfoArrayList);
+        bundle.putBoolean("isFromShopping", false);
         PageSwitcher.switchToTopNavPage(getActivity(), EditOrderFragment.class, bundle, getString(R.string.check_order), "");
     }
     @Override

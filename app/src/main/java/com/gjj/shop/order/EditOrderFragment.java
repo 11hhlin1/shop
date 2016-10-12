@@ -114,6 +114,7 @@ public class EditOrderFragment extends BaseFragment {
     RecyclerView mRecyclerView;
     private GoodListAdapter mAdapter;
     private AddressInfo addressInfo;
+    private boolean isFromShopping;
 
     @Override
     public int getContentViewLayout() {
@@ -132,6 +133,7 @@ public class EditOrderFragment extends BaseFragment {
 
 //        mProductInfo = (ProductInfo) bundle.getSerializable("product");
         shopInfoArrayList = bundle.getParcelableArrayList("shopInfo");
+        isFromShopping = bundle.getBoolean("isFromShopping");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 //        mShopIDList = new ArrayList<>();
 //        mSelList = new HashMap<>();
@@ -232,6 +234,7 @@ public class EditOrderFragment extends BaseFragment {
                 .tag(this)
                 .cacheMode(CacheMode.NO_CACHE)
                 .params("shopList",req)
+                .params("isFromCart ", String.valueOf(isFromShopping))
 //                .upJson(JSON.toJSONString(commitOrderReq))
                 .execute(new JsonCallback<String>(String.class) {
                     @Override
@@ -279,6 +282,7 @@ public class EditOrderFragment extends BaseFragment {
         if(getActivity() == null) {
             return;
         }
+        addressInfo = event.mAddressInfo;
         setAddress(event.mAddressInfo);
     }
 }
