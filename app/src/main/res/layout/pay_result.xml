@@ -4,13 +4,6 @@
 	android:orientation="vertical"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
-    
-	<TextView
-	    android:layout_width="fill_parent"
-	 	android:layout_height="fill_parent"
-		android:gravity="center"
-	 	android:textColor="#ff000000"
-	 	android:textSize="20dp"
-	 	android:text="@string/pay_result_tip"/>
+
 	
 </LinearLayout>

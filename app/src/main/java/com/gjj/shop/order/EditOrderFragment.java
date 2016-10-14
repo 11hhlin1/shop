@@ -240,17 +240,19 @@ public class EditOrderFragment extends BaseFragment {
                     @Override
                     public void onSuccess(String payBean, Call call, Response response) {
                         ToastUtil.shortToast(R.string.success);
-                        WeiXinAccess weiXinAccess = new WeiXinAccess(AppLib.getContext(), ShareConstant.WEXINAPPID);
-//                        weiXinAccess.pay2weixin();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("payInfo", payBean);
+                        PageSwitcher.switchToTopNavPage(getActivity(),ChoosePayWayFragment.class, bundle, getString(R.string.pay), "");
 
-                        final String orderInfo = "";   // 订单信息
-                        ForegroundTaskExecutor.executeTask(new Runnable() {
-                            @Override
-                            public void run() {
-                                PayTask alipay = new PayTask(getActivity());
-                                Map<String, String> result = alipay.payV2(orderInfo,true);
-                            }
-                        });
+
+//                        final String orderInfo = "";   // 订单信息
+//                        ForegroundTaskExecutor.executeTask(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                PayTask alipay = new PayTask(getActivity());
+//                                Map<String, String> result = alipay.payV2(orderInfo,true);
+//                            }
+//                        });
                     }
 
                     @Override

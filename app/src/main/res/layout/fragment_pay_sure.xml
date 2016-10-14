@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_88p"
+        android:textColor="@color/black"
+        android:paddingLeft="@dimen/margin_30p"
+        android:gravity="center_vertical|left"
+        android:text="选择支付方式"/>
+    <RelativeLayout
+        android:id="@+id/ali_pay_item"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+        <View
+            style="@style/top_horizontal_line" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_14sp"
+            android:textColor="@color/color_404040"
+            android:drawableLeft="@mipmap/alipay"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="支付宝"
+            android:drawablePadding="6dp"/>
+
+        <CheckBox
+            android:id="@+id/ali_pay_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:button="@null"
+            android:background="@drawable/selector_check_box"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/weixin_pay_item"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_14sp"
+            android:textColor="@color/color_404040"
+            android:drawableLeft="@mipmap/wechat"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="微信支付"
+            android:drawablePadding="6dp"/>
+
+        <CheckBox
+            android:id="@+id/weixin_pay_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:button="@null"
+            android:background="@drawable/selector_check_box"/>
+        <View
+            style="@style/bottom_horizontal_line" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/pay_btn"
+        style="@style/login_btn"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/forget_psw"
+        android:layout_height="@dimen/single_line_height_132px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin_30p"
+        android:layout_marginRight="@dimen/margin_30p"
+        android:layout_marginTop="@dimen/margin_40p"
+        android:text="@string/pay"/>
+</LinearLayout>

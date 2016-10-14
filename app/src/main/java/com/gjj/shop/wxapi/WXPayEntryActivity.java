@@ -1,6 +1,7 @@
 package com.gjj.shop.wxapi;
 
 import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -44,12 +45,23 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 	@Override
 	public void onResp(BaseResp resp) {
 		L.d("onPayFinish, errCode = " + resp.errCode);
-
+		switch (resp.errCode) {
+			case 0:
+				ToastUtil.shortToast(R.string.success);
+				break;
+			case -1:
+				ToastUtil.shortToast(getApplicationContext(), "参数错误");
+				break;
+			case -2:
+				ToastUtil.shortToast(getApplicationContext(), "用户取消");
+				break;
+		}
 		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
 //			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //			builder.setTitle(R.string.app_tip);
 //			builder.setMessage(getString(R.string.pay_result_callback_msg, String.valueOf(resp.errCode)));
 //			builder.show();
 		}
+		finish();
 	}
 }
