@@ -128,6 +128,7 @@
     <string name="collect_good_success">收藏成功</string>
     <string name="delete_success">删除成功</string>
     <string name="collect_good_fail">收藏失败</string>
+    <string name="comment_title">评论</string>
 
 
     <!-- 工具类 -->

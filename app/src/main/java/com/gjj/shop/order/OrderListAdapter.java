@@ -83,7 +83,7 @@ public class OrderListAdapter extends BaseRecyclerViewAdapter<OrderInfo> {
                 viewHolder.bottomRl.setVisibility(View.GONE);
                 break;
         }
-        final GoodItemListAdapter listAdapter = new GoodItemListAdapter(mContext, orderInfo.goodsList);
+        final GoodItemListAdapter listAdapter = new GoodItemListAdapter(mContext, orderInfo.goodsList,orderInfo.status,orderInfo.orderId);
         viewHolder.mGoodList.setAdapter(listAdapter);
         viewHolder.orderId.setTag(position);
     }
@@ -124,6 +124,11 @@ public class OrderListAdapter extends BaseRecyclerViewAdapter<OrderInfo> {
             mBtnCallBack.cancelOrder(pos);
         }
 
+        @OnClick(R.id.pay_btn)
+        void setPayBtn() {
+            int pos = (int) orderId.getTag();
+            mBtnCallBack.payOrder(pos);
+        }
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

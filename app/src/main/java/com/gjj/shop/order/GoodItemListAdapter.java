@@ -1,8 +1,10 @@
 package com.gjj.shop.order;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
+import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.net.UrlUtil;
 import com.gjj.shop.shopping.GoodsInfo;
 
@@ -32,10 +35,14 @@ public class GoodItemListAdapter extends BaseAdapter{
 
         private List<GoodsInfo> mLists;
         private Context mContext;
+        private int mState;
+        private String mOrderId;
 
-        public GoodItemListAdapter(Context context, List<GoodsInfo> list) {
+        public GoodItemListAdapter(Context context, List<GoodsInfo> list,int state, String orderId) {
             mContext = context;
             mLists = list;
+            mState = state;
+            mOrderId = orderId;
         }
 
         @Override
@@ -82,6 +89,12 @@ public class GoodItemListAdapter extends BaseAdapter{
                     .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                     .into(viewHolder.productAvatar);
 
+            if(mState == 2) {
+                viewHolder.adviceBtn.setVisibility(View.VISIBLE);
+                viewHolder.adviceBtn.setTag(goodsInfo.goodsId);
+            } else {
+                viewHolder.adviceBtn.setVisibility(View.GONE);
+            }
             return convertView;
         }
 
@@ -99,11 +112,25 @@ public class GoodItemListAdapter extends BaseAdapter{
             TextView productPriceOld;
             @Bind(R.id.product_amount)
             TextView productAmount;
+            @Bind(R.id.advice_btn)
+            TextView adviceBtn;
             @Bind(R.id.shop_detail_rl)
             RelativeLayout shopDetailRl;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);
+                adviceBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        String goodsId = (String) adviceBtn.getTag();
+                        bundle.putString("orderId", mOrderId);
+                        bundle.putString("goodsId", goodsId);
+                        PageSwitcher.switchToTopNavPage((Activity) mContext,CommentFragment.class,bundle,mContext.getString(R.string.comment_title),null);
+
+                    }
+                });
+
             }
         }
 

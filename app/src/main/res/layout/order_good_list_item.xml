@@ -58,6 +58,8 @@
     android:textColor="@color/color_808080"
     android:textSize="@dimen/textsize_12sp"
     />
+
+
     <TextView
     android:id="@+id/product_amount"
     android:layout_width="wrap_content"
@@ -67,6 +69,18 @@
     android:textColor="@color/color_808080"
     android:textSize="@dimen/textsize_12sp"
     />
+        <TextView
+            android:id="@+id/advice_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_14sp"
+            android:background="@mipmap/lj_btn_bg"
+            android:text="@string/comment_title"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:layout_below="@+id/product_amount"
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
     </LinearLayout>
 

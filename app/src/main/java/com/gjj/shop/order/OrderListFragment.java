@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.ListCallback;
 import com.gjj.applibrary.http.model.BaseList;
@@ -15,6 +18,7 @@ import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
+import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.base.SpaceItemDecoration;
 import com.gjj.shop.community.CommunityAdapter;
 import com.gjj.shop.net.ApiConstants;
@@ -156,6 +160,13 @@ public class OrderListFragment extends BaseFragment implements OrderListAdapter.
 
     @Override
     public void payOrder(int pos) {
+        OrderInfo orderInfo = mAdapter.getData(pos);
+        Bundle bundle = new Bundle();
+        List<String> orderIdList = new ArrayList<>();
+        orderIdList.add(orderInfo.orderId);
+        bundle.putString("orderIds", JSONArray.toJSONString(orderIdList));
+        PageSwitcher.switchToTopNavPage(getActivity(),ChoosePayWayFragment.class, bundle, getString(R.string.pay), "");
+
 
     }
 

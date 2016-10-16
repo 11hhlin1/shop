@@ -130,7 +130,7 @@ public class OrderDetailFragment extends BaseFragment {
                 break;
         }
 
-        final GoodItemListAdapter listAdapter = new GoodItemListAdapter(getActivity(), orderInfo.goodsList);
+        final GoodItemListAdapter listAdapter = new GoodItemListAdapter(getActivity(), orderInfo.goodsList,-1,"");
         goodList.setAdapter(listAdapter);
     }
 }

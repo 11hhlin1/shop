@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.app.AppLib;
@@ -241,7 +242,8 @@ public class EditOrderFragment extends BaseFragment {
                     public void onSuccess(String payBean, Call call, Response response) {
                         ToastUtil.shortToast(R.string.success);
                         Bundle bundle = new Bundle();
-                        bundle.putString("payInfo", payBean);
+                        JSONObject jsonObject = JSON.parseObject(payBean);
+                        bundle.putString("orderIds", jsonObject.getString("orderIds"));
                         PageSwitcher.switchToTopNavPage(getActivity(),ChoosePayWayFragment.class, bundle, getString(R.string.pay), "");
 
 

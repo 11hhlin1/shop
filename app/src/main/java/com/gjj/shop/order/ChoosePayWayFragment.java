@@ -50,7 +50,7 @@ public class ChoosePayWayFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        payInfo = getArguments().getString("payInfo");
+        payInfo = getArguments().getString("orderIds");
         aliPayCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -75,6 +75,7 @@ public class ChoosePayWayFragment extends BaseFragment {
             OkHttpUtils.post(ApiConstants.PAY_BY_WEIXIN)
                     .tag(this)
                     .cacheMode(CacheMode.NO_CACHE)
+                    .params("orderIds", payInfo)
 //                .upJson(JSON.toJSONString(commitOrderReq))
                     .execute(new JsonCallback<String>(String.class) {
 
