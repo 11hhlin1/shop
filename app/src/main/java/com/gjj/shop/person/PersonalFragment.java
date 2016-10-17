@@ -24,6 +24,7 @@ import com.gjj.shop.index.ShopGridAdapter;
 import com.gjj.shop.model.UserInfo;
 import com.gjj.shop.net.UrlUtil;
 import com.gjj.shop.order.OrderFragment;
+import com.gjj.shop.order.OrderListFragment;
 import com.gjj.shop.util.CallUtil;
 import com.gjj.shop.widget.DrawableCenterTextView;
 import com.gjj.shop.widget.UnScrollableGridView;
@@ -91,9 +92,16 @@ public class PersonalFragment extends BaseFragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("index", i);
-                PageSwitcher.switchToTopNavPage(getActivity(),OrderFragment.class,bundle,getString(R.string.my_order),null);
+                if(i < 4) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("index", i);
+                    PageSwitcher.switchToTopNavPage(getActivity(),OrderFragment.class,bundle,getString(R.string.my_order),null);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("index", i);
+                    PageSwitcher.switchToTopNavPage(getActivity(),OrderListFragment.class,bundle,getString(R.string.my_order),null);
+                }
+
             }
         });
 

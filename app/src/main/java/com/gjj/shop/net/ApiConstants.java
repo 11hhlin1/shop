@@ -39,5 +39,6 @@ public class ApiConstants {
     public static final String ADD_FEEDBACK = host+ "/feedback/add";
     public static final String PAY_BY_WEIXIN = host+ "/pay/wx/appOrder";
     public static final String COMMENT_PRODUCT = host+ "/comment/publish";
+    public static final String COMMENT_INFOLIST = host+ "/comment/infoList";
 
 }

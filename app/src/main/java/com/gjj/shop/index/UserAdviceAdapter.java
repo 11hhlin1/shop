@@ -13,11 +13,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.glide.GlideCircleTransform;
+import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseRecyclerViewAdapter;
 import com.gjj.shop.community.CommunityInfo;
 import com.gjj.shop.net.UrlUtil;
 
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
@@ -44,21 +46,62 @@ public class UserAdviceAdapter extends BaseRecyclerViewAdapter<CommentInfo> {
         return new RvViewHolder(view);
     }
 
-
+    public void addData(List<CommentInfo> albums) {
+        if (albums != items) {
+            int position = items.size() -1;
+            items.addAll(albums);
+            notifyDataSetChanged();
+//            notifyItemInserted(position >= 0 ? position : 0);
+        }
+    }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         RvViewHolder viewHolder = (RvViewHolder) holder;
         final CommentInfo info = items.get(position);
-//        Glide.with(mContext)
-//                .load(UrlUtil.getHttpUrl(info.thumbAvatar))
-//                .centerCrop()
-//                .placeholder(R.mipmap.s_user)
-//                .error(R.mipmap.s_user)
-//                .bitmapTransform(new GlideCircleTransform(mContext))
-//                .into(viewHolder.userAvatar);
-
+        Glide.with(mContext)
+                .load(UrlUtil.getHttpUrl(info.avatar))
+                .centerCrop()
+                .placeholder(R.mipmap.s_user)
+                .error(R.mipmap.s_user)
+                .bitmapTransform(new GlideCircleTransform(mContext))
+                .into(viewHolder.userAvatar);
+        viewHolder.commentTitle.setText(info.nickname);
+        viewHolder.commentDesc.setText(info.content);
+        viewHolder.commentTime.setText(getTimeStr(info.createTime));
+        if(info.star >= 1) {
+            viewHolder.selBox1.setChecked(true);
+        } else {
+            viewHolder.selBox1.setChecked(false);
+        }
+        if(info.star >= 2) {
+            viewHolder.selBox2.setChecked(true);
+        } else {
+            viewHolder.selBox2.setChecked(false);
+        }
+        if(info.star >= 3) {
+            viewHolder.selBox3.setChecked(true);
+        } else {
+            viewHolder.selBox3.setChecked(false);
+        }
+        if(info.star >= 4) {
+            viewHolder.selBox4.setChecked(true);
+        } else {
+            viewHolder.selBox4.setChecked(false);
+        }
+        if(info.star >= 5) {
+            viewHolder.selBox5.setChecked(true);
+        } else {
+            viewHolder.selBox5.setChecked(false);
+        }
     }
 
+    private String getTimeStr(long timeMs) {
+        Calendar dateCalendar = Calendar.getInstance();
+        dateCalendar.setTimeInMillis(timeMs);
+        StringBuilder stringBuilder = Util.getThreadSafeStringBuilder();
+        stringBuilder.append(dateCalendar.get(Calendar.YEAR)).append("-").append(dateCalendar.get(Calendar.MONTH) + 1).append("-").append(dateCalendar.get(Calendar.DAY_OF_MONTH));
+        return stringBuilder.toString();
+    }
      class RvViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.user_avatar)
         ImageView userAvatar;

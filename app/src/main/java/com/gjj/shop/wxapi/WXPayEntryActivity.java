@@ -3,6 +3,9 @@ package com.gjj.shop.wxapi;
 import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.shop.R;
+import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.order.ChoosePayWayFragment;
+import com.gjj.shop.order.PaySuccessFragment;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -48,6 +51,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 		switch (resp.errCode) {
 			case 0:
 				ToastUtil.shortToast(R.string.success);
+				PageSwitcher.switchToTopNavPage(this,PaySuccessFragment.class, null, getString(R.string.pay_success), "");
+                finish();
 				break;
 			case -1:
 				ToastUtil.shortToast(getApplicationContext(), "参数错误");

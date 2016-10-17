@@ -1,5 +1,6 @@
 package com.gjj.shop.order;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -24,7 +25,10 @@ public class OrderFragmentAdapter extends FragmentPagerAdapter {
         if (fragment != null) {
             return fragment;
         }
-        fragment = new OrderListFragment(position);
+        fragment = new OrderListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("index", position);
+        fragment.setArguments(bundle);
         mCache[position] = fragment;
         return fragment;
     }

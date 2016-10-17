@@ -1,89 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/shop_detail_rl"
-    android:layout_below="@+id/shop_icon_rl"
     android:layout_width="match_parent"
     android:layout_height="103dp"
-    android:minHeight="103dp"
-    android:background="@color/white">
+    android:layout_below="@+id/shop_icon_rl"
+    android:background="@color/white"
+    android:minHeight="103dp">
 
     <ImageView
-    android:id="@+id/product_avatar"
-    android:layout_width="80dp"
-    android:layout_height="80dp"
-    android:layout_marginLeft="6dp"
-    android:layout_centerVertical="true"
-    android:layout_alignParentLeft="true"/>
+        android:id="@+id/product_avatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="6dp" />
+
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_centerVertical="true"
-    android:layout_toRightOf="@+id/product_avatar"
-    android:orientation="vertical"
-    android:layout_marginLeft="@dimen/margin_20p"
-    android:layout_height="wrap_content">
-    <TextView
-    android:id="@+id/product_name"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textColor="@color/color_1a1a1a"
-    android:textSize="@dimen/textsize_16sp"
-    />
-    <TextView
-    android:id="@+id/product_desc"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:textColor="@color/color_737373"
-    android:textSize="@dimen/textsize_12sp"
-    />
-    <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="8dp">
-    <TextView
-    android:id="@+id/product_price_new"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textColor="@color/color_ed394a"
-    android:textSize="@dimen/textsize_18sp"
-    android:layout_alignParentLeft="true"
-    />
-    <TextView
-    android:id="@+id/product_price_old"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_toRightOf="@+id/product_price_new"
-    android:layout_marginLeft="5dp"
-    android:textColor="@color/color_808080"
-    android:textSize="@dimen/textsize_12sp"
-    />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_20p"
+        android:layout_toRightOf="@+id/product_avatar"
+        android:orientation="vertical">
 
-
-    <TextView
-    android:id="@+id/product_amount"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginRight="10dp"
-    android:layout_alignParentRight="true"
-    android:textColor="@color/color_808080"
-    android:textSize="@dimen/textsize_12sp"
-    />
         <TextView
-            android:id="@+id/advice_btn"
+            android:id="@+id/product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_14sp"
-            android:background="@mipmap/lj_btn_bg"
-            android:text="@string/comment_title"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:layout_below="@+id/product_amount"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+            android:textColor="@color/color_1a1a1a"
+            android:textSize="@dimen/textsize_16sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/product_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_737373"
+            android:textSize="@dimen/textsize_12sp" />
+
+            <TextView
+                android:id="@+id/advice_btn"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rect_red_bg"
+                android:gravity="center"
+                android:text="@string/comment_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/product_price_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/color_ed394a"
+                android:textSize="@dimen/textsize_18sp" />
+
+            <TextView
+                android:id="@+id/product_price_old"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/product_price_new"
+                android:textColor="@color/color_808080"
+                android:textSize="@dimen/textsize_12sp" />
+
+
+            <TextView
+                android:id="@+id/product_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/color_808080"
+                android:textSize="@dimen/textsize_12sp" />
+
+        </RelativeLayout>
     </LinearLayout>
 
-    <View
-    style="@style/bottom_horizontal_line" />
+    <View style="@style/bottom_horizontal_line" />
 </RelativeLayout>

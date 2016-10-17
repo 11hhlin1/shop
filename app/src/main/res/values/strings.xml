@@ -55,6 +55,7 @@
     <string name="balance">结算</string>
     <string name="delete_shop_tip">删除商品后将不能回复,你确定要删除商品吗?</string>
     <string name="delete_address_tip">删除地址后将不能回复,你确定要删除地址吗?</string>
+    <string name="cancel_order_tip">你确定要取消该订单吗?</string>
 
     <string name="des_start_up">请添加描述</string>
 
@@ -80,6 +81,8 @@
     <string name="accept_order">已收货</string>
     <string name="cancel_order">已取消</string>
     <string name="cancel_order_btn">取消订单</string>
+    <string name="apply_after_order">申请售后</string>
+    <string name="check_accept_good">确认收货</string>
     <string name="order_num">订单编号%1$s</string>
     <string name="order_detail">订单详情</string>
     <string name="after_sale_order">售后</string>
@@ -98,6 +101,7 @@
     <string name="take_photo">拍照</string>
     <string name="gallery">本地相册</string>
     <string name="pay">立即支付</string>
+    <string name="pay_success">支付成功</string>
     <string name="yesterday">昨天</string>
     <!--分享-->
     <string name="share_item_weixin_friend_title">微信好友</string>
@@ -112,6 +116,7 @@
     <string name="buy_now">立即购买</string>
     <string name="add_shop">加入购物车</string>
     <string name="choose_detail">选择规格</string>
+    <string name="choose_product">选择商品</string>
     <string name="pic_detail">图片详情</string>
     <string name="user_advice">用户评价</string>
     <string name="call">拨打</string>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/margin_30p"
+    android:paddingRight="@dimen/margin_30p">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/tuihua_rl"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@color/white">-->
+        <!--<View-->
+            <!--style="@style/top_horizontal_line" />-->
+        <!--<ImageView-->
+            <!--android:id="@+id/tuihuo_icon"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:src="@mipmap/tuihuo"/>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="@dimen/margin_30p"-->
+            <!--android:layout_toRightOf="@+id/tuihuo_icon"-->
+            <!--android:orientation="vertical">-->
+            <!--<TextView-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textSize="@dimen/textsize_14sp"-->
+                <!--android:text="退货退款"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+            <!--<TextView-->
+                <!--android:textColor="@color/color_606066"-->
+                <!--android:textSize="@dimen/textsize_14sp"-->
+                <!--android:text="已收到货,需要退还已收到的货"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+        <!--</LinearLayout>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="12dp"-->
+            <!--android:drawablePadding="6dp"-->
+            <!--android:textColor="@color/color_999999"-->
+            <!--android:textSize="13sp"-->
+            <!--android:drawableRight="@mipmap/right_jt"/>-->
+        <!--<View-->
+            <!--style="@style/bottom_horizontal_line" />-->
+    <!--</RelativeLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/register_et_bg"
+        android:layout_marginTop="@dimen/margin_30p"
+        android:orientation="horizontal">
+        <TextView
+        android:textColor="@color/color_606066"
+        android:textSize="@dimen/textsize_14sp"
+        android:text="* 申请服务"
+            android:layout_marginLeft="@dimen/margin_20p"
+            android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_14sp"
+            android:text="退货退款"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_30p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <EditText
+        android:id="@+id/advice_et"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="@dimen/margin_20p"
+        android:background="@drawable/register_et_bg"
+        android:ems="10"
+        android:gravity="start"
+        android:hint="请输入退货说明"
+        android:maxLength="200"
+        android:minLines="4"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="@dimen/margin_30p"
+        android:scrollbars="vertical"
+        android:textColor="@color/black"
+        android:textColorHint="@color/secondary_gray"
+        android:textSize="@dimen/textsize_14sp" />
+
+    <Button
+        android:id="@+id/btn_commit"
+        style="@style/login_btn"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/single_line_height_132px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_60p"
+        android:text="提交申请"/>
+</LinearLayout>

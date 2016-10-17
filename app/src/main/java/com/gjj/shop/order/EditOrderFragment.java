@@ -36,6 +36,7 @@ import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.base.SpaceItemDecoration;
 import com.gjj.shop.event.EventOfAddress;
+import com.gjj.shop.event.EventOfCreateOrderSuccess;
 import com.gjj.shop.event.EventOfDefaultAddress;
 import com.gjj.shop.index.SelTagInfo;
 import com.gjj.shop.model.ProductInfo;
@@ -235,16 +236,20 @@ public class EditOrderFragment extends BaseFragment {
                 .tag(this)
                 .cacheMode(CacheMode.NO_CACHE)
                 .params("shopList",req)
-                .params("isFromCart ", String.valueOf(isFromShopping))
+                .params("isFromCart", String.valueOf(isFromShopping))
 //                .upJson(JSON.toJSONString(commitOrderReq))
                 .execute(new JsonCallback<String>(String.class) {
                     @Override
                     public void onSuccess(String payBean, Call call, Response response) {
                         ToastUtil.shortToast(R.string.success);
+                        if(isFromShopping) {
+                            EventBus.getDefault().post(new EventOfCreateOrderSuccess());
+                        }
                         Bundle bundle = new Bundle();
                         JSONObject jsonObject = JSON.parseObject(payBean);
                         bundle.putString("orderIds", jsonObject.getString("orderIds"));
                         PageSwitcher.switchToTopNavPage(getActivity(),ChoosePayWayFragment.class, bundle, getString(R.string.pay), "");
+
 
 
 //                        final String orderInfo = "";   // 订单信息

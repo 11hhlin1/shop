@@ -1,18 +1,11 @@
 package com.gjj.shop.shopping;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -27,9 +20,7 @@ import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.base.SpaceItemDecoration;
 import com.gjj.shop.event.EventOfAddCartSuccess;
-import com.gjj.shop.event.EventOfUpdateTags;
-import com.gjj.shop.index.TagInfo;
-import com.gjj.shop.model.ProductInfo;
+import com.gjj.shop.event.EventOfCreateOrderSuccess;
 import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.order.EditOrderFragment;
 import com.gjj.shop.widget.ConfirmDialog;
@@ -41,15 +32,11 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
-import okhttp3.Request;
 import okhttp3.Response;
 
 /**
@@ -144,6 +131,10 @@ public class ShoppingFragment extends BaseFragment {
                     shopInfoArrayList.add(shopInfo);
 
             }
+            if(shopInfoArrayList.size() < 1) {
+                ToastUtil.shortToast(R.string.choose_product);
+                return;
+            }
             bundle.putParcelableArrayList("shopInfo", shopInfoArrayList);
             bundle.putBoolean("isFromShopping", true);
             PageSwitcher.switchToTopNavPage(getActivity(), EditOrderFragment.class, bundle, getString(R.string.check_order), "");
@@ -207,6 +198,16 @@ public class ShoppingFragment extends BaseFragment {
             }
         });
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refresh(EventOfCreateOrderSuccess event) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                doRequest();
+            }
+        });
+    }
     private void doRequest() {
         OkHttpUtils.get(ApiConstants.CART_LIST)
                 .tag(this)
@@ -220,8 +221,10 @@ public class ShoppingFragment extends BaseFragment {
 
                     @Override
                     public void onSuccess(BaseList<ShopInfo> shopInfoBaseList, Call call, Response response) {
-                        if(Util.isListEmpty(shopInfoBaseList.list))
+                        if(Util.isListEmpty(shopInfoBaseList.list)) {
+                            mAdapter.setData(new ArrayList<ShopAdapterInfo>());
                             return;
+                        }
                         List<ShopAdapterInfo> adapterInfos = new ArrayList<ShopAdapterInfo>();
                         for (ShopInfo shopInfo : shopInfoBaseList.list) {
                             ShopAdapterInfo shopAdapterInfo = new ShopAdapterInfo();

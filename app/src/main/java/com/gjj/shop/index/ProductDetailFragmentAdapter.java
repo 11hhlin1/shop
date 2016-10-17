@@ -30,6 +30,7 @@ public class ProductDetailFragmentAdapter extends FragmentPagerAdapter {
             fragment.setArguments(mBundle);
         } else if (position == 1) {
             fragment = new UserAdviceFragment();
+            fragment.setArguments(mBundle);
         }
         mCache[position] = fragment;
         return fragment;

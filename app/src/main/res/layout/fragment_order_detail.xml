@@ -61,8 +61,7 @@
             android:textSize="@dimen/textsize_12sp"
             android:layout_toRightOf="@+id/shop_avatar"
             android:text="海绵宝宝"/>
-        <View
-            style="@style/bottom_horizontal_line" />
+
     </RelativeLayout>
 
 
@@ -181,7 +180,7 @@
             <!--style="@style/bottom_horizontal_line" />-->
     <!--</RelativeLayout>-->
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/contact_item"
         android:layout_below="@+id/good_list"
         android:layout_width="match_parent"
@@ -231,9 +230,8 @@
                 android:text="联系商家" />
         </LinearLayout>
 
-        <View
-            style="@style/bottom_horizontal_line" />
-    </RelativeLayout>
+
+    </LinearLayout>
 
 
     <RelativeLayout
@@ -368,6 +366,7 @@
         android:layout_alignParentBottom="true">
 
         <TextView
+            android:id="@+id/order_amount_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/textsize_18sp"

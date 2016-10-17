@@ -70,6 +70,8 @@
             android:textSize="@dimen/textsize_14sp"
             android:text="1分" />
     </LinearLayout>
+    <View style="@style/horizontal_line"
+        android:paddingLeft="12dp"/>
 
     <EditText
         android:id="@+id/desc_tv"

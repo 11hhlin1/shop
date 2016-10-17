@@ -12,6 +12,7 @@ import com.gjj.shop.base.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Chuck on 2016/9/1.
@@ -36,4 +37,9 @@ public class PaySuccessFragment extends BaseFragment {
 
     }
 
+
+    @OnClick(R.id.back_home)
+    public void onClick() {
+        getActivity().finish();
+    }
 }

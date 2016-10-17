@@ -74,15 +74,23 @@ public class OrderListAdapter extends BaseRecyclerViewAdapter<OrderInfo> {
                 break;
             case 1:
                 viewHolder.orderState.setText(mContext.getString(R.string.accepting_order));
+                viewHolder.payBtn.setVisibility(View.VISIBLE);
+                viewHolder.cancelBtn.setVisibility(View.GONE);
+                viewHolder.payBtn.setText(mContext.getString(R.string.check_accept_good));
                 break;
             case 2:
                 viewHolder.orderState.setText(mContext.getString(R.string.accept_order));
+                viewHolder.bottomRl.setVisibility(View.GONE);
+//                viewHolder.payBtn.setVisibility(View.VISIBLE);
+//                viewHolder.cancelBtn.setVisibility(View.GONE);
+//                viewHolder.payBtn.setText(mContext.getString(R.string.apply_after_order));
                 break;
             case 3:
                 viewHolder.orderState.setText(mContext.getString(R.string.cancel_order));
                 viewHolder.bottomRl.setVisibility(View.GONE);
                 break;
         }
+        viewHolder.orderState.setTag(orderInfo.status);
         final GoodItemListAdapter listAdapter = new GoodItemListAdapter(mContext, orderInfo.goodsList,orderInfo.status,orderInfo.orderId);
         viewHolder.mGoodList.setAdapter(listAdapter);
         viewHolder.orderId.setTag(position);
@@ -126,8 +134,15 @@ public class OrderListAdapter extends BaseRecyclerViewAdapter<OrderInfo> {
 
         @OnClick(R.id.pay_btn)
         void setPayBtn() {
+            int state = (int) orderState.getTag();
             int pos = (int) orderId.getTag();
-            mBtnCallBack.payOrder(pos);
+            if(state == 0) {
+                mBtnCallBack.payOrder(pos);
+            } else if(state == 1) {
+                mBtnCallBack.CheckGood(pos);
+            } else if(state == 2) {
+
+            }
         }
         public ViewHolder(View view) {
             super(view);

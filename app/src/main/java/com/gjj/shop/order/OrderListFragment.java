@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.gjj.applibrary.http.callback.JsonCallback;
 import com.gjj.applibrary.http.callback.ListCallback;
 import com.gjj.applibrary.http.model.BaseList;
+import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
@@ -22,6 +23,10 @@ import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.base.SpaceItemDecoration;
 import com.gjj.shop.community.CommunityAdapter;
 import com.gjj.shop.net.ApiConstants;
+import com.gjj.shop.shopping.CartDeleteReq;
+import com.gjj.shop.shopping.GoodsAdapterInfo;
+import com.gjj.shop.shopping.ShopAdapterInfo;
+import com.gjj.shop.widget.ConfirmDialog;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
 
@@ -49,10 +54,6 @@ public class OrderListFragment extends BaseFragment implements OrderListAdapter.
     private int mIndex;
     private OrderListAdapter mAdapter;
 
-    @SuppressLint("ValidFragment")
-    public OrderListFragment(int index) {
-        mIndex = index;
-    }
     public OrderListFragment() {
     }
     @Override
@@ -62,7 +63,7 @@ public class OrderListFragment extends BaseFragment implements OrderListAdapter.
 
     @Override
     public void initView() {
-
+        mIndex = getArguments().getInt("index");
         mAdapter = new OrderListAdapter(getContext(), new ArrayList<OrderInfo>());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -125,37 +126,48 @@ public class OrderListFragment extends BaseFragment implements OrderListAdapter.
     }
 
     @Override
-    public void cancelOrder(int pos) {
-        OrderInfo orderInfo = mAdapter.getData(pos);
-        HashMap<String, String> params = new HashMap<>();
-        params.put("orderId", String.valueOf(orderInfo.orderId));
-        OkHttpUtils.post(ApiConstants.CANCEL_ORDER)
-                .tag(this)
-                .cacheMode(CacheMode.NO_CACHE)
-                .params(params)
-                .execute(new JsonCallback<String>(String.class) {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        runOnUiThread(new Runnable() {
+    public void cancelOrder(final int pos) {
+        ConfirmDialog confirmDialog = new ConfirmDialog(getActivity(), R.style.white_bg_dialog);
+        confirmDialog.setConfirmClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OrderInfo orderInfo = mAdapter.getData(pos);
+                HashMap<String, String> params = new HashMap<>();
+                params.put("orderId", String.valueOf(orderInfo.orderId));
+                OkHttpUtils.post(ApiConstants.CANCEL_ORDER)
+                        .tag(this)
+                        .cacheMode(CacheMode.NO_CACHE)
+                        .params(params)
+                        .execute(new JsonCallback<String>(String.class) {
                             @Override
-                            public void run() {
-                                ToastUtil.shortToast(R.string.success);
+                            public void onSuccess(String s, Call call, Response response) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        requestData();
+                                        ToastUtil.shortToast(getActivity(),"取消成功");
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onError(Call call, Response response, Exception e) {
+                                super.onError(call, response, e);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ToastUtil.shortToast(R.string.fail);
+                                    }
+                                });
+
                             }
                         });
-                    }
+            }
+        });
+        confirmDialog.setCanceledOnTouchOutside(true);
+        confirmDialog.show();
+        confirmDialog.setContent(R.string.cancel_order_tip);
 
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ToastUtil.shortToast(R.string.fail);
-                            }
-                        });
-
-                    }
-                });
     }
 
     @Override
