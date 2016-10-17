@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -19,47 +20,57 @@
             android:textSize="@dimen/textsize_14sp"
             android:text="@string/comment"/>
 
-        <CheckBox
-            android:id="@+id/sel_box_1"
+        <!--<CheckBox-->
+            <!--android:id="@+id/sel_box_1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:background="@drawable/selector_star_check_box"-->
+            <!--android:button="@null"-->
+            <!--android:layout_marginLeft="10dp"/>-->
+        <!--<CheckBox-->
+            <!--android:id="@+id/sel_box_2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:background="@drawable/selector_star_check_box"-->
+            <!--android:button="@null"-->
+            <!--android:layout_marginLeft="3dp"/>-->
+        <!--<CheckBox-->
+            <!--android:id="@+id/sel_box_3"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:background="@drawable/selector_star_check_box"-->
+            <!--android:button="@null"-->
+            <!--android:layout_marginLeft="3dp"/>-->
+        <!--<CheckBox-->
+            <!--android:id="@+id/sel_box_4"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:background="@drawable/selector_star_check_box"-->
+            <!--android:button="@null"-->
+            <!--android:layout_marginLeft="3dp"/>-->
+        <!--<CheckBox-->
+            <!--android:id="@+id/sel_box_5"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:background="@drawable/selector_star_check_box"-->
+            <!--android:button="@null"-->
+            <!--android:layout_marginLeft="3dp"/>-->
+        <com.gjj.shop.widget.StarBar
+            android:id="@+id/starBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            ratingbar:starEmpty="@mipmap/star_01"
+            ratingbar:starFill="@mipmap/star_02"
+            ratingbar:starDistance="5dp"
+            ratingbar:starCount="5"
+            android:layout_marginLeft="6dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_star_check_box"
-            android:button="@null"
-            android:layout_marginLeft="10dp"/>
-        <CheckBox
-            android:id="@+id/sel_box_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_star_check_box"
-            android:button="@null"
-            android:layout_marginLeft="3dp"/>
-        <CheckBox
-            android:id="@+id/sel_box_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_star_check_box"
-            android:button="@null"
-            android:layout_marginLeft="3dp"/>
-        <CheckBox
-            android:id="@+id/sel_box_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_star_check_box"
-            android:button="@null"
-            android:layout_marginLeft="3dp"/>
-        <CheckBox
-            android:id="@+id/sel_box_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_star_check_box"
-            android:button="@null"
-            android:layout_marginLeft="3dp"/>
-
+            ratingbar:starSize="25dp"/>
         <TextView
             android:id="@+id/score"
             android:layout_gravity="center_vertical"
@@ -68,10 +79,10 @@
             android:layout_marginLeft="6dp"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/textsize_14sp"
-            android:text="1分" />
+            android:text="0分" />
     </LinearLayout>
     <View style="@style/horizontal_line"
-        android:paddingLeft="12dp"/>
+        android:layout_marginLeft="12dp"/>
 
     <EditText
         android:id="@+id/desc_tv"

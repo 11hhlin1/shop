@@ -40,6 +40,7 @@
                 android:id="@+id/sel_box_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/selector_star_check_box"
                 android:button="@null" />
@@ -50,6 +51,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/selector_star_check_box"
                 android:button="@null"
+                android:enabled="false"
                 android:layout_marginLeft="3dp"/>
             <CheckBox
                 android:id="@+id/sel_box_3"
@@ -58,15 +60,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/selector_star_check_box"
                 android:button="@null"
-                android:layout_marginLeft="3dp"/>
-
-            <CheckBox
-                android:id="@+id/sel_box_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/selector_star_check_box"
-                android:button="@null"
+                android:enabled="false"
                 android:layout_marginLeft="3dp"/>
 
             <CheckBox
@@ -75,6 +69,16 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_star_check_box"
                 android:button="@null"
+                android:enabled="false"
+                android:layout_marginLeft="3dp"/>
+            <CheckBox
+                android:id="@+id/sel_box_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_star_check_box"
+                android:button="@null"
+                android:enabled="false"
                 android:layout_marginLeft="3dp"/>
         </LinearLayout>
         <TextView
