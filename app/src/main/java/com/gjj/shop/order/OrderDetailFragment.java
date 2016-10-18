@@ -1,11 +1,8 @@
 package com.gjj.shop.order;
 
-import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -13,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
@@ -23,6 +21,8 @@ import com.gjj.shop.R;
 import com.gjj.shop.address.AddressInfo;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
+import com.gjj.shop.event.EventOfCancelOrder;
+import com.gjj.shop.event.EventOfCheckGoods;
 import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.net.UrlUtil;
 import com.gjj.shop.widget.ConfirmDialog;
@@ -30,10 +30,13 @@ import com.gjj.shop.widget.UnScrollableListView;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -88,6 +91,8 @@ public class OrderDetailFragment extends BaseFragment {
     TextView commentDesc;
     @Bind(R.id.my_comment)
     RelativeLayout myComment;
+    @Bind(R.id.bottom_rl)
+    RelativeLayout mBottomRl;
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.time)
@@ -127,7 +132,7 @@ public class OrderDetailFragment extends BaseFragment {
         shopName.setText(orderInfo.shopName);
         orderNum.setText(getString(R.string.order_num,orderInfo.orderId));
 
-        orderAmount.setText(getString(R.string.money_has_mark,2400));
+        orderAmount.setText(getString(R.string.money_has_mark, String.valueOf(2400)));
         switch (orderInfo.status) {
             case 0:
                 orderState.setText(getString(R.string.pay_order));
@@ -140,9 +145,56 @@ public class OrderDetailFragment extends BaseFragment {
                         cancelOrder();
                     }
                 });
+                sureOrder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        List<String> orderIdList = new ArrayList<>();
+                        orderIdList.add(orderInfo.orderId);
+                        bundle.putString("orderIds", JSONArray.toJSONString(orderIdList));
+                        PageSwitcher.switchToTopNavPage(getActivity(),ChoosePayWayFragment.class, bundle, getString(R.string.pay), "");
+                    }
+                });
                 break;
             case 1:
                 orderState.setText(getString(R.string.accepting_order));
+                orderLeftBtn.setVisibility(View.GONE);
+                sureOrder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("orderId", orderInfo.orderId);
+                        OkHttpUtils.post(ApiConstants.RECEIVE_ORDER)
+                                .tag(this)
+                                .cacheMode(CacheMode.NO_CACHE)
+                                .params(params)
+                                .execute(new JsonCallback<String>(String.class) {
+                                    @Override
+                                    public void onSuccess(String s, Call call, Response response) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                onBackPressed();
+                                                EventBus.getDefault().post(new EventOfCheckGoods());
+                                                ToastUtil.shortToast(getActivity(),"确认成功");
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onError(Call call, Response response, Exception e) {
+                                        super.onError(call, response, e);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ToastUtil.shortToast(R.string.fail);
+                                            }
+                                        });
+
+                                    }
+                                });
+                    }
+                });
                 break;
             case 2:
                 orderState.setText(getString(R.string.accept_order));
@@ -164,6 +216,10 @@ public class OrderDetailFragment extends BaseFragment {
                 sureOrder.setVisibility(View.GONE);
                 orderLeftBtn.setVisibility(View.GONE);
                 break;
+            case 4:
+                mBottomRl.setVisibility(View.GONE);
+                myComment.setVisibility(View.GONE);
+                break;
         }
 
         final GoodItemListAdapter listAdapter = new GoodItemListAdapter(getActivity(), orderInfo.goodsList,-1,"");
@@ -175,7 +231,7 @@ public class OrderDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("orderId", String.valueOf(orderInfo.orderId));
+                params.put("orderId", orderInfo.orderId);
                 OkHttpUtils.post(ApiConstants.CANCEL_ORDER)
                         .tag(this)
                         .cacheMode(CacheMode.NO_CACHE)
@@ -186,6 +242,8 @@ public class OrderDetailFragment extends BaseFragment {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        onBackPressed();
+                                        EventBus.getDefault().post(new EventOfCancelOrder());
                                         ToastUtil.shortToast(getActivity(),"取消成功");
                                     }
                                 });

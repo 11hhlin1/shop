@@ -360,6 +360,7 @@
 
     </LinearLayout>
     <RelativeLayout
+        android:id="@+id/bottom_rl"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:background="@color/white"

@@ -22,6 +22,9 @@ import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.base.SpaceItemDecoration;
 import com.gjj.shop.community.CommunityAdapter;
+import com.gjj.shop.event.EventOfCancelOrder;
+import com.gjj.shop.event.EventOfChangeTab;
+import com.gjj.shop.event.EventOfCheckGoods;
 import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.shopping.CartDeleteReq;
 import com.gjj.shop.shopping.GoodsAdapterInfo;
@@ -29,6 +32,10 @@ import com.gjj.shop.shopping.ShopAdapterInfo;
 import com.gjj.shop.widget.ConfirmDialog;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,7 +82,7 @@ public class OrderListFragment extends BaseFragment implements OrderListAdapter.
 //        mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         mRecyclerView.setItemAnimator(null);
         mPtrLayout.setLastUpdateTimeRelateObject(this);
-
+        EventBus.getDefault().register(this);
         mPtrLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -83,6 +90,24 @@ public class OrderListFragment extends BaseFragment implements OrderListAdapter.
             }
         });
         mPtrLayout.autoRefresh();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refresh(EventOfCheckGoods event) {
+        if(getActivity() == null)
+            return;
+        if(mIndex == 1 || mIndex == 2) {
+            requestData();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refresh(EventOfCancelOrder event) {
+        if(getActivity() == null)
+            return;
+        if(mIndex == 0) {
+            requestData();
+        }
     }
 
     private void requestData() {
@@ -133,7 +158,7 @@ public class OrderListFragment extends BaseFragment implements OrderListAdapter.
             public void onClick(View v) {
                 OrderInfo orderInfo = mAdapter.getData(pos);
                 HashMap<String, String> params = new HashMap<>();
-                params.put("orderId", String.valueOf(orderInfo.orderId));
+                params.put("orderId", orderInfo.orderId);
                 OkHttpUtils.post(ApiConstants.CANCEL_ORDER)
                         .tag(this)
                         .cacheMode(CacheMode.NO_CACHE)
@@ -189,6 +214,36 @@ public class OrderListFragment extends BaseFragment implements OrderListAdapter.
 
     @Override
     public void CheckGood(int pos) {
+        OrderInfo orderInfo = mAdapter.getData(pos);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("orderId", orderInfo.orderId);
+        OkHttpUtils.post(ApiConstants.RECEIVE_ORDER)
+                .tag(this)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(params)
+                .execute(new JsonCallback<String>(String.class) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                requestData();
+                                ToastUtil.shortToast(getActivity(),"确认成功");
+                            }
+                        });
+                    }
 
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.shortToast(R.string.fail);
+                            }
+                        });
+
+                    }
+                });
     }
 }
