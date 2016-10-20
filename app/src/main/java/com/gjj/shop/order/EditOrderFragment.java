@@ -1,31 +1,19 @@
 package com.gjj.shop.order;
 
-import android.app.Activity;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alipay.sdk.app.PayTask;
-import com.bumptech.glide.Glide;
-import com.gjj.applibrary.app.AppLib;
-import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.applibrary.http.callback.JsonCallback;
-import com.gjj.applibrary.task.ForegroundTaskExecutor;
-import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.applibrary.util.PreferencesManager;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
@@ -35,19 +23,13 @@ import com.gjj.shop.address.AddressInfo;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.base.SpaceItemDecoration;
-import com.gjj.shop.event.EventOfAddress;
 import com.gjj.shop.event.EventOfCreateOrderSuccess;
 import com.gjj.shop.event.EventOfDefaultAddress;
 import com.gjj.shop.index.SelTagInfo;
 import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.ApiConstants;
-import com.gjj.shop.net.UrlUtil;
 import com.gjj.shop.shopping.GoodsInfo;
-import com.gjj.shop.shopping.ShopAdapterInfo;
-import com.gjj.shop.shopping.ShopInfo;
-import com.gjj.shop.shopping.ShoppingAdapter;
-import com.gjj.shop.wxapi.ShareConstant;
-import com.gjj.thirdaccess.WeiXinAccess;
+import com.gjj.shop.shopping.ShoppingInfo;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
 
@@ -57,10 +39,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
@@ -111,7 +91,7 @@ public class EditOrderFragment extends BaseFragment {
     private int mAmount;
     private ProductInfo mProductInfo;
     ArrayList<SelTagInfo> selTagInfoList;
-    ArrayList<ShopInfo> shopInfoArrayList;
+    ArrayList<ShoppingInfo> shoppingInfoArrayList;
     @Bind(R.id.recyclerView)
     RecyclerView mRecyclerView;
     private GoodListAdapter mAdapter;
@@ -134,14 +114,14 @@ public class EditOrderFragment extends BaseFragment {
 //        mAmount = bundle.getInt("amount");
 
 //        mProductInfo = (ProductInfo) bundle.getSerializable("product");
-        shopInfoArrayList = bundle.getParcelableArrayList("shopInfo");
+        shoppingInfoArrayList = bundle.getParcelableArrayList("shopInfo");
         isFromShopping = bundle.getBoolean("isFromShopping");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 //        mShopIDList = new ArrayList<>();
 //        mSelList = new HashMap<>();
         // 设置布局管理器
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new GoodListAdapter(getActivity(), shopInfoArrayList);
+        mAdapter = new GoodListAdapter(getActivity(), shoppingInfoArrayList);
         mRecyclerView.setAdapter(mAdapter);
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_20p);
         mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
@@ -215,11 +195,11 @@ public class EditOrderFragment extends BaseFragment {
 //            commitOrderReq.payType = 2;
 //        }
         List<ShopReq> shopReqList = new ArrayList<>();
-        for (ShopInfo shopInfo : shopInfoArrayList) {
+        for (ShoppingInfo shoppingInfo : shoppingInfoArrayList) {
             ShopReq shopReq = new ShopReq();
-            shopReq.shopId = shopInfo.shopId;
+            shopReq.shopId = shoppingInfo.shopId;
             List<OrderGoodReq> orderGoodReqs = new ArrayList<>();
-            for (GoodsInfo goodsInfo: shopInfo.goodsList) {
+            for (GoodsInfo goodsInfo: shoppingInfo.goodsList) {
                 OrderGoodReq orderGoodReq = new OrderGoodReq();
                 orderGoodReq.amount = goodsInfo.amount;
                 orderGoodReq.tags = goodsInfo.tags;

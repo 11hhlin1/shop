@@ -100,19 +100,7 @@ public class ShopFragment extends BaseFragment {
         });
         mShopInfo = (ShopInfo) getArguments().getSerializable("mShopInfo");
         assert mShopInfo != null;
-        shopName.setText(mShopInfo.name);
-        Glide.with(this)
-                .load(UrlUtil.getHttpUrl(mShopInfo.logo))
-                .centerCrop()
-                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
-                .bitmapTransform(new GlideCircleTransform(getContext()))
-                .into(shopIcon);
-        Glide.with(this)
-                .load(UrlUtil.getHttpUrl(mShopInfo.image))
-                .centerCrop()
-                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
-                .into(shopCover);
-        shopMsg.setText(mShopInfo.details);
+
         requestData(0);
 //        gridView.setOnLoadMoreListener(new OnLoadMoreListener() {
 //            @Override
@@ -120,12 +108,12 @@ public class ShopFragment extends BaseFragment {
 //                requestData(mAdapter.getCount() - 1);
 //            }
 //        });
-//        getShopInfo();
+        getShopInfo();
     }
 
     private void getShopInfo() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("shopId", "771231952710664192");
+        params.put("shopId", mShopInfo.shopId);
 
         OkHttpUtils.get(ApiConstants.SHOP_INFO)
                 .tag(this)
@@ -134,8 +122,20 @@ public class ShopFragment extends BaseFragment {
                 .execute(new JsonCallback<ShopInfo>(ShopInfo.class) {
                     @Override
                     public void onSuccess(ShopInfo shopInfo, Call call, Response response) {
-                        ToastUtil.shortToast(R.string.success);
-
+                        mShopInfo = shopInfo;
+                        shopName.setText(mShopInfo.name);
+                        Glide.with(getActivity())
+                                .load(UrlUtil.getHttpUrl(mShopInfo.logo))
+                                .centerCrop()
+                                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
+                                .bitmapTransform(new GlideCircleTransform(getContext()))
+                                .into(shopIcon);
+                        Glide.with(getActivity())
+                                .load(UrlUtil.getHttpUrl(mShopInfo.image))
+                                .centerCrop()
+                                .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
+                                .into(shopCover);
+                        shopMsg.setText(mShopInfo.details);
                     }
 
                 });

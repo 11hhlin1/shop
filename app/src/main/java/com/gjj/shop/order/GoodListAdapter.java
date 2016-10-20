@@ -1,32 +1,23 @@
 package com.gjj.shop.order;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
-import com.gjj.applibrary.util.Util;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseRecyclerViewAdapter;
 import com.gjj.shop.net.UrlUtil;
-import com.gjj.shop.shopping.GoodsInfo;
-import com.gjj.shop.shopping.ShopInfo;
+import com.gjj.shop.shopping.ShoppingInfo;
 import com.gjj.shop.widget.UnScrollableListView;
 
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,12 +25,12 @@ import butterknife.ButterKnife;
 /**
  * Created by user on 16/9/24.
  */
-public class GoodListAdapter extends BaseRecyclerViewAdapter<ShopInfo> {
+public class GoodListAdapter extends BaseRecyclerViewAdapter<ShoppingInfo> {
 //    SelectListener mSelectListener;
 
 
-    public GoodListAdapter(Context context, List<ShopInfo> shopInfoList) {
-        super(context, shopInfoList);
+    public GoodListAdapter(Context context, List<ShoppingInfo> shoppingInfoList) {
+        super(context, shoppingInfoList);
     }
 
     @Override
@@ -52,7 +43,7 @@ public class GoodListAdapter extends BaseRecyclerViewAdapter<ShopInfo> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        final ShopInfo shopAdapterInfo = items.get(position);
+        final ShoppingInfo shopAdapterInfo = items.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         Glide.with(mContext)
                 .load(UrlUtil.getHttpUrl(shopAdapterInfo.shopThumb))

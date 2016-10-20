@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -24,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -32,8 +30,6 @@ import com.bumptech.glide.Glide;
 import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.applibrary.http.callback.JsonCallback;
-import com.gjj.applibrary.http.callback.ListCallback;
-import com.gjj.applibrary.http.model.BaseList;
 import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.util.ToastUtil;
 import com.gjj.applibrary.util.Util;
@@ -42,17 +38,14 @@ import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.event.EventOfAddCartSuccess;
 import com.gjj.shop.event.EventOfChangeTab;
-import com.gjj.shop.event.EventOfLogout;
 import com.gjj.shop.event.EventOfUpdateTags;
 import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.net.UrlUtil;
 import com.gjj.shop.order.EditOrderFragment;
 import com.gjj.shop.shopping.*;
-import com.gjj.shop.shopping.ShopInfo;
 import com.gjj.shop.util.CallUtil;
 import com.gjj.shop.widget.NavLineView;
-import com.gjj.shop.widget.UnScrollableGridView;
 import com.gjj.shop.widget.UnScrollableListView;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
@@ -70,7 +63,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
-import okhttp3.Request;
 import okhttp3.Response;
 
 /**
@@ -192,7 +184,7 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     }
 
 
-    @OnClick({R.id.buy_now_btn, R.id.add_cart_btn,R.id.choose_detail_item, R.id.phone_item, R.id.user_advice_tv, R.id.pic_detail_tv, R.id.icon_back_btn,R.id.right_btn,R.id.go_shopping})
+    @OnClick({R.id.buy_now_btn, R.id.add_cart_btn,R.id.choose_detail_item, R.id.phone_item, R.id.user_advice_tv, R.id.pic_detail_tv, R.id.icon_back_btn,R.id.right_btn,R.id.go_shopping,R.id.detail_item})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buy_now_btn:
@@ -218,6 +210,13 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
                 break;
             case R.id.right_btn:
                 collectGood();
+                break;
+            case R.id.detail_item:
+                Bundle bundle = new Bundle();
+                ShopInfo shopInfo = new ShopInfo();
+                shopInfo.shopId = mProductInfo.shopId;
+                bundle.putSerializable("mShopInfo",shopInfo);
+                PageSwitcher.switchToTopNavPageNoTitle(getActivity(),ShopFragment.class, bundle,"","");
                 break;
             case R.id.go_shopping:
                 getActivity().finish();
@@ -288,15 +287,15 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
         goodsInfo.goodsLogoThumb = mProductInfo.logoThumb;
         goodsInfo.tags = JSON.toJSONString(map);
         goodsInfoList.add(goodsInfo);
-        com.gjj.shop.shopping.ShopInfo shopInfo = new ShopInfo();
-        shopInfo.shopId = mProductInfo.shopId;
-        shopInfo.shopThumb = mProductInfo.shopThumb;
-        shopInfo.shopImage = mProductInfo.shopLogo;
-        shopInfo.shopName = mProductInfo.shopName;
-        shopInfo.goodsList = goodsInfoList;
-        ArrayList<ShopInfo> shopInfoArrayList = new ArrayList<>();
-        shopInfoArrayList.add(shopInfo);
-        bundle.putParcelableArrayList("shopInfo", shopInfoArrayList);
+        ShoppingInfo shoppingInfo = new ShoppingInfo();
+        shoppingInfo.shopId = mProductInfo.shopId;
+        shoppingInfo.shopThumb = mProductInfo.shopThumb;
+        shoppingInfo.shopImage = mProductInfo.shopLogo;
+        shoppingInfo.shopName = mProductInfo.shopName;
+        shoppingInfo.goodsList = goodsInfoList;
+        ArrayList<ShoppingInfo> shoppingInfoArrayList = new ArrayList<>();
+        shoppingInfoArrayList.add(shoppingInfo);
+        bundle.putParcelableArrayList("shopInfo", shoppingInfoArrayList);
         bundle.putBoolean("isFromShopping", false);
         PageSwitcher.switchToTopNavPage(getActivity(), EditOrderFragment.class, bundle, getString(R.string.check_order), "");
     }

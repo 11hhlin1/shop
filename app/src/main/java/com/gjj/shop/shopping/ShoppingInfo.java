@@ -3,14 +3,13 @@ package com.gjj.shop.shopping;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/30.
  */
-public class ShopInfo implements Parcelable {
+public class ShoppingInfo implements Parcelable {
 
     public String shopId;
     public String shopName;
@@ -31,10 +30,10 @@ public class ShopInfo implements Parcelable {
         dest.writeList(goodsList);
     }
 
-    public ShopInfo() {
+    public ShoppingInfo() {
     }
 
-    private ShopInfo(Parcel in) {
+    private ShoppingInfo(Parcel in) {
         this.shopId = in.readString();
         this.shopName = in.readString();
         this.shopImage = in.readString();
@@ -43,13 +42,13 @@ public class ShopInfo implements Parcelable {
         in.readList(goodsList, getClass().getClassLoader());
     }
 
-    public static final Creator<ShopInfo> CREATOR = new Creator<ShopInfo>() {
-        public ShopInfo createFromParcel(Parcel source) {
-            return new ShopInfo(source);
+    public static final Creator<ShoppingInfo> CREATOR = new Creator<ShoppingInfo>() {
+        public ShoppingInfo createFromParcel(Parcel source) {
+            return new ShoppingInfo(source);
         }
 
-        public ShopInfo[] newArray(int size) {
-            return new ShopInfo[size];
+        public ShoppingInfo[] newArray(int size) {
+            return new ShoppingInfo[size];
         }
     };
 }

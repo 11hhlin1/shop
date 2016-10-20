@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,10 +18,7 @@ import com.gjj.applibrary.glide.GlideCircleTransform;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseRecyclerViewAdapter;
 import com.gjj.shop.base.PageSwitcher;
-import com.gjj.shop.index.ProductDetailFragment;
-import com.gjj.shop.model.ProductInfo;
 import com.gjj.shop.net.UrlUtil;
-import com.gjj.shop.shopping.ShopInfo;
 import com.gjj.shop.widget.UnScrollableListView;
 
 import java.util.List;

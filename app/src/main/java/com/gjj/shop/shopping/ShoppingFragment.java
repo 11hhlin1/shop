@@ -113,29 +113,29 @@ public class ShoppingFragment extends BaseFragment {
         } else {
             //TODO 结算
             Bundle bundle = new Bundle();
-            ArrayList<ShopInfo> shopInfoArrayList = new ArrayList<>();
+            ArrayList<ShoppingInfo> shoppingInfoArrayList = new ArrayList<>();
             List<ShopAdapterInfo> shopAdapterInfos = mAdapter.getDataList();
             for (ShopAdapterInfo shopAdapterInfo : shopAdapterInfos) {
-                    ShopInfo shopInfo = new ShopInfo();
-                    shopInfo.shopId = shopAdapterInfo.shopId;
-                    shopInfo.shopName = shopAdapterInfo.shopName;
-                    shopInfo.shopImage = shopAdapterInfo.shopImage;
-                    shopInfo.shopThumb = shopAdapterInfo.shopThumb;
+                    ShoppingInfo shoppingInfo = new ShoppingInfo();
+                    shoppingInfo.shopId = shopAdapterInfo.shopId;
+                    shoppingInfo.shopName = shopAdapterInfo.shopName;
+                    shoppingInfo.shopImage = shopAdapterInfo.shopImage;
+                    shoppingInfo.shopThumb = shopAdapterInfo.shopThumb;
                     ArrayList<GoodsInfo> goodsList = new ArrayList<>();
                     for (GoodsAdapterInfo goodsAdapterInfo: shopAdapterInfo.goodsList) {
                         if(goodsAdapterInfo.isSel)
                         goodsList.add(goodsAdapterInfo.goodsInfo);
                     }
-                    shopInfo.goodsList = goodsList;
+                    shoppingInfo.goodsList = goodsList;
                     if(goodsList.size() > 0)
-                    shopInfoArrayList.add(shopInfo);
+                    shoppingInfoArrayList.add(shoppingInfo);
 
             }
-            if(shopInfoArrayList.size() < 1) {
+            if(shoppingInfoArrayList.size() < 1) {
                 ToastUtil.shortToast(R.string.choose_product);
                 return;
             }
-            bundle.putParcelableArrayList("shopInfo", shopInfoArrayList);
+            bundle.putParcelableArrayList("shopInfo", shoppingInfoArrayList);
             bundle.putBoolean("isFromShopping", true);
             PageSwitcher.switchToTopNavPage(getActivity(), EditOrderFragment.class, bundle, getString(R.string.check_order), "");
 
@@ -212,7 +212,7 @@ public class ShoppingFragment extends BaseFragment {
         OkHttpUtils.get(ApiConstants.CART_LIST)
                 .tag(this)
                 .cacheMode(CacheMode.NO_CACHE)
-                .execute(new ListCallback<ShopInfo>(ShopInfo.class) {
+                .execute(new ListCallback<ShoppingInfo>(ShoppingInfo.class) {
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
@@ -220,20 +220,20 @@ public class ShoppingFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onSuccess(BaseList<ShopInfo> shopInfoBaseList, Call call, Response response) {
+                    public void onSuccess(BaseList<ShoppingInfo> shopInfoBaseList, Call call, Response response) {
                         if(Util.isListEmpty(shopInfoBaseList.list)) {
                             mAdapter.setData(new ArrayList<ShopAdapterInfo>());
                             return;
                         }
                         List<ShopAdapterInfo> adapterInfos = new ArrayList<ShopAdapterInfo>();
-                        for (ShopInfo shopInfo : shopInfoBaseList.list) {
+                        for (ShoppingInfo shoppingInfo : shopInfoBaseList.list) {
                             ShopAdapterInfo shopAdapterInfo = new ShopAdapterInfo();
-                            shopAdapterInfo.shopId = shopInfo.shopId;
-                            shopAdapterInfo.shopImage = shopInfo.shopImage;
-                            shopAdapterInfo.shopName = shopInfo.shopName;
-                            shopAdapterInfo.shopThumb =shopInfo.shopThumb;
+                            shopAdapterInfo.shopId = shoppingInfo.shopId;
+                            shopAdapterInfo.shopImage = shoppingInfo.shopImage;
+                            shopAdapterInfo.shopName = shoppingInfo.shopName;
+                            shopAdapterInfo.shopThumb = shoppingInfo.shopThumb;
                             List<GoodsAdapterInfo> goodsAdapterInfos = new ArrayList<GoodsAdapterInfo>();
-                            for (GoodsInfo goodsInfo : shopInfo.goodsList) {
+                            for (GoodsInfo goodsInfo : shoppingInfo.goodsList) {
                                 GoodsAdapterInfo goodsAdapterInfo = new GoodsAdapterInfo();
                                 goodsAdapterInfo.goodsInfo = goodsInfo;
                                 goodsAdapterInfos.add(goodsAdapterInfo);
