@@ -18,6 +18,7 @@ import com.gjj.shop.R;
 import com.gjj.shop.base.BaseRecyclerViewAdapter;
 import com.gjj.shop.community.CommunityInfo;
 import com.gjj.shop.net.UrlUtil;
+import com.gjj.shop.util.DateUtil;
 
 import java.util.Calendar;
 import java.util.List;
@@ -67,7 +68,7 @@ public class UserAdviceAdapter extends BaseRecyclerViewAdapter<CommentInfo> {
                 .into(viewHolder.userAvatar);
         viewHolder.commentTitle.setText(info.nickname);
         viewHolder.commentDesc.setText(info.content);
-        viewHolder.commentTime.setText(getTimeStr(info.createTime));
+        viewHolder.commentTime.setText(DateUtil.getTimeStr(info.createTime));
         if(info.star >= 1) {
             viewHolder.selBox1.setChecked(true);
         } else {
@@ -95,13 +96,7 @@ public class UserAdviceAdapter extends BaseRecyclerViewAdapter<CommentInfo> {
         }
     }
 
-    private String getTimeStr(long timeMs) {
-        Calendar dateCalendar = Calendar.getInstance();
-        dateCalendar.setTimeInMillis(timeMs);
-        StringBuilder stringBuilder = Util.getThreadSafeStringBuilder();
-        stringBuilder.append(dateCalendar.get(Calendar.YEAR)).append("-").append(dateCalendar.get(Calendar.MONTH) + 1).append("-").append(dateCalendar.get(Calendar.DAY_OF_MONTH));
-        return stringBuilder.toString();
-    }
+
      class RvViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.user_avatar)
         ImageView userAvatar;

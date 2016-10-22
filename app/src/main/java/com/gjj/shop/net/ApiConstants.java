@@ -43,5 +43,6 @@ public class ApiConstants {
     public static final String COMMENT_PRODUCT = host+ "/comment/publish";
     public static final String COMMENT_INFOLIST = host+ "/comment/infoList";
     public static final String ORDER_AFTERSALE = host+ "/order/applyAfterSaleService";
+    public static final String MESSAGE_INFOLIST = host+ "/message/infoList";
 
 }

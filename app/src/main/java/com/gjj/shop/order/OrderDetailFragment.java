@@ -2,9 +2,9 @@ package com.gjj.shop.order;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -25,9 +25,12 @@ import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.base.PageSwitcher;
 import com.gjj.shop.event.EventOfCancelOrder;
 import com.gjj.shop.event.EventOfCheckGoods;
+import com.gjj.shop.index.CommentInfo;
 import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.net.UrlUtil;
+import com.gjj.shop.shopping.GoodsInfo;
 import com.gjj.shop.util.CallUtil;
+import com.gjj.shop.util.DateUtil;
 import com.gjj.shop.widget.ConfirmDialog;
 import com.gjj.shop.widget.UnScrollableListView;
 import com.lzy.okhttputils.OkHttpUtils;
@@ -94,14 +97,12 @@ public class OrderDetailFragment extends BaseFragment {
     TextView commentTime;
     @Bind(R.id.comment_desc)
     TextView commentDesc;
+    @Bind(R.id.time_detail_ll)
+    LinearLayout mTimeLl;
     @Bind(R.id.my_comment)
     RelativeLayout myComment;
     @Bind(R.id.bottom_rl)
     RelativeLayout mBottomRl;
-    @Bind(R.id.title)
-    TextView title;
-    @Bind(R.id.time)
-    TextView time;
     @Bind(R.id.order_amount_tv)
     TextView orderAmount;
     @Bind(R.id.sure_order)
@@ -109,7 +110,7 @@ public class OrderDetailFragment extends BaseFragment {
     @Bind(R.id.order_left_btn)
     Button orderLeftBtn;
     OrderInfo orderInfo;
-
+    double mAmount;
     @Override
     public int getContentViewLayout() {
         return R.layout.fragment_order_detail;
@@ -138,7 +139,10 @@ public class OrderDetailFragment extends BaseFragment {
         shopName.setText(orderInfo.shopName);
         orderNum.setText(getString(R.string.order_num, orderInfo.orderId));
 
-        orderAmount.setText(getString(R.string.money_has_mark, String.valueOf(2400)));
+        for (GoodsInfo goodsInfo : orderInfo.goodsList) {
+            mAmount += goodsInfo.amount * goodsInfo.curPrice;
+        }
+        orderAmount.setText(getString(R.string.money_has_mark, String.valueOf(mAmount)));
         switch (orderInfo.status) {
             case 0:
                 orderState.setText(getString(R.string.pay_order));
@@ -217,6 +221,12 @@ public class OrderDetailFragment extends BaseFragment {
                     }
                 });
                 orderLeftBtn.setVisibility(View.GONE);
+                if(orderInfo.comment.size() > 0) {
+                    myComment.setVisibility(View.VISIBLE);
+                    setComment(orderInfo.comment.get(0));
+                } else {
+                    myComment.setVisibility(View.GONE);
+                }
                 break;
             case 3:
                 orderState.setText(getString(R.string.cancel_order));
@@ -225,8 +235,8 @@ public class OrderDetailFragment extends BaseFragment {
                 orderLeftBtn.setVisibility(View.GONE);
                 break;
             case 4:
-                if(orderInfo.afterSaleService != null) {
-                    if(orderInfo.afterSaleService.getStatus() == 0) {
+                if (orderInfo.afterSaleService != null) {
+                    if (orderInfo.afterSaleService.getStatus() == 0) {
                         orderState.setText("处理中");
                     } else {
                         orderState.setText("退款成功");
@@ -239,8 +249,67 @@ public class OrderDetailFragment extends BaseFragment {
 
         final GoodItemListAdapter listAdapter = new GoodItemListAdapter(getActivity(), orderInfo.goodsList, -1, "");
         goodList.setAdapter(listAdapter);
+        TimeViewHolder holder = inflatePassengerView(getActivity().getLayoutInflater());
+        holder.title.setText("创建时间");
+        holder.time.setText(DateUtil.getTimeStr(orderInfo.createTime));
+        mTimeLl.addView(holder.parent);
+        if(orderInfo.payTime > 0) {
+            TimeViewHolder holder1 = inflatePassengerView(getActivity().getLayoutInflater());
+            holder1.title.setText("支付时间");
+            holder1.time.setText(DateUtil.getTimeStr(orderInfo.payTime));
+            mTimeLl.addView(holder1.parent);
+        }
+        if(!TextUtils.isEmpty(orderInfo.payWay)) {
+            TimeViewHolder holder1 = inflatePassengerView(getActivity().getLayoutInflater());
+            holder1.title.setText("支付方式");
+            holder1.time.setText(orderInfo.payWay);
+            mTimeLl.addView(holder1.parent);
+        }
+
+        if(orderInfo.receiveTime > 0) {
+            TimeViewHolder holder1 = inflatePassengerView(getActivity().getLayoutInflater());
+            holder1.title.setText("收货时间");
+            holder1.time.setText(DateUtil.getTimeStr(orderInfo.receiveTime));
+            mTimeLl.addView(holder1.parent);
+        }
+        if(orderInfo.deliverTime > 0) {
+            TimeViewHolder holder1 = inflatePassengerView(getActivity().getLayoutInflater());
+            holder1.title.setText("发货时间");
+            holder1.time.setText(DateUtil.getTimeStr(orderInfo.deliverTime));
+            mTimeLl.addView(holder1.parent);
+        }
     }
 
+    private void setComment(CommentInfo info) {
+
+        commentDesc.setText(info.content);
+        commentTime.setText(DateUtil.getTimeStr(info.createTime));
+        if(info.star >= 1) {
+            selBox1.setChecked(true);
+        } else {
+            selBox1.setChecked(false);
+        }
+        if(info.star >= 2) {
+            selBox2.setChecked(true);
+        } else {
+            selBox2.setChecked(false);
+        }
+        if(info.star >= 3) {
+            selBox3.setChecked(true);
+        } else {
+            selBox3.setChecked(false);
+        }
+        if(info.star >= 4) {
+            selBox4.setChecked(true);
+        } else {
+            selBox4.setChecked(false);
+        }
+        if(info.star >= 5) {
+            selBox5.setChecked(true);
+        } else {
+            selBox5.setChecked(false);
+        }
+    }
     public void cancelOrder() {
         ConfirmDialog confirmDialog = new ConfirmDialog(getActivity(), R.style.white_bg_dialog);
         confirmDialog.setConfirmClickListener(new View.OnClickListener() {
@@ -287,6 +356,24 @@ public class OrderDetailFragment extends BaseFragment {
 
     @OnClick(R.id.tel_ll)
     void onTelClick() {
-        CallUtil.askForMakeCall(getActivity(), "", orderInfo.shopId);
+        CallUtil.askForMakeCall(getActivity(), "", orderInfo.contactPhone);
+    }
+
+    private TimeViewHolder inflatePassengerView(LayoutInflater inflater) {
+        View child = inflater.inflate(R.layout.order_detail_time_item, null);
+        TimeViewHolder holder = new TimeViewHolder(child);
+        return holder;
+    }
+
+    class TimeViewHolder {
+        @Bind(R.id.title)
+        TextView title;
+        @Bind(R.id.time)
+        TextView time;
+        View parent;
+        TimeViewHolder(View view) {
+            parent = view;
+            ButterKnife.bind(this, view);
+        }
     }
 }
