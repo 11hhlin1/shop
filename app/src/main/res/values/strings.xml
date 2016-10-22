@@ -143,4 +143,5 @@
     <string name="category">分类</string>
     <string name="money_has_mark">￥%1$s</string>
     <string name="loading">加载中</string>
+    <string name="input_prduct_name">请输入商品名称</string>
 </resources>

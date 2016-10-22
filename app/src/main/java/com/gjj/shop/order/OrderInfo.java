@@ -23,6 +23,7 @@ public class OrderInfo implements Parcelable {
     public AddressInfo address;
     public String orderId;
     public String shopLogo;
+    public AfterSaleService afterSaleService;
     public List<GoodsInfo> goodsList;
 
     public OrderInfo() {
@@ -37,6 +38,7 @@ public class OrderInfo implements Parcelable {
         orderId = in.readString();
         shopLogo = in.readString();
         address = (AddressInfo) in.readSerializable();
+        afterSaleService = (AfterSaleService) in.readSerializable();
         goodsList = in.createTypedArrayList(GoodsInfo.CREATOR);
     }
 
@@ -50,6 +52,7 @@ public class OrderInfo implements Parcelable {
         dest.writeString(orderId);
         dest.writeString(shopLogo);
         dest.writeSerializable(address);
+        dest.writeSerializable(afterSaleService);
         dest.writeTypedList(goodsList);
     }
 

@@ -2,7 +2,9 @@ package com.gjj.shop.order;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -25,6 +27,7 @@ import com.gjj.shop.event.EventOfCancelOrder;
 import com.gjj.shop.event.EventOfCheckGoods;
 import com.gjj.shop.net.ApiConstants;
 import com.gjj.shop.net.UrlUtil;
+import com.gjj.shop.util.CallUtil;
 import com.gjj.shop.widget.ConfirmDialog;
 import com.gjj.shop.widget.UnScrollableListView;
 import com.lzy.okhttputils.OkHttpUtils;
@@ -37,6 +40,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -104,6 +109,7 @@ public class OrderDetailFragment extends BaseFragment {
     @Bind(R.id.order_left_btn)
     Button orderLeftBtn;
     OrderInfo orderInfo;
+
     @Override
     public int getContentViewLayout() {
         return R.layout.fragment_order_detail;
@@ -111,11 +117,11 @@ public class OrderDetailFragment extends BaseFragment {
 
     @Override
     public void initView() {
-         Bundle bundle = getArguments();
+        Bundle bundle = getArguments();
         orderInfo = bundle.getParcelable("orderInfo");
-         assert orderInfo != null;
-         AddressInfo addressInfo = orderInfo.address;
-        if(addressInfo !=null) {
+        assert orderInfo != null;
+        AddressInfo addressInfo = orderInfo.address;
+        if (addressInfo != null) {
             StringBuilder phone = Util.getThreadSafeStringBuilder();
             phone.append("收货人:").append(addressInfo.contact).append("  ").append(addressInfo.phone);
             receivePerson.setText(phone.toString());
@@ -130,7 +136,7 @@ public class OrderDetailFragment extends BaseFragment {
                 .error(new ColorDrawable(AppLib.getResources().getColor(android.R.color.transparent)))
                 .into(shopAvatar);
         shopName.setText(orderInfo.shopName);
-        orderNum.setText(getString(R.string.order_num,orderInfo.orderId));
+        orderNum.setText(getString(R.string.order_num, orderInfo.orderId));
 
         orderAmount.setText(getString(R.string.money_has_mark, String.valueOf(2400)));
         switch (orderInfo.status) {
@@ -152,13 +158,15 @@ public class OrderDetailFragment extends BaseFragment {
                         List<String> orderIdList = new ArrayList<>();
                         orderIdList.add(orderInfo.orderId);
                         bundle.putString("orderIds", JSONArray.toJSONString(orderIdList));
-                        PageSwitcher.switchToTopNavPage(getActivity(),ChoosePayWayFragment.class, bundle, getString(R.string.pay), "");
+                        PageSwitcher.switchToTopNavPage(getActivity(), ChoosePayWayFragment.class, bundle, getString(R.string.pay), "");
                     }
                 });
                 break;
             case 1:
                 orderState.setText(getString(R.string.accepting_order));
                 orderLeftBtn.setVisibility(View.GONE);
+                myComment.setVisibility(View.GONE);
+                sureOrder.setText(getString(R.string.check_accept_good));
                 sureOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -176,7 +184,7 @@ public class OrderDetailFragment extends BaseFragment {
                                             public void run() {
                                                 onBackPressed();
                                                 EventBus.getDefault().post(new EventOfCheckGoods());
-                                                ToastUtil.shortToast(getActivity(),"确认成功");
+                                                ToastUtil.shortToast(getActivity(), "确认成功");
                                             }
                                         });
                                     }
@@ -203,8 +211,8 @@ public class OrderDetailFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putParcelable("orderInfo",orderInfo);
-                        PageSwitcher.switchToTopNavPage(getActivity(),AfterSaleFragment.class,bundle,getString(R.string.apply_after_order),"");
+                        bundle.putParcelable("orderInfo", orderInfo);
+                        PageSwitcher.switchToTopNavPage(getActivity(), AfterSaleFragment.class, bundle, getString(R.string.apply_after_order), "");
 
                     }
                 });
@@ -217,14 +225,22 @@ public class OrderDetailFragment extends BaseFragment {
                 orderLeftBtn.setVisibility(View.GONE);
                 break;
             case 4:
+                if(orderInfo.afterSaleService != null) {
+                    if(orderInfo.afterSaleService.getStatus() == 0) {
+                        orderState.setText("处理中");
+                    } else {
+                        orderState.setText("退款成功");
+                    }
+                }
                 mBottomRl.setVisibility(View.GONE);
                 myComment.setVisibility(View.GONE);
                 break;
         }
 
-        final GoodItemListAdapter listAdapter = new GoodItemListAdapter(getActivity(), orderInfo.goodsList,-1,"");
+        final GoodItemListAdapter listAdapter = new GoodItemListAdapter(getActivity(), orderInfo.goodsList, -1, "");
         goodList.setAdapter(listAdapter);
     }
+
     public void cancelOrder() {
         ConfirmDialog confirmDialog = new ConfirmDialog(getActivity(), R.style.white_bg_dialog);
         confirmDialog.setConfirmClickListener(new View.OnClickListener() {
@@ -244,7 +260,7 @@ public class OrderDetailFragment extends BaseFragment {
                                     public void run() {
                                         onBackPressed();
                                         EventBus.getDefault().post(new EventOfCancelOrder());
-                                        ToastUtil.shortToast(getActivity(),"取消成功");
+                                        ToastUtil.shortToast(getActivity(), "取消成功");
                                     }
                                 });
                             }
@@ -269,4 +285,8 @@ public class OrderDetailFragment extends BaseFragment {
 
     }
 
+    @OnClick(R.id.tel_ll)
+    void onTelClick() {
+        CallUtil.askForMakeCall(getActivity(), "", orderInfo.shopId);
+    }
 }

@@ -35,6 +35,7 @@
                 android:layout_marginLeft="2dp"/>
 
              <EditText
+                 android:id="@+id/search_et"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
                  android:layout_marginLeft="4dp"
@@ -42,7 +43,7 @@
                  android:gravity="center_vertical"
                  android:textColor="@color/color_808080"
                  android:textSize="13sp"
-                 android:hint="请输入商品名称"/>
+                 android:hint="@string/input_prduct_name"/>
         </LinearLayout>
 
         <TextView
@@ -54,18 +55,10 @@
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_15sp"
             android:padding="10dp"
-            android:text="@string/dialog_default_cancel_title" />
+            android:text="搜索" />
 
     </RelativeLayout>
-    <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
-        android:id="@+id/store_house_ptr_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:ptr_resistance="1.7"
-        app:ptr_ratio_of_header_height_to_refresh="1.2"
-        app:ptr_duration_to_close="300"
-        app:ptr_duration_to_close_header="2000"
-        app:ptr_keep_header_when_refresh="true">
+
         <cn.finalteam.loadingviewfinal.GridViewFinal
             android:id="@+id/product_grid"
             android:layout_width="match_parent"
@@ -78,5 +71,4 @@
             android:stretchMode="columnWidth"
             android:verticalSpacing="@dimen/margin_24px"
             android:gravity="center"/>
-    </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
 </LinearLayout>

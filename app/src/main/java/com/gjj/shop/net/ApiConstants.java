@@ -42,5 +42,6 @@ public class ApiConstants {
     public static final String PAY_BY_ALIPAY = host+ "/pay/alipay/signatures";
     public static final String COMMENT_PRODUCT = host+ "/comment/publish";
     public static final String COMMENT_INFOLIST = host+ "/comment/infoList";
+    public static final String ORDER_AFTERSALE = host+ "/order/applyAfterSaleService";
 
 }

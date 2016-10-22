@@ -85,6 +85,16 @@ public class OrderListAdapter extends BaseRecyclerViewAdapter<OrderInfo> {
                 viewHolder.orderState.setText(mContext.getString(R.string.cancel_order));
                 viewHolder.bottomRl.setVisibility(View.GONE);
                 break;
+            case 4:
+                if(orderInfo.afterSaleService != null) {
+                    if(orderInfo.afterSaleService.getStatus() == 0) {
+                        viewHolder.orderState.setText("处理中");
+                    } else {
+                        viewHolder.orderState.setText("退款成功");
+                    }
+                }
+                viewHolder.bottomRl.setVisibility(View.GONE);
+                break;
         }
         viewHolder.orderState.setTag(orderInfo.status);
         final GoodItemListAdapter listAdapter = new GoodItemListAdapter(mContext, orderInfo.goodsList,orderInfo.status,orderInfo.orderId);

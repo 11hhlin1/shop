@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gjj.applibrary.log.L;
 import com.gjj.applibrary.task.MainTaskExecutor;
 import com.gjj.shop.widget.CustomProgressDialog;
 import com.lzy.okhttputils.OkHttpUtils;
@@ -140,5 +141,16 @@ public abstract class BaseFragment extends Fragment {
 
     public boolean goBack(boolean fromKeyboard) {
         return false;
+    }
+
+    public void hideKeyboardForCurrentFocus() {
+        try {
+            FragmentActivity activity = getActivity();
+            if (activity instanceof BaseSubActivity) {
+                ((BaseSubActivity) activity).hideKeyboardForCurrentFocus();
+            }
+        } catch (Exception e) {
+            L.e(e);
+        }
     }
 }
