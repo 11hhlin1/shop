@@ -11,8 +11,11 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.sdk.app.PayTask;
 import com.gjj.applibrary.app.AppLib;
 import com.gjj.applibrary.http.callback.JsonCallback;
+import com.gjj.applibrary.log.L;
+import com.gjj.applibrary.task.ForegroundTaskExecutor;
 import com.gjj.shop.R;
 import com.gjj.shop.base.BaseFragment;
 import com.gjj.shop.net.ApiConstants;
@@ -20,6 +23,8 @@ import com.gjj.shop.wxapi.ShareConstant;
 import com.gjj.thirdaccess.WeiXinAccess;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -88,7 +93,26 @@ public class ChoosePayWayFragment extends BaseFragment {
                     });
 
         } else {
+            OkHttpUtils.post(ApiConstants.PAY_BY_ALIPAY)
+                    .tag(this)
+                    .cacheMode(CacheMode.NO_CACHE)
+                    .params("orderIds", payInfo)
+//                .upJson(JSON.toJSONString(commitOrderReq))
+                    .execute(new JsonCallback<String>(String.class) {
 
+                        @Override
+                        public void onSuccess(final String orderInfo, Call call, Response response) {
+                        ForegroundTaskExecutor.executeTask(new Runnable() {
+                            @Override
+                            public void run() {
+                                PayTask alipay = new PayTask(getActivity());
+                                Map<String, String> result = alipay.payV2(orderInfo,true);
+                                L.d("@@@" + result);
+                            }
+                        });
+
+                        }
+                    });
         }
     }
 }

@@ -12,7 +12,6 @@ import com.gjj.shop.user.UserMgr;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cookie.store.MemoryCookieStore;
 import com.lzy.okhttputils.model.HttpHeaders;
-import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 /**
@@ -53,12 +52,12 @@ public class BaseApplication extends Application {
                 AppLib.setInitialized(true);
             }
         });
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return;
+//        }
+//        LeakCanary.install(this);
     }
     public static UserMgr getUserMgr() {
         return mApp.mUserMgr;
